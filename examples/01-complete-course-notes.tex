@@ -1,0 +1,116 @@
+\documentclass[mode=notes, palette=ocean, fontsize=11pt]{modernclassnotes}
+
+\course{Data Structures \& Algorithms}
+\coursecode{CS 201}
+\professor{Dr. Alex Morgan}
+\institution{Department of Computer Science}
+\term{Fall 2026}
+\docsubtitle{Comprehensive Lecture Notes \& Course Companion}
+\title{CS 201: Class Notes}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% -------------------------------------------------------------------
+% LECTURE 1
+% -------------------------------------------------------------------
+\lecture[September 2, 2026]{1}{Introduction to Algorithm Analysis}
+
+Welcome to CS 201! In this first lecture, we set the foundation for computational complexity analysis, mathematical modeling of program performance, and asymptotic notation.
+
+\begin{definition}[Algorithm]
+An \textbf{algorithm} is a finite, well-defined sequence of step-by-step computational instructions that transforms an input into a desired output.
+\end{definition}
+
+When analyzing algorithms, we evaluate performance across two main resource axes:
+\begin{enumerate}
+    \item \textbf{Time Complexity}: How the execution runtime scales as the input size $n$ approaches infinity.
+    \item \textbf{Space Complexity}: Memory auxiliary consumption required by the data structures during execution.
+\end{enumerate}
+
+\begin{theorem}[Master Theorem for Divide-and-Conquer]
+Let $T(n)$ be a recurrence relation defined by $T(n) = a T(n/b) + f(n)$ where $a \ge 1$ and $b > 1$.
+If $f(n) = \Theta(n^c)$, then:
+\[
+T(n) =
+\begin{cases}
+\Theta(n^{\log_b a}) & \text{if } c < \log_b a \\
+\Theta(n^c \log n) & \text{if } c = \log_b a \\
+\Theta(n^c) & \text{if } c > \log_b a
+\end{cases}
+\]
+\end{theorem}
+
+\begin{proof}
+By constructing a recurrence tree of depth $\log_b n$, at level $i$ there are $a^i$ subproblems, each of size $n/b^i$. Summing work across all levels yields the geometric series solution above.
+\end{proof}
+
+\begin{example}[Binary Search Analysis]
+In Binary Search, $a = 1, b = 2$, and $f(n) = \Theta(1)$. Since $c = 0$ and $\log_2 1 = 0$, Case 2 of the Master Theorem applies:
+\[
+T(n) = \Theta(\log n)
+\]
+\end{example}
+
+\begin{warning}
+Master Theorem does not apply if $f(n)$ is not polynomial (e.g., $f(n) = 2^n$) or if $a < 1$.
+\end{warning}
+
+\begin{takeaways}
+\begin{itemize}
+    \item Big-O provides an asymptotic upper bound on growth rate.
+    \item Master Theorem simplifies divide-and-conquer recurrences.
+    \item Always consider both average-case and worst-case bounds.
+\end{itemize}
+\end{takeaways}
+
+\newpage
+
+% -------------------------------------------------------------------
+% LECTURE 2
+% -------------------------------------------------------------------
+\lecture[September 7, 2026]{2}{Dynamic Programming \& Optimization}
+
+Dynamic Programming (DP) is an algorithmic technique for solving optimization problems by breaking them down into simpler overlapping subproblems.
+
+\begin{definition}[Optimal Substructure]
+A problem exhibits \textbf{optimal substructure} if an optimal solution to the problem contains optimal solutions to its subproblems.
+\end{definition}
+
+\begin{codebox}[Python Implementation: 0/1 Knapsack Bottom-Up]
+\begin{lstlisting}[language=Python]
+def knapsack(weights, values, capacity):
+    n = len(weights)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        for w in range(1, capacity + 1):
+            if weights[i-1] <= w:
+                dp[i][w] = max(values[i-1] + dp[i-1][w - weights[i-1]], dp[i-1][w])
+            else:
+                dp[i][w] = dp[i-1][w]
+                
+    return dp[n][capacity]
+\end{lstlisting}
+\end{codebox}
+
+\begin{tip}
+When designing DP state transitions, start by writing down the mathematical recurrence relation before touching code.
+\end{tip}
+
+\begin{exercise}[Fibonacci DP Space Optimization]
+Reduce the space complexity of bottom-up Fibonacci calculation from $O(n)$ to $O(1)$.
+\end{exercise}
+
+\begin{solution}
+Instead of storing an array of size $n$, track only the last two state variables ($a$ and $b$) and update them iteratively in a loop:
+\[
+(a, b) \leftarrow (b, a + b)
+\]
+\end{solution}
+
+\end{document}

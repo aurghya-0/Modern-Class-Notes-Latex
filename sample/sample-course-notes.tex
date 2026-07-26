@@ -1,0 +1,134 @@
+\documentclass[mode=notes, palette=midnight, fontsize=11pt]{modernclassnotes}
+
+\course{Quantum Information \& Computing}
+\coursecode{PHYS / CS 405}
+\professor{Prof. Richard Feynman}
+\institution{Department of Physics \& Computer Science}
+\term{Fall 2026}
+\docsubtitle{Comprehensive Lecture Notes \& Quantum Circuit Primer}
+\title{CS 405: Quantum Computing Notes}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% -------------------------------------------------------------------
+% LECTURE 1
+% -------------------------------------------------------------------
+\lecture[September 3, 2026]{1}{Qubits, Superposition \& State Vectors}
+
+Welcome to Quantum Information \& Computing! In this introductory lecture, we explore the fundamental mathematical transition from classical binary bits to quantum state vectors in Hilbert space.
+
+\section{Classical Bits vs. Quantum Bits}
+
+A classical bit exists in one of two definite states: $0$ or $1$. A quantum bit (qubit), by contrast, is a two-level quantum system represented as a unit vector in a 2-dimensional complex vector space $\mathbb{C}^2$.
+
+\begin{definition}[Qubit \& Computational Basis]
+The computational basis states of a qubit are orthonormal basis vectors:
+\[
+|0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |1\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+\]
+A general qubit state $|\psi\rangle$ is a linear superposition:
+\[
+|\psi\rangle = \alpha |0\rangle + \beta |1\rangle = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}, \quad \alpha, \beta \in \mathbb{C}
+\]
+subject to the \textbf{normalization condition}: $|\alpha|^2 + |\beta|^2 = 1$.
+\end{definition}
+
+\begin{theorem}[Born Rule for Measurement]
+When a qubit in state $|\psi\rangle = \alpha |0\rangle + \beta |1\rangle$ is measured in the computational basis, the outcome is:
+\begin{itemize}
+    \item State $|0\rangle$ with probability $P(0) = |\alpha|^2$
+    \item State $|1\rangle$ with probability $P(1) = |\beta|^2$
+\end{itemize}
+Immediately following measurement, the qubit collapses state to the observed state vector.
+\end{theorem}
+
+\begin{proof}
+By projection operator measurement postulates, the probability of outcome $i \in \{0, 1\}$ is given by $P(i) = \langle \psi | P_i | \psi \rangle$ where $P_0 = |0\rangle\langle 0|$ and $P_1 = |1\rangle\langle 1|$. Substituting $|\psi\rangle$ yields $P(0) = |\alpha|^2$ and $P(1) = |\beta|^2$.
+\end{proof}
+
+\begin{example}[Equal Superposition State]
+The Hadamard state $|+\rangle = \frac{1}{\sqrt{2}}|0\rangle + \frac{1}{\sqrt{2}}|1\rangle$ has $\alpha = \beta = 1/\sqrt{2}$.
+Measuring $|+\rangle$ yields outcome $0$ with probability $|\frac{1}{\sqrt{2}}|^2 = 0.5$ and outcome $1$ with probability $0.5$.
+\end{example}
+
+\begin{warning}
+Quantum superposition is not simply an unknown classical state! A qubit in state $|+\rangle$ possesses definitive quantum coherence that can produce quantum interference when transformed by unitary gates.
+\end{warning}
+
+\begin{codebox}[Python Simulation: Qubit Superposition with NumPy]
+\begin{lstlisting}[language=Python]
+import numpy as np
+
+# Define computational basis vectors
+ket_0 = np.array([[1], [0]])
+ket_1 = np.array([[0], [1]])
+
+# Define Hadamard matrix H
+H = (1 / np.sqrt(2)) * np.array([[1,  1],
+                                 [1, -1]])
+
+# Prepare state |+> = H |0>
+ket_plus = H @ ket_0
+print("State |+>:\n", ket_plus)
+
+# Probabilities P(0) and P(1)
+prob_0 = np.abs(ket_plus[0, 0])**2
+prob_1 = np.abs(ket_plus[1, 0])**2
+print(f"P(0) = {prob_0:.2f}, P(1) = {prob_1:.2f}")
+\end{lstlisting}
+\end{codebox}
+
+\begin{takeaways}
+\begin{itemize}
+    \item Qubits live in $\mathbb{C}^2$ complex Hilbert space normalized to length 1.
+    \item Measurement collapses superposition non-reversibly into basis states.
+    \item Unitary operations preserve norms and quantum coherence.
+\end{itemize}
+\end{takeaways}
+
+\newpage
+
+% -------------------------------------------------------------------
+% LECTURE 2
+% -------------------------------------------------------------------
+\lecture[September 8, 2026]{2}{Entanglement \& Bell States}
+
+Quantum entanglement is a non-local correlation between multiple qubits that cannot be factored into product states of individual qubits.
+
+\section{Multi-Qubit Systems \& Tensor Products}
+
+A 2-qubit system lives in the tensor product space $\mathbb{C}^2 \otimes \mathbb{C}^2 \cong \mathbb{C}^4$ with computational basis $\{|00\rangle, |01\rangle, |10\rangle, |11\rangle\}$.
+
+\begin{definition}[Product vs. Entangled States]
+A two-qubit state $|\Psi\rangle$ is a \textbf{product state} if it can be written as $|\Psi\rangle = |\psi_1\rangle \otimes |\psi_2\rangle$. Otherwise, $|\Psi\rangle$ is \textbf{entangled}.
+\end{definition}
+
+\begin{theorem}[Maximally Entangled Bell State]
+The EPR pair (Bell state $|\Phi^+\rangle$) defined by:
+\[
+|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}
+\]
+is a maximally entangled state. Measuring the first qubit collapses the second qubit instantly to the identical state, regardless of spatial distance.
+\end{theorem}
+
+\begin{tip}
+To test if a 2-qubit state $|\psi\rangle = a|00\rangle + b|01\rangle + c|10\rangle + d|11\rangle$ is separable (a product state), check whether its coefficient matrix determinant $ad - bc = 0$.
+\end{tip}
+
+\begin{exercise}[Bell State Measurement]
+Calculate the probability of measuring state $|01\rangle$ for the Bell state $|\Psi^-\rangle = \frac{|01\rangle - |10\rangle}{\sqrt{2}}$.
+\end{exercise}
+
+\begin{solution}
+The coefficient of $|01\rangle$ is $\frac{1}{\sqrt{2}}$. Therefore, by the Born Rule:
+\[
+P(01) = \left| \frac{1}{\sqrt{2}} \right|^2 = \frac{1}{2} = 50\%
+\]
+\end{solution}
+
+\end{document}

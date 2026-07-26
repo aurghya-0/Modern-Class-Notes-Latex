@@ -1,0 +1,111 @@
+\documentclass[mode=notes, palette=ocean, fontsize=11pt]{modernclassnotes}
+
+\course{LaTeX Package Documentation}
+\coursecode{MCN v1.0}
+\professor{Modern Class Notes Maintainers}
+\institution{Open Source TeX Initiative}
+\term{Release 2026}
+\docsubtitle{User Manual \& Architecture Guide for Class Notes Package}
+\title{The \texttt{modernclassnotes} Class \& Package}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+The \texttt{modernclassnotes} package and document class provides a modern, highly aesthetic, and open-source LaTeX framework designed specifically for university professors, lecturers, and educators. It enables effortless creation and distribution of lecture notes, student handouts, and problem worksheets.
+
+\begin{takeaways}
+Key highlights of \texttt{modernclassnotes}:
+\begin{itemize}
+    \item \textbf{Three Specialized Modes}: \texttt{notes} (full course manuals), \texttt{handout} (1--2 page lecture summaries), and \texttt{worksheet} (homeworks and solution keys).
+    \item \textbf{Curated Color Palettes}: Switch between 7 themes (\texttt{ocean}, \texttt{nord}, \texttt{midnight}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{mono}) with a single class option.
+    \item \textbf{Zero Mandatory Heavy Dependencies}: Native TeX/LaTeX box engine ensuring maximum portability across TeX Live, MiKTeX, and Overleaf.
+    \item \textbf{Lecture Tracking}: Automated lecture header banners, running headers, and table of contents logging via \texttt{\textbackslash lecture}.
+\end{itemize}
+\end{takeaways}
+
+\section{Class Options \& Configuration}
+
+Load the class in your LaTeX document header:
+\begin{codebox}[Loading the Class]
+\begin{lstlisting}[language=TeX]
+\documentclass[mode=notes, palette=ocean, fontsize=11pt, font=default]{modernclassnotes}
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Available Class Keys}
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Key} & \textbf{Values} & \textbf{Default} \\
+\midrule
+\texttt{mode} & \texttt{notes}, \texttt{handout}, \texttt{worksheet} & \texttt{notes} \\
+\texttt{palette} & \texttt{ocean}, \texttt{midnight}, \texttt{nord}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{mono} & \texttt{ocean} \\
+\texttt{fontsize} & \texttt{10pt}, \texttt{11pt}, \texttt{12pt} & \texttt{11pt} \\
+\texttt{font} & \texttt{default}, \texttt{palatino}, \texttt{charter}, \texttt{sans} & \texttt{default} \\
+\texttt{showsolutions} & \texttt{true}, \texttt{false} & \texttt{true} \\
+\texttt{parskip} & \texttt{true}, \texttt{false} & \texttt{true} \\
+\bottomrule
+\end{tabular}
+\caption{Class options and parameter values}
+\end{table}
+
+\section{Course Metadata Commands}
+
+Specify your course metadata in the document preamble:
+\begin{codebox}[Metadata Setup]
+\begin{lstlisting}[language=TeX]
+\course{Data Structures & Algorithms}
+\coursecode{CS 201}
+\professor{Dr. Alex Morgan}
+\institution{Department of Computer Science}
+\term{Fall 2026}
+\docsubtitle{Comprehensive Lecture Notes}
+\title{CS 201: Class Notes}
+\end{lstlisting}
+\end{codebox}
+
+\section{Lecture Tracking System}
+
+Use the \texttt{\textbackslash lecture} command to divide course notes into distinct lecture sessions:
+\begin{codebox}[Lecture Macro]
+\begin{lstlisting}[language=TeX]
+\lecture[September 2, 2026]{1}{Introduction to Algorithm Analysis}
+\end{lstlisting}
+\end{codebox}
+
+\section{Pedagogical Environments}
+
+\begin{definition}[Mathematical Callout Environments]
+\texttt{modernclassnotes} provides structured environments for mathematical and academic content:
+\begin{itemize}
+    \item \texttt{theorem}, \texttt{lemma}, \texttt{proposition}, \texttt{corollary}, \texttt{proof}
+    \item \texttt{definition}, \texttt{example}, \texttt{remark}, \texttt{warning}, \texttt{tip}, \texttt{takeaways}
+    \item \texttt{exercise}, \texttt{solution}, \texttt{codebox}
+\end{itemize}
+\end{definition}
+
+\begin{example}[Sample Theorem Environment]
+\begin{lstlisting}[language=TeX]
+\begin{theorem}[Euler's Identity]
+For any real number $\theta$, $e^{i\theta} = \cos\theta + i\sin\theta$.
+\end{theorem}
+\end{lstlisting}
+\end{example}
+
+\section{Open-Source \& CTAN Distribution Guidelines}
+
+To distribute this package under an open-source initiative:
+\begin{enumerate}
+    \item Maintain the LPPL 1.3c / MIT dual licensing terms in \texttt{LICENSE}.
+    \item Provide compiled sample PDFs in \texttt{examples/} for GitHub previews.
+    \item Execute \texttt{make ctan} to bundle a clean \texttt{.zip} release file ready for CTAN submission.
+\end{enumerate}
+
+\end{document}

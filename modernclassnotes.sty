@@ -1,0 +1,251 @@
+%% modernclassnotes.sty
+%% Copyright 2026 Modern Class Notes Project
+%%
+%% Package extension for modernclassnotes style integration in standard
+%% article, report, or book classes.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{modernclassnotes}[2026/07/26 v1.0.0 Modern Class Notes Package]
+
+% -------------------------------------------------------------------
+% Package Options & Key-Value Handling
+% -------------------------------------------------------------------
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=mcn,
+  prefix=mcn@
+}
+
+\DeclareStringOption[notes]{mode}        % notes, handout, worksheet
+\DeclareStringOption[ocean]{palette}     % ocean, midnight, nord, emerald, burgundy, amethyst, mono
+\DeclareStringOption[default]{font}      % default, palatino, charter, sans
+\DeclareBoolOption[true]{showsolutions}  % show/hide solutions in worksheets
+\DeclareBoolOption[true]{parskip}        % toggle paragraph spacing
+
+\ProcessKeyvalOptions*
+
+% -------------------------------------------------------------------
+% Core Dependencies
+% -------------------------------------------------------------------
+\RequirePackage{xcolor}
+\RequirePackage{geometry}
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{fancyhdr}
+\RequirePackage{etoolbox}
+\RequirePackage{listings}
+\RequirePackage{caption}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{iftex}
+
+\ifmcn@parskip
+  \RequirePackage{parskip}
+\fi
+
+% Geometry configuration
+\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=28pt, headsep=15pt}
+
+% Color Palette Presets
+\ifstrequal{\mcn@palette}{midnight}{%
+  \definecolor{mcnPrimary}{HTML}{1D2D44}
+  \definecolor{mcnSecondary}{HTML}{3A86EF}
+  \definecolor{mcnAccent}{HTML}{F72585}
+  \definecolor{mcnBg}{HTML}{F8F9FA}
+  \definecolor{mcnText}{HTML}{212529}
+  \definecolor{mcnBoxBg}{HTML}{EDF2F7}
+  \definecolor{mcnBorder}{HTML}{CBD5E0}
+}{%
+\ifstrequal{\mcn@palette}{nord}{%
+  \definecolor{mcnPrimary}{HTML}{2E3440}
+  \definecolor{mcnSecondary}{HTML}{88C0D0}
+  \definecolor{mcnAccent}{HTML}{B48EAD}
+  \definecolor{mcnBg}{HTML}{F8F9FB}
+  \definecolor{mcnText}{HTML}{3B4252}
+  \definecolor{mcnBoxBg}{HTML}{ECEFF4}
+  \definecolor{mcnBorder}{HTML}{D8DEE9}
+}{%
+\ifstrequal{\mcn@palette}{emerald}{%
+  \definecolor{mcnPrimary}{HTML}{1B4332}
+  \definecolor{mcnSecondary}{HTML}{2D6A4F}
+  \definecolor{mcnAccent}{HTML}{52B788}
+  \definecolor{mcnBg}{HTML}{F4F9F5}
+  \definecolor{mcnText}{HTML}{1A2E26}
+  \definecolor{mcnBoxBg}{HTML}{E8F5E9}
+  \definecolor{mcnBorder}{HTML}{C8E6C9}
+}{%
+\ifstrequal{\mcn@palette}{burgundy}{%
+  \definecolor{mcnPrimary}{HTML}{5C061C}
+  \definecolor{mcnSecondary}{HTML}{9D0208}
+  \definecolor{mcnAccent}{HTML}{DC2F02}
+  \definecolor{mcnBg}{HTML}{FAF4F5}
+  \definecolor{mcnText}{HTML}{2B0D12}
+  \definecolor{mcnBoxBg}{HTML}{F7EBEF}
+  \definecolor{mcnBorder}{HTML}{E8C5CE}
+}{%
+\ifstrequal{\mcn@palette}{amethyst}{%
+  \definecolor{mcnPrimary}{HTML}{3A0CA3}
+  \definecolor{mcnSecondary}{HTML}{7209B7}
+  \definecolor{mcnAccent}{HTML}{4361EE}
+  \definecolor{mcnBg}{HTML}{F8F7FF}
+  \definecolor{mcnText}{HTML}{1D1A2E}
+  \definecolor{mcnBoxBg}{HTML}{F0EEFD}
+  \definecolor{mcnBorder}{HTML}{D7D2FA}
+}{%
+\ifstrequal{\mcn@palette}{mono}{%
+  \definecolor{mcnPrimary}{HTML}{212529}
+  \definecolor{mcnSecondary}{HTML}{495057}
+  \definecolor{mcnAccent}{HTML}{6C757D}
+  \definecolor{mcnBg}{HTML}{FAFAFA}
+  \definecolor{mcnText}{HTML}{212529}
+  \definecolor{mcnBoxBg}{HTML}{F1F3F5}
+  \definecolor{mcnBorder}{HTML}{CED4DA}
+}{%
+  % Default: Ocean Palette
+  \definecolor{mcnPrimary}{HTML}{005F73}
+  \definecolor{mcnSecondary}{HTML}{0A9396}
+  \definecolor{mcnAccent}{HTML}{94D2BD}
+  \definecolor{mcnBg}{HTML}{F4F7F6}
+  \definecolor{mcnText}{HTML}{1D2D35}
+  \definecolor{mcnBoxBg}{HTML}{EAF4F4}
+  \definecolor{mcnBorder}{HTML}{CCE3DE}
+}}}}}}
+
+\definecolor{mcnTheorem}{HTML}{023E8A}
+\definecolor{mcnTheoremBg}{HTML}{EDF4FC}
+\definecolor{mcnDefinition}{HTML}{0077B6}
+\definecolor{mcnDefinitionBg}{HTML}{EAF6FB}
+\definecolor{mcnExample}{HTML}{2B9348}
+\definecolor{mcnExampleBg}{HTML}{EEF8F1}
+\definecolor{mcnRemark}{HTML}{555555}
+\definecolor{mcnRemarkBg}{HTML}{F5F5F5}
+\definecolor{mcnWarning}{HTML}{D90429}
+\definecolor{mcnWarningBg}{HTML}{FDE8EA}
+\definecolor{mcnTip}{HTML}{E07A5F}
+\definecolor{mcnTipBg}{HTML}{FDF2EF}
+
+% Metadata macros
+\newcommand{\mcn@course}{}
+\newcommand{\mcn@coursecode}{}
+\newcommand{\mcn@professor}{}
+\newcommand{\mcn@institution}{}
+\newcommand{\mcn@term}{}
+\newcommand{\mcn@docsubtitle}{}
+
+\newcommand{\course}[1]{\renewcommand{\mcn@course}{#1}}
+\newcommand{\coursecode}[1]{\renewcommand{\mcn@coursecode}{#1}}
+\newcommand{\professor}[1]{\renewcommand{\mcn@professor}{#1}}
+\newcommand{\institution}[1]{\renewcommand{\mcn@institution}{#1}}
+\newcommand{\term}[1]{\renewcommand{\mcn@term}{#1}}
+\newcommand{\docsubtitle}[1]{\renewcommand{\mcn@docsubtitle}{#1}}
+
+% Callout box core macro
+\newcommand{\mcn@callout}[5]{% {BorderColor}{BgColor}{Label}{Icon/Prefix}{Content}
+  \par\addvspace{0.8em}%
+  \noindent
+  \fcolorbox{#1}{#2}{%
+    \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
+      \vspace{6pt}%
+      \noindent\hspace{8pt}%
+      \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
+        {\sffamily\bfseries\color{#1}#4 #3}\par\vspace{4pt}%
+        \color{mcnText}#5%
+      \end{minipage}%
+      \vspace{6pt}%
+    \end{minipage}%
+  }%
+  \par\addvspace{0.8em}%
+}
+
+% Pedagogical Environments
+\newcounter{mcnTheoremCount}
+\newcounter{mcnDefCount}
+\newcounter{mcnExampleCount}
+\newcounter{mcnExerciseCount}
+
+\newenvironment{theorem}[1][]{%
+  \refstepcounter{mcnTheoremCount}%
+  \def\mcn@title{Theorem \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[THM]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{lemma}[1][]{%
+  \refstepcounter{mcnTheoremCount}%
+  \def\mcn@title{Lemma \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[LEM]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{definition}[1][]{%
+  \refstepcounter{mcnDefCount}%
+  \def\mcn@title{Definition \themcnDefCount\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnDefinition}{mcnDefinitionBg}{\mcn@title}{[DEF]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{example}[1][]{%
+  \refstepcounter{mcnExampleCount}%
+  \def\mcn@title{Example \themcnExampleCount\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnExample}{mcnExampleBg}{\mcn@title}{[EX]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{remark}[1][]{%
+  \def\mcn@title{Remark\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnRemark}{mcnRemarkBg}{\mcn@title}{[REM]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{warning}[1][]{%
+  \def\mcn@title{Warning\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnWarning}{mcnWarningBg}{\mcn@title}{[!]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{tip}[1][]{%
+  \def\mcn@title{Pro Tip\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnTip}{mcnTipBg}{\mcn@title}{[*]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{takeaways}{%
+  \def\mcn@title{Key Takeaways}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnPrimary}{mcnBoxBg}{\mcn@title}{[KEY]}{\usebox{\mcn@box}}%
+}
+
+\newsavebox{\mcn@box}
+
+\endinput

@@ -1,0 +1,64 @@
+\documentclass[mode=handout, palette=nord, fontsize=11pt]{modernclassnotes}
+
+\course{Linear Algebra \& Matrix Analysis}
+\coursecode{MATH 301}
+\professor{Prof. Sarah Jenkins}
+\institution{Department of Mathematics}
+\term{Fall 2026}
+\lecturedate{October 14, 2026}
+\docsubtitle{Lecture Handout: Singular Value Decomposition (SVD)}
+\title{Singular Value Decomposition}
+
+\begin{document}
+
+\maketitle
+
+\section{Overview \& Core Intuition}
+
+Singular Value Decomposition (SVD) is a fundamental matrix factorization in linear algebra that generalizes the eigendecomposition of a square normal matrix to any $m \times n$ matrix.
+
+\begin{definition}[Singular Value Decomposition]
+Let $A \in \mathbb{R}^{m \times n}$ be a real matrix of rank $r$. The \textbf{Singular Value Decomposition} of $A$ is a factorization of the form:
+\[
+A = U \Sigma V^T
+\]
+where:
+\begin{itemize}
+    \item $U \in \mathbb{R}^{m \times m}$ is an orthogonal matrix ($U^T U = I_m$), whose columns are the \textbf{left-singular vectors}.
+    \item $\Sigma \in \mathbb{R}^{m \times n}$ is a diagonal matrix containing non-negative real numbers $\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r > 0$, known as \textbf{singular values}.
+    \item $V \in \mathbb{R}^{n \times n}$ is an orthogonal matrix ($V^T V = I_n$), whose columns are the \textbf{right-singular vectors}.
+\end{itemize}
+\end{definition}
+
+\section{Geometric Interpretation}
+
+Geometrically, linear transformation by $A$ decomposes into three operations:
+\begin{enumerate}
+    \item \textbf{Rotation/Reflection} in input domain $\mathbb{R}^n$ via $V^T$.
+    \item \textbf{Scaling} along coordinate axes via diagonal matrix $\Sigma$.
+    \item \textbf{Rotation/Reflection} in output domain $\mathbb{R}^m$ via $U$.
+\end{enumerate}
+
+\begin{theorem}[Fundamental Relationship to Eigenvalues]
+The singular values $\sigma_i$ of $A$ are the square roots of the non-zero eigenvalues of $A^T A$ or $A A^T$:
+\[
+\sigma_i = \sqrt{\lambda_i(A^T A)}
+\]
+Furthermore, the columns of $V$ are eigenvectors of $A^T A$, and the columns of $U$ are eigenvectors of $A A^T$.
+\end{theorem}
+
+\begin{warning}
+Do not confuse singular values with eigenvalues! Eigenvalues are only defined for square matrices and can be complex, whereas singular values exist for any rectangular matrix and are always real and non-negative.
+\end{warning}
+
+\section{Applications}
+
+\begin{takeaways}
+\begin{itemize}
+    \item \textbf{Low-Rank Matrix Approximation}: Truncating SVD at $k < r$ singular values yields the optimal rank-$k$ approximation under the Frobenius norm (Eckart--Young Theorem).
+    \item \textbf{Principal Component Analysis (PCA)}: SVD directly computes principal axes of centered data matrices.
+    \item \textbf{Pseudoinverse Calculation}: Computing $A^+ = V \Sigma^+ U^T$ for least-squares optimization.
+\end{itemize}
+\end{takeaways}
+
+\end{document}

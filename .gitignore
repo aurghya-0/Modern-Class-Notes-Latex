@@ -1,0 +1,28 @@
+# TeX Build Artifacts
+*.aux
+*.log
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.idx
+*.ind
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.dvi
+*.ps
+
+# Package distribution zips
+*.zip
+*.tar.gz
+
+# OS / Editor artifacts
+.DS_Store
+.vscode/
+.idea/
