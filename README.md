@@ -4,7 +4,7 @@
 [![License: LPPL 1.3c](https://img.shields.io/badge/License-LPPL%201.3c-green.svg)](https://www.latex-project.org/lppl.txt)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![TeX Live 2025 Ready](https://img.shields.io/badge/TeX%20Live-2025%20Compatible-brightgreen.svg)]()
-[[![CTAN Version](https://shields.io)](https://ctan.org)](https://img.shields.io/ctan/v/modernclassnotes)
+![CTAN Version](https://img.shields.io/ctan/v/modernclassnotes)
 
 **`modernclassnotes`** is a state-of-the-art, open-source LaTeX package and document class tailored for university professors, lecturers, researchers, and students. It produces clean, beautifully formatted, and modern class notes, lecture handouts, and assignment worksheets.
 
