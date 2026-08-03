@@ -40,7 +40,7 @@
 % -------------------------------------------------------------------
 % Core Dependencies
 % -------------------------------------------------------------------
-\RequirePackage[utf8]{inputenc}
+%\RequirePackage[utf8]{inputenc} % not needed when using xelatex
 \RequirePackage[T1]{fontenc}
 \RequirePackage{xcolor}
 \RequirePackage{geometry}
