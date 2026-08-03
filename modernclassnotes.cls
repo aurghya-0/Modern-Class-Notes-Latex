@@ -89,6 +89,14 @@
 }{}
 
 % -------------------------------------------------------------------
+% Itemize bullet point symbols config
+% -------------------------------------------------------------------
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemiii}{$\blacksquare$}
+\renewcommand{\labelitemiv}{$\diamond$}
+
+% -------------------------------------------------------------------
 % Font Selection Presets
 % -------------------------------------------------------------------
 % Default Latin Modern / Computer Modern
