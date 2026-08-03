@@ -30,6 +30,7 @@
 \DeclareBoolOption[true]{showsolutions}  % show/hide solutions in worksheets
 \DeclareBoolOption[true]{parskip}        % toggle paragraph spacing
 \DeclareBoolOption[true]{numbering}      % continuous vs chapter-based numbering
+\DeclareBoolOption[false]{official}      % include prof and institution in footer if true
 
 \ProcessKeyvalOptions*
 
@@ -302,9 +303,11 @@
 % -------------------------------------------------------------------
 % Page Footer Controls
 % -------------------------------------------------------------------
-%\lfoot{\small\sffamily\color{gray}\ifx\mcn@professor\@empty\else Prof. \mcn@professor\fi}
+\ifmcn@official
+  \lfoot{\small\sffamily\color{gray}\ifx\mcn@professor\@empty\else Prof. \mcn@professor\fi}
+  \rfoot{\small\sffamily\color{gray}\ifx\mcn@institution\@empty\else\mcn@institution\fi}
+\fi
 \cfoot{\small\sffamily\color{mcnPrimary}\bfseries\thepage}
-%\rfoot{\small\sffamily\color{gray}\ifx\mcn@institution\@empty\else\mcn@institution\fi}
 
 \renewcommand{\headrulewidth}{0.8pt}
 \renewcommand{\headrule}{{\color{mcnPrimary}\hrule width\headwidth height \headrulewidth \vspace{\headsep}}}
