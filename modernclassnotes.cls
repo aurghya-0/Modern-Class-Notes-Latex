@@ -454,18 +454,20 @@
 % Chapter Section Tracking
 % -------------------------------------------------------------------
 \newcommand{\subchapter}[2]{% {section}{title}
-  \par\vspace{0.9em}%
+  \par\vspace{0.5em}%
   \noindent
-    {\large\sffamily\bfseries\color{mcnPrimary}
-      \makebox[2.5em][l]{\thechapter.#1}#2}\\[-0.5em]
-    {\color{mcnBorder}\rule{\linewidth}{2pt}}\\[-1.5em]
+  {\raggedright\large\sffamily\bfseries\color{mcnPrimary}%
+    \makebox[2.5em][l]{\thechapter.#1}#2\par}%
+  \vspace{-1.1em}% adjust to bring rule closer
+  \noindent{\color{mcnBorder}\rule{\linewidth}{2pt}}%
+  \vspace{-0.3em}% adjust spacing after rule
   \par
   \phantomsection
   \addcontentsline{toc}{subsection}{%
     \texorpdfstring{%
       \makebox[3em][l]{\thechapter.#1}#2%
     }{%
-      \thechapter.#1\ #2%  Clean text for bookmarks
+      \thechapter.#1\ #2%
     }%
   }%
 }
