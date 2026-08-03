@@ -52,6 +52,7 @@
 \RequirePackage{array}
 \RequirePackage{enumerate}
 \RequirePackage{iftex}
+\RequirePackage{verbatim}
 
 \ifmcn@parskip
   \RequirePackage{parskip}
@@ -82,7 +83,8 @@
       \RequirePackage{helvet}
       \renewcommand{\familydefault}{\sfdefault}
     }{%
-      % Default Latin Modern / Computer Modern
+      % Default Latin Modern vector fonts (Type 1)
+      \RequirePackage{lmodern}
     }%
   }%
 }
@@ -494,13 +496,13 @@
     \par\vspace{0.4em}%
     \noindent{\sffamily\bfseries\color{mcnSecondary}Solution:}\par\vspace{0.2em}%
   \else
-    \comment
+    \expandafter\comment
   \fi
 }{%
   \ifmcn@showsolutions
     \par\vspace{0.6em}%
   \else
-    \endcomment
+    \expandafter\endcomment
   \fi
 }
 
