@@ -444,14 +444,16 @@
         }%
         % ---------- Optional objectives ----------
         \IfValueT{#3}{%
-          \par\vspace{4pt}%
+          \par\vspace{-6pt}% space before separator
+          {\color{mcnBorder}\rule{\linewidth}{0.5pt}}% separator line (0.5pt elegant)
+          \par\vspace{0pt}% space after separator
           \begin{enumerate}[
               label=\color{mcnPrimary}\arabic*.,
               nosep,
               leftmargin=*,
               after=\vspace{-\topsep} % tighten up spacing
             ]%
-            \forcsvlist{\footnotesize\mcn@objective@item}{#3}%
+            \forcsvlist{\mcn@objective@item}{#3}%
           \end{enumerate}%
           \vspace{0pt}% space after objectives
         }%
