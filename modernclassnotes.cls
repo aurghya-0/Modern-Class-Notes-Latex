@@ -78,11 +78,33 @@
   \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm,
     right=2.0cm, headheight=28pt, headsep=12pt}
 }{}
+% chapternotes
+\expandafter\ifstrequal\expandafter{\mcn@mode}{chapternotes}{%
+  \typeout{chapternotes geometry was chosen} % DEBUG LOG
+  \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm,
+    right=2.0cm, headheight=28pt, headsep=12pt}
+}{}
 
 % -------------------------------------------------------------------
 % Font Selection Presets
 % -------------------------------------------------------------------
 % Default Latin Modern / Computer Modern
+% font option override: kpfonts
+\expandafter\ifstrequal\expandafter{\mcn@font}{kpfonts}{%
+  \typeout{Kpfont was chosen} % DEBUG LOG
+  \RequirePackage{kpfonts}
+}{}
+% font option override: pagella
+\expandafter\ifstrequal\expandafter{\mcn@font}{pegella}{%
+  \typeout{pegella was chosen} % DEBUG LOG
+  \RequirePackage{tgpagella}
+}{}
+% font option override: sourceserif
+\expandafter\ifstrequal\expandafter{\mcn@font}{sourceserif}{%
+  \typeout{Source Serif Pro was chosen} % DEBUG LOG
+  \RequirePackage{sourcesanspro}
+  \RequirePackage{newtxmath}
+}{}
 % font option override: charter
 \expandafter\ifstrequal\expandafter{\mcn@font}{charter}{%
   \typeout{charter was chosen} % DEBUG LOG
@@ -91,12 +113,28 @@
   %\RequirePackage[charter]{mathdesign}
   \RequirePackage{newtxmath}
 }{}
-% font option override: sans
-\expandafter\ifstrequal\expandafter{\mcn@font}{sans}{%
+% font option override: helvet
+\expandafter\ifstrequal\expandafter{\mcn@font}{helvet}{%
   \typeout{sans was chosen} % DEBUG LOG
   \RequirePackage{helvet}
   \renewcommand{\familydefault}{\sfdefault}
   \RequirePackage{newtxmath}
+}{}
+% font option override: fira
+\expandafter\ifstrequal\expandafter{\mcn@font}{fira}{%
+  \typeout{Fira font was chosen} % DEBUG LOG
+  \RequirePackage[sfdefault]{FiraSans}
+  \RequirePackage{FiraMono}
+}{}
+% font option override: libertine
+\expandafter\ifstrequal\expandafter{\mcn@font}{libertine}{%
+  \typeout{libertine font was chosen} % DEBUG LOG
+  \RequirePackage{libertine}
+}{}
+% font option override: utopia
+\expandafter\ifstrequal\expandafter{\mcn@font}{utopia}{%
+  \typeout{utopia font was chosen} % DEBUG LOG
+  \RequirePackage{utopia}
 }{}
 
 % -------------------------------------------------------------------
@@ -176,6 +214,17 @@
   \definecolor{mcnBoxBg}{HTML}{F1F3F5}
   \definecolor{mcnBorder}{HTML}{CED4DA}
 }{}
+% palette option override: purple
+\expandafter\ifstrequal\expandafter{\mcn@palette}{purple}{%
+  \typeout{purple palette was chosen} % DEBUG LOG
+  \definecolor{mcnPrimary}{HTML}{560073}
+  \definecolor{mcnSecondary}{HTML}{5d0a96}
+  \definecolor{mcnAccent}{HTML}{a294d2}
+  \definecolor{mcnBg}{HTML}{f4f4f7}
+  \definecolor{mcnText}{HTML}{331d35}
+  \definecolor{mcnBoxBg}{HTML}{f0eaf4}
+  \definecolor{mcnBorder}{HTML}{d4cce3}
+}{}
 
 % Environmental standard colors
 \definecolor{mcnTheorem}{HTML}{023E8A}
@@ -250,9 +299,12 @@
   \fi
 }
 
-\lfoot{\small\sffamily\color{gray}\ifx\mcn@professor\@empty\else Prof. \mcn@professor\fi}
+% -------------------------------------------------------------------
+% Page Footer Controls
+% -------------------------------------------------------------------
+%\lfoot{\small\sffamily\color{gray}\ifx\mcn@professor\@empty\else Prof. \mcn@professor\fi}
 \cfoot{\small\sffamily\color{mcnPrimary}\bfseries\thepage}
-\rfoot{\small\sffamily\color{gray}\ifx\mcn@institution\@empty\else\mcn@institution\fi}
+%\rfoot{\small\sffamily\color{gray}\ifx\mcn@institution\@empty\else\mcn@institution\fi}
 
 \renewcommand{\headrulewidth}{0.8pt}
 \renewcommand{\headrule}{{\color{mcnPrimary}\hrule width\headwidth height \headrulewidth \vspace{\headsep}}}
@@ -364,6 +416,55 @@
   }%
   \addcontentsline{toc}{section}{Lecture #2: #3}%
   \par\vspace{0.8em}%
+}
+
+% -------------------------------------------------------------------
+% Chapter Tracking System
+% -------------------------------------------------------------------
+\newcounter{chapter}
+
+\newcommand{\chapter}[2]{% {number}{title}
+  \setcounter{chapter}{#1}
+  \def\mcn@currentlecture{Chapter #1: #2}%
+  \par\vspace{1.2em}%
+  \noindent
+  \fcolorbox{mcnSecondary}{mcnBoxBg}{%
+    \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
+      \vspace{6pt}%
+      \noindent\hspace{8pt}%
+      \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
+        {\raggedright
+          {\small\sffamily\bfseries\color{mcnSecondary} CHAPTER #1}\par\vspace{2pt}%
+          {\Large\sffamily\bfseries\color{mcnPrimary} #2}\par
+        }%
+      \end{minipage}%
+      \vspace{6pt}%
+    \end{minipage}%
+  }%
+  \par
+  \phantomsection
+  \addcontentsline{toc}{section}{Chapter #1: #2}%
+  \par\vspace{0.8em}%
+}
+
+% -------------------------------------------------------------------
+% Chapter Section Tracking
+% -------------------------------------------------------------------
+\newcommand{\subchapter}[2]{% {section}{title}
+  \par\vspace{0.9em}%
+  \noindent
+    {\large\sffamily\bfseries\color{mcnPrimary}
+      \makebox[2.5em][l]{\thechapter.#1}#2}\\[-0.5em]
+    {\color{mcnBorder}\rule{\linewidth}{2pt}}\\[-1.5em]
+  \par
+  \phantomsection
+  \addcontentsline{toc}{subsection}{%
+    \texorpdfstring{%
+      \makebox[3em][l]{\thechapter.#1}#2%
+    }{%
+      \thechapter.#1\ #2%  Clean text for bookmarks
+    }%
+  }%
 }
 
 % -------------------------------------------------------------------
