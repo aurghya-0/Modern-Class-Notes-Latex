@@ -53,6 +53,8 @@
 \RequirePackage{array}
 \RequirePackage{enumerate}
 \RequirePackage{iftex}
+\RequirePackage{xparse}    % for \NewDocumentCommand
+\RequirePackage{enumitem}  % for easy list formatting
 
 \ifmcn@parskip
   \RequirePackage{parskip}
@@ -426,8 +428,8 @@
 % -------------------------------------------------------------------
 \newcounter{chapter}
 
-\newcommand{\chapter}[2]{% {number}{title}
-  \setcounter{chapter}{#1}
+\NewDocumentCommand{\chapter}{m m g}{%  % #1=number, #2=title, #3=objectives (optional)
+  \setcounter{chapter}{#1}%
   \def\mcn@currentlecture{Chapter #1: #2}%
   \par\vspace{1.2em}%
   \noindent
@@ -440,6 +442,20 @@
           {\small\sffamily\bfseries\color{mcnSecondary} CHAPTER #1}\par\vspace{2pt}%
           {\Large\sffamily\bfseries\color{mcnPrimary} #2}\par
         }%
+        % ---------- Optional objectives ----------
+        \IfValueT{#3}{%
+          \par\vspace{4pt}%
+          \begin{enumerate}[
+              label=\color{mcnPrimary}\arabic*.,
+              nosep,
+              leftmargin=*,
+              after=\vspace{-\topsep} % tighten up spacing
+            ]%
+            \forcsvlist{\footnotesize\mcn@objective@item}{#3}%
+          \end{enumerate}%
+          \vspace{0pt}% space after objectives
+        }%
+        % -----------------------------------------
       \end{minipage}%
       \vspace{6pt}%
     \end{minipage}%
@@ -449,6 +465,8 @@
   \addcontentsline{toc}{section}{Chapter #1: #2}%
   \par\vspace{0.8em}%
 }
+% Helper macro to format each objective item
+\newcommand{\mcn@objective@item}[1]{\item \textcolor{mcnSecondary}{#1}}
 
 % -------------------------------------------------------------------
 % Chapter Section Tracking
