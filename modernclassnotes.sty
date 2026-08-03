@@ -37,6 +37,7 @@
 \RequirePackage{booktabs}
 \RequirePackage{array}
 \RequirePackage{iftex}
+\RequirePackage{verbatim}
 
 \ifmcn@parskip
   \RequirePackage{parskip}
@@ -184,6 +185,28 @@
   \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[LEM]}{\usebox{\mcn@box}}%
 }
 
+\newenvironment{proposition}[1][]{%
+  \refstepcounter{mcnTheoremCount}%
+  \def\mcn@title{Proposition \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[PROP]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{corollary}[1][]{%
+  \refstepcounter{mcnTheoremCount}%
+  \def\mcn@title{Corollary \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[COR]}{\usebox{\mcn@box}}%
+}
+
 \newenvironment{definition}[1][]{%
   \refstepcounter{mcnDefCount}%
   \def\mcn@title{Definition \themcnDefCount\ifx&#1&\else\ (#1)\fi}%
@@ -246,6 +269,70 @@
   \mcn@callout{mcnPrimary}{mcnBoxBg}{\mcn@title}{[KEY]}{\usebox{\mcn@box}}%
 }
 
+\newenvironment{exercise}[1][]{%
+  \refstepcounter{mcnExerciseCount}%
+  \def\mcn@title{Exercise \themcnExerciseCount\ifx&#1&\else\ (#1)\fi}%
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \mcn@callout{mcnSecondary}{mcnBoxBg}{\mcn@title}{[EXR]}{\usebox{\mcn@box}}%
+}
+
+\newenvironment{solution}{%
+  \ifmcn@showsolutions
+    \par\vspace{0.4em}%
+    \noindent{\sffamily\bfseries\color{mcnSecondary}Solution:}\par\vspace{0.2em}%
+  \else
+    \expandafter\comment
+  \fi
+}{%
+  \ifmcn@showsolutions
+    \par\vspace{0.6em}%
+  \else
+    \expandafter\endcomment
+  \fi
+}
+
 \newsavebox{\mcn@box}
+
+% Standard Proof environment wrapper
+\renewenvironment{proof}[1][Proof]{%
+  \par\vspace{0.4em}%
+  \noindent{\sffamily\bfseries\color{mcnPrimary}#1:}\quad\ignorespaces
+}{%
+  \hfill$\blacksquare$\par\vspace{0.6em}%
+}
+
+% -------------------------------------------------------------------
+% Code Snippets & Listings Integration
+% -------------------------------------------------------------------
+\lstset{
+  basicstyle=\small\ttfamily\color{mcnText},
+  keywordstyle=\bfseries\color{mcnPrimary},
+  stringstyle=\color{mcnExample},
+  commentstyle=\itshape\color{mcnRemark},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=8pt,
+  backgroundcolor=\color{mcnBoxBg},
+  showstringspaces=false,
+  tabsize=2,
+  breaklines=true,
+  breakatwhitespace=false,
+  frame=single,
+  rulecolor=\color{mcnBorder},
+  xleftmargin=12pt,
+  framexleftmargin=12pt
+}
+
+\newenvironment{codebox}[1][Code Snippet]{%
+  \par\vspace{0.5em}%
+  \noindent{\small\sffamily\bfseries\color{mcnPrimary}#1}\par\vspace{0.3em}%
+}{%
+  \par\vspace{0.5em}%
+}
 
 \endinput
