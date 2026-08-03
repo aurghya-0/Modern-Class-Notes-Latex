@@ -51,6 +51,7 @@
 % -------------------------------------------------------------------
 % Font Selection Presets
 % -------------------------------------------------------------------
+\RequirePackage{lmodern} % baseline: ensures vector Latin Modern (incl. lmtt) for code
 \ifstrequal{\mcn@font}{palatino}{%
   \RequirePackage{mathpazo}
 }{%
@@ -62,8 +63,7 @@
       \RequirePackage{helvet}
       \renewcommand{\familydefault}{\sfdefault}
     }{%
-      % Default Latin Modern vector fonts (Type 1)
-      \RequirePackage{lmodern}
+      % Keep Latin Modern as the default font family
     }%
   }%
 }
