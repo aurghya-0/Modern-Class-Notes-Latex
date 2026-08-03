@@ -83,7 +83,8 @@
       \RequirePackage{helvet}
       \renewcommand{\familydefault}{\sfdefault}
     }{%
-      % Default Latin Modern / Computer Modern
+      % Default Latin Modern vector fonts (Type 1)
+      \RequirePackage{lmodern}
     }%
   }%
 }

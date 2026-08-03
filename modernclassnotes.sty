@@ -27,6 +27,8 @@
 % -------------------------------------------------------------------
 % Core Dependencies
 % -------------------------------------------------------------------
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
 \RequirePackage{xcolor}
 \RequirePackage{geometry}
 \RequirePackage{amsmath,amssymb,amsthm}
@@ -45,6 +47,26 @@
 
 % Geometry configuration
 \geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=28pt, headsep=15pt}
+
+% -------------------------------------------------------------------
+% Font Selection Presets
+% -------------------------------------------------------------------
+\ifstrequal{\mcn@font}{palatino}{%
+  \RequirePackage{mathpazo}
+}{%
+  \ifstrequal{\mcn@font}{charter}{%
+    \RequirePackage{charter}
+    \RequirePackage[charter]{mathdesign}
+  }{%
+    \ifstrequal{\mcn@font}{sans}{%
+      \RequirePackage{helvet}
+      \renewcommand{\familydefault}{\sfdefault}
+    }{%
+      % Default Latin Modern vector fonts (Type 1)
+      \RequirePackage{lmodern}
+    }%
+  }%
+}
 
 % Color Palette Presets
 \ifstrequal{\mcn@palette}{midnight}{%
