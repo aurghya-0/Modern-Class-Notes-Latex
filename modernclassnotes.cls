@@ -465,7 +465,7 @@
   \par
   \phantomsection
   \addcontentsline{toc}{section}{Chapter #1: #2}%
-  \par\vspace{0.8em}%
+  \par\vspace{0.3em}%
 }
 % Helper macro to format each objective item
 \newcommand{\mcn@objective@item}[1]{\item \textcolor{mcnSecondary}{#1}}
