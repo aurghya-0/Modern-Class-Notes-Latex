@@ -652,13 +652,13 @@
     \par\vspace{0.4em}%
     \noindent{\sffamily\bfseries\color{mcnSecondary}Solution:}\par\vspace{0.2em}%
   \else
-    \comment
+    \expandafter\comment
   \fi
 }{%
   \ifmcn@showsolutions
     \par\vspace{0.6em}%
   \else
-    \endcomment
+    \expandafter\endcomment
   \fi
 }
 
