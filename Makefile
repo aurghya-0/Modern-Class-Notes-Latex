@@ -6,9 +6,9 @@ TEXFLAGS = -interaction=nonstopmode
 DOC_DIR = doc
 EXAMPLES_DIR = examples
 PACKAGE_NAME = modernclassnotes
-VERSION = 1.0.0
+VERSION = 1.1.0
 
-.PHONY: all doc examples clean ctan help
+.PHONY: all doc examples clean ctan CTAN help
 
 all: doc examples
 
@@ -31,20 +31,23 @@ $(EXAMPLES_DIR)/%.pdf: $(EXAMPLES_DIR)/%.tex modernclassnotes.cls
 
 ctan: all
 	@echo "Creating CTAN release package..."
-	rm -rf $(PACKAGE_NAME)-ctan $(PACKAGE_NAME)-$(VERSION).zip
+
+CTAN: ctan
+	rm -rf $(PACKAGE_NAME)-ctan $(PACKAGE_NAME).zip $(PACKAGE_NAME)-$(VERSION).zip
 	mkdir -p $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)
 	cp modernclassnotes.cls modernclassnotes.sty README.md LICENSE Makefile $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)/
 	mkdir -p $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)/doc
 	cp $(DOC_DIR)/modernclassnotes-doc.tex $(DOC_DIR)/modernclassnotes-doc.pdf $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)/doc/
 	mkdir -p $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)/examples
 	cp $(EXAMPLES_DIR)/*.tex $(EXAMPLES_DIR)/*.pdf $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)/examples/
-	cd $(PACKAGE_NAME)-ctan && (zip -r ../$(PACKAGE_NAME)-$(VERSION).zip $(PACKAGE_NAME) 2>/dev/null || python3 -m zipfile -c ../$(PACKAGE_NAME)-$(VERSION).zip $(PACKAGE_NAME))
+	find $(PACKAGE_NAME)-ctan -name ".*" -delete
+	cd $(PACKAGE_NAME)-ctan && (zip -r ../$(PACKAGE_NAME).zip $(PACKAGE_NAME) -x "*/.*" 2>/dev/null || python3 -m zipfile -c ../$(PACKAGE_NAME).zip $(PACKAGE_NAME))
 	rm -rf $(PACKAGE_NAME)-ctan
-	@echo "CTAN release package created: $(PACKAGE_NAME)-$(VERSION).zip"
+	@echo "CTAN release package created: $(PACKAGE_NAME).zip"
 
 clean:
 	@echo "Cleaning auxiliary build artifacts..."
-	rm -f *.aux *.log *.toc *.out *.fls *.fdb_latexmk *.synctex.gz
+	rm -f *.aux *.log *.toc *.out *.fls *.fdb_latexmk *.synctex.gz $(PACKAGE_NAME).zip $(PACKAGE_NAME)-*.zip
 	rm -f $(DOC_DIR)/*.aux $(DOC_DIR)/*.log $(DOC_DIR)/*.toc $(DOC_DIR)/*.out $(DOC_DIR)/*.fls $(DOC_DIR)/*.fdb_latexmk
 	rm -f $(EXAMPLES_DIR)/*.aux $(EXAMPLES_DIR)/*.log $(EXAMPLES_DIR)/*.toc $(EXAMPLES_DIR)/*.out $(EXAMPLES_DIR)/*.fls $(EXAMPLES_DIR)/*.fdb_latexmk
 
