@@ -22,10 +22,10 @@ The \texttt{modernclassnotes} package and document class provides a modern, high
 \begin{takeaways}
 Key highlights of \texttt{modernclassnotes}:
 \begin{itemize}
-    \item \textbf{Three Specialized Modes}: \texttt{notes} (full course manuals), \texttt{handout} (1--2 page lecture summaries), and \texttt{worksheet} (homeworks and solution keys).
-    \item \textbf{Curated Color Palettes}: Switch between 7 themes (\texttt{ocean}, \texttt{nord}, \texttt{midnight}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{mono}) with a single class option.
+    \item \textbf{Four Specialized Modes}: \texttt{notes} (full course manuals), \texttt{handout} (1--2 page lecture summaries), \texttt{worksheet} (homeworks and solution keys), and \texttt{chapternotes} (chapter-based notes and reading summaries).
+    \item \textbf{Curated Color Palettes}: Switch between 8 themes (\texttt{ocean}, \texttt{nord}, \texttt{midnight}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono}) with a single class option.
     \item \textbf{Zero Mandatory Heavy Dependencies}: Native TeX/LaTeX box engine ensuring maximum portability across TeX Live, MiKTeX, and Overleaf.
-    \item \textbf{Lecture Tracking}: Automated lecture header banners, running headers, and table of contents logging via \texttt{\textbackslash lecture}.
+    \item \textbf{Lecture \& Chapter Tracking}: Automated lecture header banners and chapter headers with optional objectives via \texttt{\textbackslash lecture}, \texttt{\textbackslash chapter}, and \texttt{\textbackslash subchapter}.
 \end{itemize}
 \end{takeaways}
 
@@ -45,10 +45,11 @@ Load the class in your LaTeX document header:
 \toprule
 \textbf{Key} & \textbf{Values} & \textbf{Default} \\
 \midrule
-\texttt{mode} & \texttt{notes}, \texttt{handout}, \texttt{worksheet} & \texttt{notes} \\
-\texttt{palette} & \texttt{ocean}, \texttt{midnight}, \texttt{nord}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{mono} & \texttt{ocean} \\
+\texttt{mode} & \texttt{notes}, \texttt{handout}, \texttt{worksheet}, \texttt{chapternotes} & \texttt{notes} \\
+\texttt{palette} & \texttt{ocean}, \texttt{midnight}, \texttt{nord}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono} & \texttt{ocean} \\
 \texttt{fontsize} & \texttt{10pt}, \texttt{11pt}, \texttt{12pt} & \texttt{11pt} \\
-\texttt{font} & \texttt{default}, \texttt{palatino}, \texttt{charter}, \texttt{sans} & \texttt{default} \\
+\texttt{font} & \texttt{default}, \texttt{palatino}, \texttt{charter}, \texttt{sans}/\texttt{helvet}, \texttt{kpfonts}, \texttt{pagella}, \texttt{sourceserif}, \texttt{fira}, \texttt{libertine}, \texttt{utopia} & \texttt{default} \\
+\texttt{official} & \texttt{true}, \texttt{false} & \texttt{false} \\
 \texttt{showsolutions} & \texttt{true}, \texttt{false} & \texttt{true} \\
 \texttt{parskip} & \texttt{true}, \texttt{false} & \texttt{true} \\
 \bottomrule
@@ -71,12 +72,25 @@ Specify your course metadata in the document preamble:
 \end{lstlisting}
 \end{codebox}
 
-\section{Lecture Tracking System}
+\section{Lecture \& Chapter Tracking Systems}
 
 Use the \texttt{\textbackslash lecture} command to divide course notes into distinct lecture sessions:
 \begin{codebox}[Lecture Macro]
 \begin{lstlisting}[language=TeX]
 \lecture[September 2, 2026]{1}{Introduction to Algorithm Analysis}
+\end{lstlisting}
+\end{codebox}
+
+For chapter-based notes (\texttt{mode=chapternotes}), use \texttt{\textbackslash chapter} and \texttt{\textbackslash subchapter}:
+\begin{codebox}[Chapter Macro with Objectives]
+\begin{lstlisting}[language=TeX]
+\chapter{1}{Digital Systems and Binary Numbers}{%
+  Understand binary numbers.,%
+  {Convert between binary, octal, decimal, and hexadecimal.},%
+  Form complements and parity bits.%
+}
+
+\subchapter{2}{Binary Numbers}
 \end{lstlisting}
 \end{codebox}
 
