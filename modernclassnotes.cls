@@ -100,6 +100,7 @@
 % Font Selection Presets
 % -------------------------------------------------------------------
 % Default Latin Modern / Computer Modern
+\RequirePackage{lmodern}
 % font option override: kpfonts
 \expandafter\ifstrequal\expandafter{\mcn@font}{kpfonts}{%
   \typeout{Kpfont was chosen} % DEBUG LOG
