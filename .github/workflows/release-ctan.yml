@@ -1,0 +1,57 @@
+name: Build CTAN Package and Publish Release
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
+
+jobs:
+  release:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install TeX Live and build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            zip \
+            make
+
+      - name: Build CTAN Package
+        run: |
+          make ctan
+
+      - name: Create Release and Upload Asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(grep '^VERSION' Makefile | cut -d '=' -f2 | tr -d ' ')
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            TAG_NAME="v${VERSION}-pr${{ github.event.pull_request.number }}"
+            RELEASE_TITLE="Release ${TAG_NAME} (PR #${{ github.event.pull_request.number }})"
+            PR_TITLE="${{ github.event.pull_request.title }}"
+            PR_NUM="${{ github.event.pull_request.number }}"
+            NOTES="Automated release generated from merged PR #${PR_NUM}: ${PR_TITLE}"
+          else
+            TAG_NAME="v${VERSION}-run${{ github.run_number }}"
+            RELEASE_TITLE="Release ${TAG_NAME}"
+            NOTES="Automated release generated via manual workflow dispatch."
+          fi
+          
+          echo "Publishing release for ${TAG_NAME}..."
+          gh release create "${TAG_NAME}" modernclassnotes-*.zip \
+            --title "${RELEASE_TITLE}" \
+            --notes "${NOTES}"
