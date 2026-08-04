@@ -414,7 +414,7 @@
 \newcounter{chapter}
 
 \NewDocumentCommand{\chapter}{m m g}{%  % #1=number, #2=title, #3=objectives (optional)
-  \setcounter{chapter}{#1}%
+  \setcounter{chapter}{#1}\addtocounter{chapter}{-1}\refstepcounter{chapter}%
   \def\mcn@currentlecture{Chapter #1: #2}%
   \par\vspace{1.2em}%
   \noindent
