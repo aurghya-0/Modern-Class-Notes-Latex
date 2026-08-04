@@ -30,6 +30,7 @@
 \DeclareBoolOption[true]{showsolutions}  % show/hide solutions in worksheets
 \DeclareBoolOption[true]{parskip}        % toggle paragraph spacing
 \DeclareBoolOption[true]{numbering}      % continuous vs chapter-based numbering
+\DeclareBoolOption[false]{official}      % include prof and institution in footer if true
 
 \ProcessKeyvalOptions*
 
@@ -39,7 +40,7 @@
 % -------------------------------------------------------------------
 % Core Dependencies
 % -------------------------------------------------------------------
-\RequirePackage[utf8]{inputenc}
+%\RequirePackage[utf8]{inputenc} % not needed when using xelatex
 \RequirePackage[T1]{fontenc}
 \RequirePackage{xcolor}
 \RequirePackage{geometry}
@@ -52,47 +53,116 @@
 \RequirePackage{array}
 \RequirePackage{enumerate}
 \RequirePackage{iftex}
-\RequirePackage{verbatim}
+\RequirePackage{xparse}    % for \NewDocumentCommand
+\RequirePackage{enumitem}  % for easy list formatting
 
 \ifmcn@parskip
   \RequirePackage{parskip}
 \fi
 
+% -------------------------------------------------------------------
 % Geometry configuration based on mode
-\ifstrequal{\mcn@mode}{handout}{%
-  \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm, right=2.0cm, headheight=28pt, headsep=12pt}%
-}{%
-  \ifstrequal{\mcn@mode}{worksheet}{%
-    \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm, right=2.0cm, headheight=28pt, headsep=12pt}%
-  }{%
-    \geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=28pt, headsep=15pt}%
-  }%
-}
+% -------------------------------------------------------------------
+% notes
+\expandafter\ifstrequal\expandafter{\mcn@mode}{notes}{%
+  \typeout{notes geometry was chosen} % DEBUG LOG
+  \geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm,
+    right=2.5cm, headheight=28pt, headsep=15pt}
+}{}
+% worksheet
+\expandafter\ifstrequal\expandafter{\mcn@mode}{worksheet}{%
+  \typeout{worksheet geometry was chosen} % DEBUG LOG
+  \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm,
+    right=2.0cm, headheight=28pt, headsep=12pt}
+}{}
+% handout
+\expandafter\ifstrequal\expandafter{\mcn@mode}{handout}{%
+  \typeout{handout geometry was chosen} % DEBUG LOG
+  \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm,
+    right=2.0cm, headheight=28pt, headsep=12pt}
+}{}
+% chapternotes
+\expandafter\ifstrequal\expandafter{\mcn@mode}{chapternotes}{%
+  \typeout{chapternotes geometry was chosen} % DEBUG LOG
+  \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm,
+    right=2.0cm, headheight=28pt, headsep=12pt}
+}{}
+
+% -------------------------------------------------------------------
+% Itemize bullet point symbols config
+% -------------------------------------------------------------------
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemiii}{$\blacksquare$}
+\renewcommand{\labelitemiv}{$\diamond$}
 
 % -------------------------------------------------------------------
 % Font Selection Presets
 % -------------------------------------------------------------------
-\ifstrequal{\mcn@font}{palatino}{%
-  \RequirePackage{mathpazo}
-}{%
-  \ifstrequal{\mcn@font}{charter}{%
-    \RequirePackage{charter}
-    \RequirePackage[charter]{mathdesign}
-  }{%
-    \ifstrequal{\mcn@font}{sans}{%
-      \RequirePackage{helvet}
-      \renewcommand{\familydefault}{\sfdefault}
-    }{%
-      % Default Latin Modern vector fonts (Type 1)
-      \RequirePackage{lmodern}
-    }%
-  }%
-}
+% Default Latin Modern / Computer Modern
+\RequirePackage{lmodern}
+% font option override: kpfonts
+\expandafter\ifstrequal\expandafter{\mcn@font}{kpfonts}{%
+  \typeout{Kpfont was chosen} % DEBUG LOG
+  \RequirePackage{kpfonts}
+}{}
+% font option override: pagella
+\expandafter\ifstrequal\expandafter{\mcn@font}{pegella}{%
+  \typeout{pegella was chosen} % DEBUG LOG
+  \RequirePackage{tgpagella}
+}{}
+% font option override: sourceserif
+\expandafter\ifstrequal\expandafter{\mcn@font}{sourceserif}{%
+  \typeout{Source Serif Pro was chosen} % DEBUG LOG
+  \RequirePackage{sourcesanspro}
+  \RequirePackage{newtxmath}
+}{}
+% font option override: charter
+\expandafter\ifstrequal\expandafter{\mcn@font}{charter}{%
+  \typeout{charter was chosen} % DEBUG LOG
+  %\RequirePackage{helvet}
+  \RequirePackage{charter}
+  %\RequirePackage[charter]{mathdesign}
+  \RequirePackage{newtxmath}
+}{}
+% font option override: helvet
+\expandafter\ifstrequal\expandafter{\mcn@font}{helvet}{%
+  \typeout{sans was chosen} % DEBUG LOG
+  \RequirePackage{helvet}
+  \renewcommand{\familydefault}{\sfdefault}
+  \RequirePackage{newtxmath}
+}{}
+% font option override: fira
+\expandafter\ifstrequal\expandafter{\mcn@font}{fira}{%
+  \typeout{Fira font was chosen} % DEBUG LOG
+  \RequirePackage[sfdefault]{FiraSans}
+  \RequirePackage{FiraMono}
+}{}
+% font option override: libertine
+\expandafter\ifstrequal\expandafter{\mcn@font}{libertine}{%
+  \typeout{libertine font was chosen} % DEBUG LOG
+  \RequirePackage{libertine}
+}{}
+% font option override: utopia
+\expandafter\ifstrequal\expandafter{\mcn@font}{utopia}{%
+  \typeout{utopia font was chosen} % DEBUG LOG
+  \RequirePackage{utopia}
+}{}
 
 % -------------------------------------------------------------------
 % Color Palette Presets
 % -------------------------------------------------------------------
-\ifstrequal{\mcn@palette}{midnight}{%
+% Default: Ocean Palette
+\definecolor{mcnPrimary}{HTML}{005F73}
+\definecolor{mcnSecondary}{HTML}{0A9396}
+\definecolor{mcnAccent}{HTML}{94D2BD}
+\definecolor{mcnBg}{HTML}{F4F7F6}
+\definecolor{mcnText}{HTML}{1D2D35}
+\definecolor{mcnBoxBg}{HTML}{EAF4F4}
+\definecolor{mcnBorder}{HTML}{CCE3DE}
+% palette option override: midnight
+\expandafter\ifstrequal\expandafter{\mcn@palette}{midnight}{%
+  \typeout{midnight palette was chosen} % DEBUG LOG
   \definecolor{mcnPrimary}{HTML}{1D2D44}
   \definecolor{mcnSecondary}{HTML}{3A86EF}
   \definecolor{mcnAccent}{HTML}{F72585}
@@ -100,8 +170,10 @@
   \definecolor{mcnText}{HTML}{212529}
   \definecolor{mcnBoxBg}{HTML}{EDF2F7}
   \definecolor{mcnBorder}{HTML}{CBD5E0}
-}{%
-\ifstrequal{\mcn@palette}{nord}{%
+}{}
+% palette option override: nord
+\expandafter\ifstrequal\expandafter{\mcn@palette}{nord}{%
+  \typeout{nord palette was chosen} % DEBUG LOG
   \definecolor{mcnPrimary}{HTML}{2E3440}
   \definecolor{mcnSecondary}{HTML}{88C0D0}
   \definecolor{mcnAccent}{HTML}{B48EAD}
@@ -109,8 +181,10 @@
   \definecolor{mcnText}{HTML}{3B4252}
   \definecolor{mcnBoxBg}{HTML}{ECEFF4}
   \definecolor{mcnBorder}{HTML}{D8DEE9}
-}{%
-\ifstrequal{\mcn@palette}{emerald}{%
+}{}
+% palette option override: emerald
+\expandafter\ifstrequal\expandafter{\mcn@palette}{emerald}{%
+  \typeout{emerald palette was chosen} % DEBUG LOG
   \definecolor{mcnPrimary}{HTML}{1B4332}
   \definecolor{mcnSecondary}{HTML}{2D6A4F}
   \definecolor{mcnAccent}{HTML}{52B788}
@@ -118,8 +192,10 @@
   \definecolor{mcnText}{HTML}{1A2E26}
   \definecolor{mcnBoxBg}{HTML}{E8F5E9}
   \definecolor{mcnBorder}{HTML}{C8E6C9}
-}{%
-\ifstrequal{\mcn@palette}{burgundy}{%
+}{}
+% palette option override: burgundy
+\expandafter\ifstrequal\expandafter{\mcn@palette}{burgundy}{%
+  \typeout{burgundy palette was chosen} % DEBUG LOG
   \definecolor{mcnPrimary}{HTML}{5C061C}
   \definecolor{mcnSecondary}{HTML}{9D0208}
   \definecolor{mcnAccent}{HTML}{DC2F02}
@@ -127,8 +203,10 @@
   \definecolor{mcnText}{HTML}{2B0D12}
   \definecolor{mcnBoxBg}{HTML}{F7EBEF}
   \definecolor{mcnBorder}{HTML}{E8C5CE}
-}{%
-\ifstrequal{\mcn@palette}{amethyst}{%
+}{}
+% palette option override: amethyst
+\expandafter\ifstrequal\expandafter{\mcn@palette}{amethyst}{%
+  \typeout{amethyst palette was chosen} % DEBUG LOG
   \definecolor{mcnPrimary}{HTML}{3A0CA3}
   \definecolor{mcnSecondary}{HTML}{7209B7}
   \definecolor{mcnAccent}{HTML}{4361EE}
@@ -136,8 +214,10 @@
   \definecolor{mcnText}{HTML}{1D1A2E}
   \definecolor{mcnBoxBg}{HTML}{F0EEFD}
   \definecolor{mcnBorder}{HTML}{D7D2FA}
-}{%
-\ifstrequal{\mcn@palette}{mono}{%
+}{}
+% palette option override: mono
+\expandafter\ifstrequal\expandafter{\mcn@palette}{mono}{%
+  \typeout{mono palette was chosen} % DEBUG LOG
   \definecolor{mcnPrimary}{HTML}{212529}
   \definecolor{mcnSecondary}{HTML}{495057}
   \definecolor{mcnAccent}{HTML}{6C757D}
@@ -145,16 +225,18 @@
   \definecolor{mcnText}{HTML}{212529}
   \definecolor{mcnBoxBg}{HTML}{F1F3F5}
   \definecolor{mcnBorder}{HTML}{CED4DA}
-}{%
-  % Default: Ocean Palette
-  \definecolor{mcnPrimary}{HTML}{005F73}
-  \definecolor{mcnSecondary}{HTML}{0A9396}
-  \definecolor{mcnAccent}{HTML}{94D2BD}
-  \definecolor{mcnBg}{HTML}{F4F7F6}
-  \definecolor{mcnText}{HTML}{1D2D35}
-  \definecolor{mcnBoxBg}{HTML}{EAF4F4}
-  \definecolor{mcnBorder}{HTML}{CCE3DE}
-}}}}}}
+}{}
+% palette option override: purple
+\expandafter\ifstrequal\expandafter{\mcn@palette}{purple}{%
+  \typeout{purple palette was chosen} % DEBUG LOG
+  \definecolor{mcnPrimary}{HTML}{560073}
+  \definecolor{mcnSecondary}{HTML}{5d0a96}
+  \definecolor{mcnAccent}{HTML}{a294d2}
+  \definecolor{mcnBg}{HTML}{f4f4f7}
+  \definecolor{mcnText}{HTML}{331d35}
+  \definecolor{mcnBoxBg}{HTML}{f0eaf4}
+  \definecolor{mcnBorder}{HTML}{d4cce3}
+}{}
 
 % Environmental standard colors
 \definecolor{mcnTheorem}{HTML}{023E8A}
@@ -229,9 +311,14 @@
   \fi
 }
 
-\lfoot{\small\sffamily\color{gray}\ifx\mcn@professor\@empty\else Prof. \mcn@professor\fi}
+% -------------------------------------------------------------------
+% Page Footer Controls
+% -------------------------------------------------------------------
+\ifmcn@official
+  \lfoot{\small\sffamily\color{gray}\ifx\mcn@professor\@empty\else Prof. \mcn@professor\fi}
+  \rfoot{\small\sffamily\color{gray}\ifx\mcn@institution\@empty\else\mcn@institution\fi}
+\fi
 \cfoot{\small\sffamily\color{mcnPrimary}\bfseries\thepage}
-\rfoot{\small\sffamily\color{gray}\ifx\mcn@institution\@empty\else\mcn@institution\fi}
 
 \renewcommand{\headrulewidth}{0.8pt}
 \renewcommand{\headrule}{{\color{mcnPrimary}\hrule width\headwidth height \headrulewidth \vspace{\headsep}}}
@@ -343,6 +430,75 @@
   }%
   \addcontentsline{toc}{section}{Lecture #2: #3}%
   \par\vspace{0.8em}%
+}
+
+% -------------------------------------------------------------------
+% Chapter Tracking System
+% -------------------------------------------------------------------
+\newcounter{chapter}
+
+\NewDocumentCommand{\chapter}{m m g}{%  % #1=number, #2=title, #3=objectives (optional)
+  \setcounter{chapter}{#1}%
+  \def\mcn@currentlecture{Chapter #1: #2}%
+  \par\vspace{1.2em}%
+  \noindent
+  \fcolorbox{mcnSecondary}{mcnBoxBg}{%
+    \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
+      \vspace{6pt}%
+      \noindent\hspace{8pt}%
+      \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
+        {\raggedright
+          {\small\sffamily\bfseries\color{mcnSecondary} CHAPTER #1}\par\vspace{2pt}%
+          {\Large\sffamily\bfseries\color{mcnPrimary} #2}\par
+        }%
+        % ---------- Optional objectives ----------
+        \IfValueT{#3}{%
+          \par\vspace{-6pt}% space before separator
+          {\color{mcnBorder}\rule{\linewidth}{0.5pt}}% separator line (0.5pt elegant)
+          \par\vspace{0pt}% space after separator
+          \begin{enumerate}[
+              label=\color{mcnPrimary}\arabic*.,
+              nosep,
+              leftmargin=*,
+              after=\vspace{-\topsep} % tighten up spacing
+            ]%
+            \forcsvlist{\mcn@objective@item}{#3}%
+          \end{enumerate}%
+          \vspace{0pt}% space after objectives
+        }%
+        % -----------------------------------------
+      \end{minipage}%
+      \vspace{6pt}%
+    \end{minipage}%
+  }%
+  \par
+  \phantomsection
+  \addcontentsline{toc}{section}{Chapter #1: #2}%
+  \par\vspace{0.3em}%
+}
+% Helper macro to format each objective item
+\newcommand{\mcn@objective@item}[1]{\item \textcolor{mcnSecondary}{#1}}
+
+% -------------------------------------------------------------------
+% Chapter Section Tracking
+% -------------------------------------------------------------------
+\newcommand{\subchapter}[2]{% {section}{title}
+  \par\vspace{0.5em}%
+  \noindent
+  {\raggedright\large\sffamily\bfseries\color{mcnPrimary}%
+    \makebox[2.5em][l]{\thechapter.#1}#2\par}%
+  \vspace{-1.1em}% adjust to bring rule closer
+  \noindent{\color{mcnBorder}\rule{\linewidth}{2pt}}%
+  \vspace{-0.3em}% adjust spacing after rule
+  \par
+  \phantomsection
+  \addcontentsline{toc}{subsection}{%
+    \texorpdfstring{%
+      \makebox[3em][l]{\thechapter.#1}#2%
+    }{%
+      \thechapter.#1\ #2%
+    }%
+  }%
 }
 
 % -------------------------------------------------------------------
