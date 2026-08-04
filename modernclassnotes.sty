@@ -224,7 +224,7 @@
 % -------------------------------------------------------------------
 \newcounter{lecture}
 \newcommand{\lecture}[3][]{% [date]{number}{title}
-  \refstepcounter{lecture}%
+  \setcounter{lecture}{#2}\addtocounter{lecture}{-1}\refstepcounter{lecture}%
   \def\mcn@currentlecture{Lecture #2: #3}%
   \par\vspace{1.2em}%
   \noindent
