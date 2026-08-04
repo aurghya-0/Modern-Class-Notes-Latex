@@ -14,24 +14,31 @@ Designed with a **zero-dependency native box engine**, it works out of the box o
 
 ## ✨ Features
 
-- **3 Document Modes**:
+- **4 Document Modes**:
   - `mode=notes`: Full multi-lecture course notes, semester manuals, and syllabus guides.
   - `mode=handout`: Compact 1–2 page lecture summary handouts with structured metadata banners.
   - `mode=worksheet`: Homework assignments & problem sets with student ID fields and togglable solution keys (`showsolutions=true/false`).
-- **7 Curated Color Palettes**:
+  - `mode=chapternotes`: Chapter-based notes and reading summaries with optional chapter objectives lists.
+- **8 Curated Color Palettes**:
   - `ocean` (Default modern teal/cyan)
   - `nord` (Scandinavian ice/slate)
   - `midnight` (Academic deep blue)
   - `emerald` (Forest green/mint)
   - `burgundy` (Classic wine/crimson)
   - `amethyst` (Vibrant purple/lavender)
+  - `purple` (Soft purple/violet)
   - `mono` (Minimalist monochrome)
+- **Expanded Font Options**:
+  - `default` (Latin Modern), `palatino`, `charter`, `sans`/`helvet`, `kpfonts`, `pagella`, `sourceserif`, `fira`, `libertine`, `utopia`
+- **Footer Control**:
+  - `official=true/false`: Toggle professor and institution information in footers.
 - **Pedagogical Callout Environments**:
   - Mathematics: `theorem`, `lemma`, `proposition`, `corollary`, `proof`, `definition`
   - Explanatory: `example`, `remark`, `note`, `warning`, `tip`, `takeaways`
   - Assessment: `exercise`, `solution`, `codebox`
-- **Dynamic Lecture Tracking**:
-  - Automated lecture headers, running headers, and table of contents entries using `\lecture[date]{number}{title}`.
+- **Dynamic Lecture & Chapter Tracking**:
+  - Automated lecture headers via `\lecture[date]{number}{title}`.
+  - Chapter headings with optional objectives via `\chapter{number}{title}{objectives}` and subchapters via `\subchapter{number}{title}`.
 - **CTAN & Open-Source Distribution Ready**:
   - Dual LPPL 1.3c / MIT licensed, complete with build `Makefile` and CTAN packaging scripts.
 
@@ -163,7 +170,9 @@ Modern-Class-Notes-Latex/
     ├── 02-single-lecture-handout.tex # Single lecture handout template
     ├── 02-single-lecture-handout.pdf # Compiled PDF preview
     ├── 03-homework-worksheet.tex    # Problem set & solution worksheet template
-    └── 03-homework-worksheet.pdf    # Compiled PDF preview
+    ├── 03-homework-worksheet.pdf    # Compiled PDF preview
+    ├── 04-chapter-notes.tex         # Chapter notes template with objectives
+    └── 04-chapter-notes.pdf         # Compiled PDF preview
 ```
 
 ---
