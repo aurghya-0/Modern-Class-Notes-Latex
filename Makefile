@@ -38,7 +38,7 @@ ctan: all
 	cp $(DOC_DIR)/modernclassnotes-doc.tex $(DOC_DIR)/modernclassnotes-doc.pdf $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)/doc/
 	mkdir -p $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)/examples
 	cp $(EXAMPLES_DIR)/*.tex $(EXAMPLES_DIR)/*.pdf $(PACKAGE_NAME)-ctan/$(PACKAGE_NAME)/examples/
-	cd $(PACKAGE_NAME)-ctan && zip -r ../$(PACKAGE_NAME)-$(VERSION).zip $(PACKAGE_NAME)
+	cd $(PACKAGE_NAME)-ctan && (zip -r ../$(PACKAGE_NAME)-$(VERSION).zip $(PACKAGE_NAME) 2>/dev/null || python3 -m zipfile -c ../$(PACKAGE_NAME)-$(VERSION).zip $(PACKAGE_NAME))
 	rm -rf $(PACKAGE_NAME)-ctan
 	@echo "CTAN release package created: $(PACKAGE_NAME)-$(VERSION).zip"
 
