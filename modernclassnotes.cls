@@ -40,7 +40,7 @@
 % -------------------------------------------------------------------
 % Core Dependencies
 % -------------------------------------------------------------------
-\RequirePackage[utf8]{inputenc}
+%\RequirePackage[utf8]{inputenc} % not needed when using xelatex / modern LaTeX2e
 \RequirePackage[T1]{fontenc}
 \RequirePackage{xcolor}
 \RequirePackage{geometry}
@@ -76,29 +76,78 @@
 }{}
 
 % -------------------------------------------------------------------
+% Itemize bullet point symbols config
+% -------------------------------------------------------------------
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemiii}{$\blacksquare$}
+\renewcommand{\labelitemiv}{$\diamond$}
+
+% -------------------------------------------------------------------
 % Font Selection Presets
 % -------------------------------------------------------------------
-\ifstrequal{\mcn@font}{palatino}{%
-  \RequirePackage{mathpazo}
-}{%
-  \ifstrequal{\mcn@font}{charter}{%
-    \RequirePackage{charter}
-    \RequirePackage[charter]{mathdesign}
+% Default Latin Modern / Computer Modern
+\RequirePackage{lmodern}
+% font option override: kpfonts
+\expandafter\ifstrequal\expandafter{\mcn@font}{kpfonts}{%
+  \RequirePackage{kpfonts}
+}{}
+% font option override: pagella
+\expandafter\ifstrequal\expandafter{\mcn@font}{pagella}{%
+  \RequirePackage{tgpagella}
+}{}
+% font option override: sourceserif
+\expandafter\ifstrequal\expandafter{\mcn@font}{sourceserif}{%
+  \IfFileExists{sourceserifpro.sty}{%
+    \RequirePackage{sourceserifpro}%
   }{%
-    \ifstrequal{\mcn@font}{sans}{%
-      \RequirePackage{helvet}
-      \renewcommand{\familydefault}{\sfdefault}
-    }{%
-      % Default Latin Modern vector fonts (Type 1)
-      \RequirePackage{lmodern}
-    }%
+    \RequirePackage{sourcesanspro}%
   }%
-}
+  \RequirePackage{newtxmath}
+}{}
+% font option override: charter
+\expandafter\ifstrequal\expandafter{\mcn@font}{charter}{%
+  \RequirePackage{charter}
+  \RequirePackage{newtxmath}
+}{}
+% font option override: helvet / sans
+\expandafter\ifstrequal\expandafter{\mcn@font}{helvet}{%
+  \RequirePackage{helvet}
+  \renewcommand{\familydefault}{\sfdefault}
+  \RequirePackage{newtxmath}
+}{}
+\expandafter\ifstrequal\expandafter{\mcn@font}{sans}{%
+  \RequirePackage{helvet}
+  \renewcommand{\familydefault}{\sfdefault}
+  \RequirePackage{newtxmath}
+}{}
+% font option override: fira
+\expandafter\ifstrequal\expandafter{\mcn@font}{fira}{%
+  \RequirePackage[sfdefault]{FiraSans}
+  \RequirePackage{FiraMono}
+}{}
+% font option override: libertine
+\expandafter\ifstrequal\expandafter{\mcn@font}{libertine}{%
+  \RequirePackage{libertine}
+}{}
+% font option override: utopia
+\expandafter\ifstrequal\expandafter{\mcn@font}{utopia}{%
+  \RequirePackage{utopia}
+}{}
 
 % -------------------------------------------------------------------
 % Color Palette Presets
 % -------------------------------------------------------------------
-\ifstrequal{\mcn@palette}{midnight}{%
+% Default: Ocean Palette
+\definecolor{mcnPrimary}{HTML}{005F73}
+\definecolor{mcnSecondary}{HTML}{0A9396}
+\definecolor{mcnAccent}{HTML}{94D2BD}
+\definecolor{mcnBg}{HTML}{F4F7F6}
+\definecolor{mcnText}{HTML}{1D2D35}
+\definecolor{mcnBoxBg}{HTML}{EAF4F4}
+\definecolor{mcnBorder}{HTML}{CCE3DE}
+% palette option override: midnight
+\expandafter\ifstrequal\expandafter{\mcn@palette}{midnight}{%
   \definecolor{mcnPrimary}{HTML}{1D2D44}
   \definecolor{mcnSecondary}{HTML}{3A86EF}
   \definecolor{mcnAccent}{HTML}{F72585}
@@ -106,8 +155,9 @@
   \definecolor{mcnText}{HTML}{212529}
   \definecolor{mcnBoxBg}{HTML}{EDF2F7}
   \definecolor{mcnBorder}{HTML}{CBD5E0}
-}{%
-\ifstrequal{\mcn@palette}{nord}{%
+}{}
+% palette option override: nord
+\expandafter\ifstrequal\expandafter{\mcn@palette}{nord}{%
   \definecolor{mcnPrimary}{HTML}{2E3440}
   \definecolor{mcnSecondary}{HTML}{88C0D0}
   \definecolor{mcnAccent}{HTML}{B48EAD}
@@ -115,8 +165,9 @@
   \definecolor{mcnText}{HTML}{3B4252}
   \definecolor{mcnBoxBg}{HTML}{ECEFF4}
   \definecolor{mcnBorder}{HTML}{D8DEE9}
-}{%
-\ifstrequal{\mcn@palette}{emerald}{%
+}{}
+% palette option override: emerald
+\expandafter\ifstrequal\expandafter{\mcn@palette}{emerald}{%
   \definecolor{mcnPrimary}{HTML}{1B4332}
   \definecolor{mcnSecondary}{HTML}{2D6A4F}
   \definecolor{mcnAccent}{HTML}{52B788}
@@ -124,8 +175,9 @@
   \definecolor{mcnText}{HTML}{1A2E26}
   \definecolor{mcnBoxBg}{HTML}{E8F5E9}
   \definecolor{mcnBorder}{HTML}{C8E6C9}
-}{%
-\ifstrequal{\mcn@palette}{burgundy}{%
+}{}
+% palette option override: burgundy
+\expandafter\ifstrequal\expandafter{\mcn@palette}{burgundy}{%
   \definecolor{mcnPrimary}{HTML}{5C061C}
   \definecolor{mcnSecondary}{HTML}{9D0208}
   \definecolor{mcnAccent}{HTML}{DC2F02}
@@ -133,8 +185,9 @@
   \definecolor{mcnText}{HTML}{2B0D12}
   \definecolor{mcnBoxBg}{HTML}{F7EBEF}
   \definecolor{mcnBorder}{HTML}{E8C5CE}
-}{%
-\ifstrequal{\mcn@palette}{amethyst}{%
+}{}
+% palette option override: amethyst
+\expandafter\ifstrequal\expandafter{\mcn@palette}{amethyst}{%
   \definecolor{mcnPrimary}{HTML}{3A0CA3}
   \definecolor{mcnSecondary}{HTML}{7209B7}
   \definecolor{mcnAccent}{HTML}{4361EE}
@@ -142,8 +195,9 @@
   \definecolor{mcnText}{HTML}{1D1A2E}
   \definecolor{mcnBoxBg}{HTML}{F0EEFD}
   \definecolor{mcnBorder}{HTML}{D7D2FA}
-}{%
-\ifstrequal{\mcn@palette}{mono}{%
+}{}
+% palette option override: mono
+\expandafter\ifstrequal\expandafter{\mcn@palette}{mono}{%
   \definecolor{mcnPrimary}{HTML}{212529}
   \definecolor{mcnSecondary}{HTML}{495057}
   \definecolor{mcnAccent}{HTML}{6C757D}
@@ -151,16 +205,17 @@
   \definecolor{mcnText}{HTML}{212529}
   \definecolor{mcnBoxBg}{HTML}{F1F3F5}
   \definecolor{mcnBorder}{HTML}{CED4DA}
-}{%
-  % Default: Ocean Palette
-  \definecolor{mcnPrimary}{HTML}{005F73}
-  \definecolor{mcnSecondary}{HTML}{0A9396}
-  \definecolor{mcnAccent}{HTML}{94D2BD}
-  \definecolor{mcnBg}{HTML}{F4F7F6}
-  \definecolor{mcnText}{HTML}{1D2D35}
-  \definecolor{mcnBoxBg}{HTML}{EAF4F4}
-  \definecolor{mcnBorder}{HTML}{CCE3DE}
-}}}}}}
+}{}
+% palette option override: purple
+\expandafter\ifstrequal\expandafter{\mcn@palette}{purple}{%
+  \definecolor{mcnPrimary}{HTML}{560073}
+  \definecolor{mcnSecondary}{HTML}{5D0A96}
+  \definecolor{mcnAccent}{HTML}{A294D2}
+  \definecolor{mcnBg}{HTML}{F4F4F7}
+  \definecolor{mcnText}{HTML}{331D35}
+  \definecolor{mcnBoxBg}{HTML}{F0EAF4}
+  \definecolor{mcnBorder}{HTML}{D4CCE3}
+}{}
 
 % Environmental standard colors
 \definecolor{mcnTheorem}{HTML}{023E8A}
