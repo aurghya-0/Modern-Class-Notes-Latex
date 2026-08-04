@@ -294,7 +294,7 @@
     \end{minipage}%
   }%
   \par
-  \phantomsection
+  \@ifpackageloaded{hyperref}{\phantomsection}{}
   \addcontentsline{toc}{section}{Chapter #1: #2}%
   \par\vspace{0.3em}%
 }
