@@ -30,6 +30,7 @@
 \DeclareBoolOption[true]{showsolutions}  % show/hide solutions in worksheets
 \DeclareBoolOption[true]{parskip}        % toggle paragraph spacing
 \DeclareBoolOption[true]{numbering}      % continuous vs chapter-based numbering
+\DeclareBoolOption[false]{official}      % include prof and institution in footer if true
 
 \ProcessKeyvalOptions*
 
@@ -53,21 +54,26 @@
 \RequirePackage{enumerate}
 \RequirePackage{iftex}
 \RequirePackage{verbatim}
+\RequirePackage{xparse}    % for \NewDocumentCommand
+\RequirePackage{enumitem}  % for easy list formatting
 
 \ifmcn@parskip
   \RequirePackage{parskip}
 \fi
 
 % Geometry configuration based on mode
-\ifstrequal{\mcn@mode}{handout}{%
+\expandafter\ifstrequal\expandafter{\mcn@mode}{notes}{%
+  \geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=28pt, headsep=15pt}%
+}{}%
+\expandafter\ifstrequal\expandafter{\mcn@mode}{worksheet}{%
   \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm, right=2.0cm, headheight=28pt, headsep=12pt}%
-}{%
-  \ifstrequal{\mcn@mode}{worksheet}{%
-    \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm, right=2.0cm, headheight=28pt, headsep=12pt}%
-  }{%
-    \geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=28pt, headsep=15pt}%
-  }%
-}
+}{}%
+\expandafter\ifstrequal\expandafter{\mcn@mode}{handout}{%
+  \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm, right=2.0cm, headheight=28pt, headsep=12pt}%
+}{}%
+\expandafter\ifstrequal\expandafter{\mcn@mode}{chapternotes}{%
+  \geometry{a4paper, top=2.0cm, bottom=2.0cm, left=2.0cm, right=2.0cm, headheight=28pt, headsep=12pt}%
+}{}
 
 % -------------------------------------------------------------------
 % Font Selection Presets
@@ -229,9 +235,11 @@
   \fi
 }
 
-\lfoot{\small\sffamily\color{gray}\ifx\mcn@professor\@empty\else Prof. \mcn@professor\fi}
+\ifmcn@official
+  \lfoot{\small\sffamily\color{gray}\ifx\mcn@professor\@empty\else Prof. \mcn@professor\fi}
+  \rfoot{\small\sffamily\color{gray}\ifx\mcn@institution\@empty\else\mcn@institution\fi}
+\fi
 \cfoot{\small\sffamily\color{mcnPrimary}\bfseries\thepage}
-\rfoot{\small\sffamily\color{gray}\ifx\mcn@institution\@empty\else\mcn@institution\fi}
 
 \renewcommand{\headrulewidth}{0.8pt}
 \renewcommand{\headrule}{{\color{mcnPrimary}\hrule width\headwidth height \headrulewidth \vspace{\headsep}}}
@@ -343,6 +351,71 @@
   }%
   \addcontentsline{toc}{section}{Lecture #2: #3}%
   \par\vspace{0.8em}%
+}
+
+% -------------------------------------------------------------------
+% Chapter Tracking System
+% -------------------------------------------------------------------
+\newcounter{chapter}
+
+\NewDocumentCommand{\chapter}{m m g}{%  % #1=number, #2=title, #3=objectives (optional)
+  \setcounter{chapter}{#1}%
+  \def\mcn@currentlecture{Chapter #1: #2}%
+  \par\vspace{1.2em}%
+  \noindent
+  \fcolorbox{mcnSecondary}{mcnBoxBg}{%
+    \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
+      \vspace{6pt}%
+      \noindent\hspace{8pt}%
+      \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
+        {\raggedright
+          {\small\sffamily\bfseries\color{mcnSecondary} CHAPTER #1}\par\vspace{2pt}%
+          {\Large\sffamily\bfseries\color{mcnPrimary} #2}\par
+        }%
+        % ---------- Optional objectives ----------
+        \IfValueT{#3}{%
+          \par\vspace{-6pt}% space before separator
+          {\color{mcnBorder}\rule{\linewidth}{0.5pt}}% separator line (0.5pt elegant)
+          \par\vspace{0pt}% space after separator
+          \begin{enumerate}[
+              label=\color{mcnPrimary}\arabic*.,
+              nosep,
+              leftmargin=*,
+              after=\vspace{-\topsep}
+            ]%
+            \forcsvlist{\mcn@objective@item}{#3}%
+          \end{enumerate}%
+          \vspace{0pt}% space after objectives
+        }%
+        % -----------------------------------------
+      \end{minipage}%
+      \vspace{6pt}%
+    \end{minipage}%
+  }%
+  \par
+  \phantomsection
+  \addcontentsline{toc}{section}{Chapter #1: #2}%
+  \par\vspace{0.3em}%
+}
+\newcommand{\mcn@objective@item}[1]{\item \textcolor{mcnSecondary}{#1}}
+
+\newcommand{\subchapter}[2]{% {section}{title}
+  \par\vspace{0.5em}%
+  \noindent
+  {\raggedright\large\sffamily\bfseries\color{mcnPrimary}%
+    \makebox[2.5em][l]{\thechapter.#1}#2\par}%
+  \vspace{-1.1em}% adjust to bring rule closer
+  \noindent{\color{mcnBorder}\rule{\linewidth}{2pt}}%
+  \vspace{-0.3em}% adjust spacing after rule
+  \par
+  \phantomsection
+  \addcontentsline{toc}{subsection}{%
+    \texorpdfstring{%
+      \makebox[3em][l]{\thechapter.#1}#2%
+    }{%
+      \thechapter.#1\ #2%
+    }%
+  }%
 }
 
 % -------------------------------------------------------------------

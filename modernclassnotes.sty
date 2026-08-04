@@ -16,11 +16,12 @@
   prefix=mcn@
 }
 
-\DeclareStringOption[notes]{mode}        % notes, handout, worksheet
+\DeclareStringOption[notes]{mode}        % notes, handout, worksheet, chapternotes
 \DeclareStringOption[ocean]{palette}     % ocean, midnight, nord, emerald, burgundy, amethyst, mono
 \DeclareStringOption[default]{font}      % default, palatino, charter, sans
 \DeclareBoolOption[true]{showsolutions}  % show/hide solutions in worksheets
 \DeclareBoolOption[true]{parskip}        % toggle paragraph spacing
+\DeclareBoolOption[false]{official}      % include prof and institution in footer if true
 
 \ProcessKeyvalOptions*
 
@@ -40,6 +41,8 @@
 \RequirePackage{array}
 \RequirePackage{iftex}
 \RequirePackage{verbatim}
+\RequirePackage{xparse}    % for \NewDocumentCommand
+\RequirePackage{enumitem}  % for easy list formatting
 
 \ifmcn@parskip
   \RequirePackage{parskip}
