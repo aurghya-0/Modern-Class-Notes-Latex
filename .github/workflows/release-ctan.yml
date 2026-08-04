@@ -52,6 +52,6 @@ jobs:
           fi
           
           echo "Publishing release for ${TAG_NAME}..."
-          gh release create "${TAG_NAME}" modernclassnotes-*.zip \
+          gh release create "${TAG_NAME}" modernclassnotes.zip \
             --title "${RELEASE_TITLE}" \
             --notes "${NOTES}"

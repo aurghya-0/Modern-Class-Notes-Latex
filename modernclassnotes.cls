@@ -12,7 +12,7 @@
 %% Dual-licensed under the MIT License for open-source flexibility.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{modernclassnotes}[2026/07/26 v1.0.0 Modern Class Notes Document Class]
+\ProvidesClass{modernclassnotes}[2026/08/04 v1.1.0 Modern Class Notes Document Class]
 
 % -------------------------------------------------------------------
 % Package Options & Key-Value Handling
@@ -413,7 +413,9 @@
 % -------------------------------------------------------------------
 \newcounter{chapter}
 
-\NewDocumentCommand{\chapter}{m m g}{%  % #1=number, #2=title, #3=objectives (optional)
+\newcommand{\mcn@objective@item}[1]{\item \textcolor{mcnSecondary}{#1}}
+
+\NewDocumentCommand{\chapter}{m m m}{%  % #1=number, #2=title, #3=objectives
   \setcounter{chapter}{#1}\addtocounter{chapter}{-1}\refstepcounter{chapter}%
   \def\mcn@currentlecture{Chapter #1: #2}%
   \par\vspace{1.2em}%
@@ -428,7 +430,7 @@
           {\Large\sffamily\bfseries\color{mcnPrimary} #2}\par
         }%
         % ---------- Optional objectives ----------
-        \IfValueT{#3}{%
+        \ifstrempty{#3}{}{%
           \par\vspace{-6pt}% space before separator
           {\color{mcnBorder}\rule{\linewidth}{0.5pt}}% separator line (0.5pt elegant)
           \par\vspace{0pt}% space after separator
@@ -461,7 +463,6 @@
   \addcontentsline{toc}{section}{Chapter #1: #2}%
   \par\vspace{0.3em}%
 }
-\newcommand{\mcn@objective@item}[1]{\item \textcolor{mcnSecondary}{#1}}
 
 \newcommand{\subchapter}[2]{% {section}{title}
   \par\vspace{0.5em}%
