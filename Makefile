@@ -21,7 +21,8 @@ $(DOC_DIR)/modernclassnotes-doc.pdf: $(DOC_DIR)/modernclassnotes-doc.tex modernc
 
 examples: $(EXAMPLES_DIR)/01-complete-course-notes.pdf \
           $(EXAMPLES_DIR)/02-single-lecture-handout.pdf \
-          $(EXAMPLES_DIR)/03-homework-worksheet.pdf
+          $(EXAMPLES_DIR)/03-homework-worksheet.pdf \
+          $(EXAMPLES_DIR)/04-chapter-notes.pdf
 
 $(EXAMPLES_DIR)/%.pdf: $(EXAMPLES_DIR)/%.tex modernclassnotes.cls
 	@echo "Compiling example $<..."

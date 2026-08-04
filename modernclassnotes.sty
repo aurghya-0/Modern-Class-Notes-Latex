@@ -42,7 +42,7 @@
 \RequirePackage{iftex}
 \RequirePackage{verbatim}
 \RequirePackage{xparse}    % for \NewDocumentCommand
-\RequirePackage{enumitem}  % for easy list formatting
+\IfFileExists{enumitem.sty}{\RequirePackage{enumitem}}{}
 
 \ifmcn@parskip
   \RequirePackage{parskip}
@@ -66,49 +66,49 @@
 \RequirePackage{lmodern}
 % font option override: kpfonts
 \expandafter\ifstrequal\expandafter{\mcn@font}{kpfonts}{%
-  \RequirePackage{kpfonts}
+  \IfFileExists{kpfonts.sty}{\RequirePackage{kpfonts}}{}%
 }{}
 % font option override: pagella
 \expandafter\ifstrequal\expandafter{\mcn@font}{pagella}{%
-  \RequirePackage{tgpagella}
+  \IfFileExists{tgpagella.sty}{\RequirePackage{tgpagella}}{\RequirePackage{mathpazo}}%
 }{}
 % font option override: sourceserif
 \expandafter\ifstrequal\expandafter{\mcn@font}{sourceserif}{%
   \IfFileExists{sourceserifpro.sty}{%
     \RequirePackage{sourceserifpro}%
   }{%
-    \RequirePackage{sourcesanspro}%
+    \IfFileExists{sourcesanspro.sty}{\RequirePackage{sourcesanspro}}{}%
   }%
-  \RequirePackage{newtxmath}
+  \IfFileExists{newtxmath.sty}{\RequirePackage{newtxmath}}{}%
 }{}
 % font option override: charter
 \expandafter\ifstrequal\expandafter{\mcn@font}{charter}{%
-  \RequirePackage{charter}
-  \RequirePackage{newtxmath}
+  \IfFileExists{charter.sty}{\RequirePackage{charter}}{}%
+  \IfFileExists{newtxmath.sty}{\RequirePackage{newtxmath}}{}%
 }{}
 % font option override: helvet / sans
 \expandafter\ifstrequal\expandafter{\mcn@font}{helvet}{%
-  \RequirePackage{helvet}
-  \renewcommand{\familydefault}{\sfdefault}
-  \RequirePackage{newtxmath}
+  \IfFileExists{helvet.sty}{\RequirePackage{helvet}}{}%
+  \renewcommand{\familydefault}{\sfdefault}%
+  \IfFileExists{newtxmath.sty}{\RequirePackage{newtxmath}}{}%
 }{}
 \expandafter\ifstrequal\expandafter{\mcn@font}{sans}{%
-  \RequirePackage{helvet}
-  \renewcommand{\familydefault}{\sfdefault}
-  \RequirePackage{newtxmath}
+  \IfFileExists{helvet.sty}{\RequirePackage{helvet}}{}%
+  \renewcommand{\familydefault}{\sfdefault}%
+  \IfFileExists{newtxmath.sty}{\RequirePackage{newtxmath}}{}%
 }{}
 % font option override: fira
 \expandafter\ifstrequal\expandafter{\mcn@font}{fira}{%
-  \RequirePackage[sfdefault]{FiraSans}
-  \RequirePackage{FiraMono}
+  \IfFileExists{FiraSans.sty}{\RequirePackage[sfdefault]{FiraSans}}{\renewcommand{\familydefault}{\sfdefault}}%
+  \IfFileExists{FiraMono.sty}{\RequirePackage{FiraMono}}{}%
 }{}
 % font option override: libertine
 \expandafter\ifstrequal\expandafter{\mcn@font}{libertine}{%
-  \RequirePackage{libertine}
+  \IfFileExists{libertine.sty}{\RequirePackage{libertine}}{}%
 }{}
 % font option override: utopia
 \expandafter\ifstrequal\expandafter{\mcn@font}{utopia}{%
-  \RequirePackage{utopia}
+  \IfFileExists{utopia.sty}{\RequirePackage{utopia}}{}%
 }{}
 
 % Color Palette Presets
@@ -269,14 +269,23 @@
           \par\vspace{-6pt}% space before separator
           {\color{mcnBorder}\rule{\linewidth}{0.5pt}}% separator line (0.5pt elegant)
           \par\vspace{0pt}% space after separator
-          \begin{enumerate}[
-              label=\color{mcnPrimary}\arabic*.,
-              nosep,
-              leftmargin=*,
-              after=\vspace{-\topsep}
-            ]%
-            \forcsvlist{\mcn@objective@item}{#3}%
-          \end{enumerate}%
+          \@ifpackageloaded{enumitem}{%
+            \begin{enumerate}[
+                label=\color{mcnPrimary}\arabic*.,
+                nosep,
+                leftmargin=*,
+                after=\vspace{-\topsep}
+              ]%
+              \forcsvlist{\mcn@objective@item}{#3}%
+            \end{enumerate}%
+          }{%
+            \begin{enumerate}%
+              \setlength{\itemsep}{1pt}%
+              \setlength{\parskip}{0pt}%
+              \setlength{\parsep}{0pt}%
+              \forcsvlist{\mcn@objective@item}{#3}%
+            \end{enumerate}%
+          }%
           \vspace{0pt}% space after objectives
         }%
         % -----------------------------------------
