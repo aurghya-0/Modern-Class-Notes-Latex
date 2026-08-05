@@ -182,7 +182,6 @@ Modern-Class-Notes-Latex/
 This package is created as an open-source initiative under the **LaTeX Project Public License (LPPL v1.3c)** and the **MIT License**.
 
 Contributions, bug reports, and pull requests are welcome!
-To submit to CTAN (Comprehensive TeX Archive Network), run `make ctan` to generate the release archive `modernclassnotes.zip` ready for uploading.
 
 ---
 *Created for educators, researchers, and open-source contributors worldwide.*

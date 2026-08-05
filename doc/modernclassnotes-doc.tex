@@ -41,16 +41,16 @@ Load the class in your LaTeX document header:
 \subsection{Available Class Keys}
 \begin{table}[h]
 \centering
-\begin{tabular}{lll}
+\begin{tabular}{l|p{9.5cm}|l}
 \toprule
 \textbf{Key} & \textbf{Values} & \textbf{Default} \\
 \midrule
-\texttt{mode} & \texttt{notes}, \texttt{handout}, \texttt{worksheet}, \texttt{chapternotes} & \texttt{notes} \\
-\texttt{palette} & \texttt{ocean}, \texttt{midnight}, \texttt{nord}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono} & \texttt{ocean} \\
-\texttt{fontsize} & \texttt{10pt}, \texttt{11pt}, \texttt{12pt} & \texttt{11pt} \\
-\texttt{font} & \texttt{default}, \texttt{palatino}, \texttt{charter}, \texttt{sans}/\texttt{helvet}, \texttt{kpfonts}, \texttt{pagella}, \texttt{sourceserif}, \texttt{fira}, \texttt{libertine}, \texttt{utopia} & \texttt{default} \\
-\texttt{official} & \texttt{true}, \texttt{false} & \texttt{false} \\
-\texttt{showsolutions} & \texttt{true}, \texttt{false} & \texttt{true} \\
+\texttt{mode} & \texttt{notes}, \texttt{handout}, \texttt{worksheet}, \texttt{chapternotes} & \texttt{notes} \\ \hline
+\texttt{palette} & \texttt{ocean}, \texttt{midnight}, \texttt{nord}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono} & \texttt{ocean} \\ \hline
+\texttt{fontsize} & \texttt{10pt}, \texttt{11pt}, \texttt{12pt} & \texttt{11pt} \\ \hline
+\texttt{font} & \texttt{default}, \texttt{palatino}, \texttt{charter}, \texttt{sans}/\texttt{helvet}, \texttt{kpfonts}, \texttt{pagella}, \texttt{sourceserif}, \texttt{fira}, \texttt{libertine}, \texttt{utopia} & \texttt{default} \\ \hline
+\texttt{official} & \texttt{true}, \texttt{false} & \texttt{false} \\ \hline
+\texttt{showsolutions} & \texttt{true}, \texttt{false} & \texttt{true} \\ \hline
 \texttt{parskip} & \texttt{true}, \texttt{false} & \texttt{true} \\
 \bottomrule
 \end{tabular}
@@ -113,13 +113,12 @@ For any real number $\theta$, $e^{i\theta} = \cos\theta + i\sin\theta$.
 \end{lstlisting}
 \end{example}
 
-\section{Open-Source \& CTAN Distribution Guidelines}
+\section{Open-Source Distribution Guidelines}
 
 To distribute this package under an open-source initiative:
 \begin{enumerate}
     \item Maintain the LPPL 1.3c / MIT dual licensing terms in \texttt{LICENSE}.
     \item Provide compiled sample PDFs in \texttt{examples/} for GitHub previews.
-    \item Execute \texttt{make ctan} to bundle a clean \texttt{.zip} release file ready for CTAN submission.
 \end{enumerate}
 
 \end{document}
