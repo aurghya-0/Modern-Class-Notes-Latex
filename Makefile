@@ -8,9 +8,15 @@ EXAMPLES_DIR = examples
 PACKAGE_NAME = modernclassnotes
 VERSION = 1.1.0
 
-.PHONY: all doc examples clean ctan CTAN help
+.PHONY: all doc examples install clean ctan CTAN help
 
 all: doc examples
+
+install:
+	@echo "Installing package files to local texmf (~/texmf/tex/latex/modernclassnotes)..."
+	mkdir -p $(HOME)/texmf/tex/latex/$(PACKAGE_NAME)
+	cp modernclassnotes.cls modernclassnotes.sty $(HOME)/texmf/tex/latex/$(PACKAGE_NAME)/
+	@echo "Package installed successfully to $(HOME)/texmf/tex/latex/$(PACKAGE_NAME)/."
 
 doc: $(DOC_DIR)/modernclassnotes-doc.pdf
 
@@ -21,7 +27,8 @@ $(DOC_DIR)/modernclassnotes-doc.pdf: $(DOC_DIR)/modernclassnotes-doc.tex modernc
 
 examples: $(EXAMPLES_DIR)/01-complete-course-notes.pdf \
           $(EXAMPLES_DIR)/02-single-lecture-handout.pdf \
-          $(EXAMPLES_DIR)/03-homework-worksheet.pdf \
+          $(EXAMPLES_DIR)/03-homework-worksheet-with-sol.pdf \
+          $(EXAMPLES_DIR)/03-homework-worksheet-without-sol.pdf \
           $(EXAMPLES_DIR)/04-chapter-notes.pdf
 
 $(EXAMPLES_DIR)/%.pdf: $(EXAMPLES_DIR)/%.tex modernclassnotes.cls

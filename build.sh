@@ -23,9 +23,13 @@ echo "[3/4] Compiling Example 02 (examples/02-single-lecture-handout.tex)..."
 pdflatex -interaction=nonstopmode -output-directory=examples examples/02-single-lecture-handout.tex > /dev/null
 echo "      -> examples/02-single-lecture-handout.pdf compiled successfully."
 
-echo "[4/4] Compiling Example 03 (examples/03-homework-worksheet.tex)..."
-pdflatex -interaction=nonstopmode -output-directory=examples examples/03-homework-worksheet.tex > /dev/null
-echo "      -> examples/03-homework-worksheet.pdf compiled successfully."
+echo "[4/5] Compiling Example 03 (with solution) (examples/03-homework-worksheet-with-sol.tex)..."
+pdflatex -interaction=nonstopmode -output-directory=examples examples/03-homework-worksheet-with-sol.tex > /dev/null
+echo "      -> examples/03-homework-worksheet-with-sol.pdf compiled successfully."
+
+echo "[5/5] Compiling Example 03 (without solution) (examples/03-homework-worksheet-without-sol.tex)..."
+pdflatex -interaction=nonstopmode -output-directory=examples examples/03-homework-worksheet-without-sol.tex > /dev/null
+echo "      -> examples/03-homework-worksheet-without-sol.pdf compiled successfully."
 
 echo "====================================================="
 echo " All documentations & examples compiled successfully! "

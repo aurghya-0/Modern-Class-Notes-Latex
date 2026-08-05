@@ -55,7 +55,7 @@
 \RequirePackage{iftex}
 \RequirePackage{verbatim}
 \RequirePackage{xparse}    % for \NewDocumentCommand
-\IfFileExists{enumitem.sty}{\RequirePackage{enumitem}}{}
+\IfFileExists{enumitem.sty}{\RequirePackage[shortlabels]{enumitem}}{}
 
 \ifmcn@parskip
   \RequirePackage{parskip}
