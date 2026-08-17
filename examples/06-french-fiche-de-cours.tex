@@ -1,0 +1,51 @@
+\documentclass[mode=handout, palette=emerald, lang=french, fontsize=11pt]{modernclassnotes}
+
+\course{Mécanique Quantique et Physique Statistique}
+\coursecode{PHYS 301}
+\professor{Prof. Claire Dubois}
+\institution{Sorbonne Université}
+\term{Semestre d'Automne 2026}
+\lecturedate{12 Novembre 2026}
+\title{Équation de Schrödinger et Puits de Potentiel}
+\docsubtitle{Fiche de synthèse – Cours 3}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction et Principes Fondamentaux}
+
+L'état quantique d'une particule est décrit par sa fonction d'onde $\Psi(x,t)$, solution de l'équation de Schrödinger dépendante du temps.
+
+\begin{definition}[Équation de Schrödinger Indépendante du Temps]
+Pour un système conservatif d'énergie $E$, l'équation aux valeurs propres s'écrit :
+\begin{equation*}
+  \hat{H} \psi(x) = -\frac{\hbar^2}{2m} \frac{d^2\psi(x)}{dx^2} + V(x)\psi(x) = E \psi(x)
+\end{equation*}
+où $\hat{H}$ est l'opérateur hamiltonien.
+\end{definition}
+
+\begin{theorem}[Quantification de l'Énergie dans un Puits Infini]
+Pour une particule confinée dans un puits potentiel unidimensionnel de largeur $L$ avec $V(x)=0$ sur $[0,L]$ et $V(x)=\infty$ ailleurs, les niveaux d'énergie admissibles sont quantifiés :
+\begin{equation*}
+  E_n = \frac{n^2 \pi^2 \hbar^2}{2m L^2}, \quad n \in \{1, 2, 3, \dots\}
+\end{equation*}
+\end{theorem}
+
+\begin{remark}
+Notez que l'état fondamental ($n=1$) possède une énergie non nulle $E_1 > 0$, appelée \textbf{énergie du point zéro}, imposée par le principe d'incertitude d'Heisenberg $\Delta x \cdot \Delta p \ge \frac{\hbar}{2}$.
+\end{remark}
+
+\begin{tip}[Méthode de Résolution]
+Toujours vérifier la continuité de la fonction d'onde $\psi(x)$ et de sa dérivée première $\psi'(x)$ aux limites des régions de potentiel fini.
+\end{tip}
+
+\begin{takeaways}
+\begin{itemize}
+  \item La fonction d'onde doit être continue, dérivable et de carré intégrable ($\int |\psi|^2 dx = 1$).
+  \item Le confinement spatial entraîne la quantification automatique des états énergétiques.
+  \item L'effet tunnel apparaît dès que le potentiel $V(x) > E$ sur une barrière de largeur finie.
+\end{itemize}
+\end{takeaways}
+
+\end{document}

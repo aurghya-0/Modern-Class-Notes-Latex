@@ -1,0 +1,55 @@
+\documentclass[mode=worksheet, palette=amethyst, lang=chinese, showsolutions=true, fontsize=11pt]{modernclassnotes}
+\ifxetex
+  \RequirePackage{xeCJK}
+  \setCJKmainfont{SimSun}
+\else
+  \RequirePackage{CJKutf8}
+\fi
+
+\course{高等数学与线性代数}
+\coursecode{MATH 101}
+\term{2026年秋季学期}
+\assignmentname{作业 4：矩阵特征值与向量空间}
+
+\begin{document}
+\ifxetex\else\begin{CJK*}{UTF8}{gbsn}\fi
+
+\maketitle
+
+\begin{exercise}[特征值与特征向量计算]
+设方阵 $A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$，求解阵 $A$ 的所有特征值 $\lambda_1, \lambda_2$ 及其对应的特征向量。
+\end{exercise}
+
+\begin{solution}
+首先求解特征方程 $\det(A - \lambda I) = 0$：
+\begin{equation*}
+  \begin{vmatrix} 4-\lambda & 1 \\ 2 & 3-\lambda \end{vmatrix} = (4-\lambda)(3-\lambda) - 2 = \lambda^2 - 7\lambda + 10 = 0
+\end{equation*}
+解得特征值为 $\lambda_1 = 5, \lambda_2 = 2$。
+
+当 $\lambda_1 = 5$ 时，解齐次方程组 $(A - 5I)x = 0$ 得特征向量 $v_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$。\\
+当 $\lambda_2 = 2$ 时，解齐次方程组 $(A - 2I)x = 0$ 得特征向量 $v_2 = \begin{pmatrix} -1 \\ 2 \end{pmatrix}$。
+\end{solution}
+
+\begin{exercise}[Python 线性代数验证]
+编写 Python 代码，利用 \texttt{numpy.linalg.eig} 函数验证上述矩阵 $A$ 的特征值与特征向量。
+\end{exercise}
+
+\begin{solution}
+对应的算法代码实现如下：
+\end{solution}
+
+\begin{codebox}[Python 特征值验证代码]
+\begin{lstlisting}[language=Python]
+import numpy as np
+
+A = np.array([[4, 1], [2, 3]])
+eigenvalues, eigenvectors = np.linalg.eig(A)
+
+print("Eigenvalues:", eigenvalues)
+print("Eigenvectors:\n", eigenvectors)
+\end{lstlisting}
+\end{codebox}
+
+\ifxetex\else\end{CJK*}\fi
+\end{document}

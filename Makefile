@@ -55,7 +55,13 @@ examples: $(EXAMPLES_DIR)/01-complete-course-notes.pdf \
           $(EXAMPLES_DIR)/02-single-lecture-handout.pdf \
           $(EXAMPLES_DIR)/03-homework-worksheet.pdf \
           $(EXAMPLES_DIR)/04-chapter-notes.pdf \
-          $(EXAMPLES_DIR)/05-multilingual-and-localized.pdf
+          $(EXAMPLES_DIR)/05-german-vorlesungsskript.pdf \
+          $(EXAMPLES_DIR)/06-french-fiche-de-cours.pdf \
+          $(EXAMPLES_DIR)/07-chinese-worksheet-homework.pdf
+
+$(EXAMPLES_DIR)/07-chinese-worksheet-homework.pdf: $(EXAMPLES_DIR)/07-chinese-worksheet-homework.tex modernclassnotes.cls
+	@echo "Compiling example $<..."
+	xelatex -interaction=nonstopmode -output-directory=$(EXAMPLES_DIR) $<
 
 $(EXAMPLES_DIR)/%.pdf: $(EXAMPLES_DIR)/%.tex modernclassnotes.cls
 	@echo "Compiling example $<..."

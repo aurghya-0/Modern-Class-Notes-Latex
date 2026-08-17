@@ -9,27 +9,38 @@ echo "====================================================="
 
 mkdir -p doc examples
 
-echo "[1/4] Compiling Documentation (doc/modernclassnotes-doc.tex)..."
+echo "[1/8] Compiling Documentation (doc/modernclassnotes-doc.tex)..."
 pdflatex -interaction=nonstopmode -output-directory=doc doc/modernclassnotes-doc.tex > /dev/null
 pdflatex -interaction=nonstopmode -output-directory=doc doc/modernclassnotes-doc.tex > /dev/null
 echo "      -> doc/modernclassnotes-doc.pdf compiled successfully."
 
-echo "[2/4] Compiling Example 01 (examples/01-complete-course-notes.tex)..."
-pdflatex -interaction=nonstopmode -output-directory=examples examples/01-complete-course-notes.tex > /dev/null
+echo "[2/8] Compiling Example 01 (examples/01-complete-course-notes.tex)..."
 pdflatex -interaction=nonstopmode -output-directory=examples examples/01-complete-course-notes.tex > /dev/null
 echo "      -> examples/01-complete-course-notes.pdf compiled successfully."
 
-echo "[3/4] Compiling Example 02 (examples/02-single-lecture-handout.tex)..."
+echo "[3/8] Compiling Example 02 (examples/02-single-lecture-handout.tex)..."
 pdflatex -interaction=nonstopmode -output-directory=examples examples/02-single-lecture-handout.tex > /dev/null
 echo "      -> examples/02-single-lecture-handout.pdf compiled successfully."
 
-echo "[4/5] Compiling Example 03 (with solution) (examples/03-homework-worksheet-with-sol.tex)..."
-pdflatex -interaction=nonstopmode -output-directory=examples examples/03-homework-worksheet-with-sol.tex > /dev/null
-echo "      -> examples/03-homework-worksheet-with-sol.pdf compiled successfully."
+echo "[4/8] Compiling Example 03 (examples/03-homework-worksheet.tex)..."
+pdflatex -interaction=nonstopmode -output-directory=examples examples/03-homework-worksheet.tex > /dev/null
+echo "      -> examples/03-homework-worksheet.pdf compiled successfully."
 
-echo "[5/5] Compiling Example 03 (without solution) (examples/03-homework-worksheet-without-sol.tex)..."
-pdflatex -interaction=nonstopmode -output-directory=examples examples/03-homework-worksheet-without-sol.tex > /dev/null
-echo "      -> examples/03-homework-worksheet-without-sol.pdf compiled successfully."
+echo "[5/8] Compiling Example 04 (examples/04-chapter-notes.tex)..."
+pdflatex -interaction=nonstopmode -output-directory=examples examples/04-chapter-notes.tex > /dev/null
+echo "      -> examples/04-chapter-notes.pdf compiled successfully."
+
+echo "[6/8] Compiling Example 05 (German) (examples/05-german-vorlesungsskript.tex)..."
+pdflatex -interaction=nonstopmode -output-directory=examples examples/05-german-vorlesungsskript.tex > /dev/null
+echo "      -> examples/05-german-vorlesungsskript.pdf compiled successfully."
+
+echo "[7/8] Compiling Example 06 (French) (examples/06-french-fiche-de-cours.tex)..."
+pdflatex -interaction=nonstopmode -output-directory=examples examples/06-french-fiche-de-cours.tex > /dev/null
+echo "      -> examples/06-french-fiche-de-cours.pdf compiled successfully."
+
+echo "[8/8] Compiling Example 07 (Chinese) (examples/07-chinese-worksheet-homework.tex)..."
+xelatex -interaction=nonstopmode -output-directory=examples examples/07-chinese-worksheet-homework.tex > /dev/null
+echo "      -> examples/07-chinese-worksheet-homework.pdf compiled successfully."
 
 echo "====================================================="
 echo " All documentations & examples compiled successfully! "
