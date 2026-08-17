@@ -1,0 +1,126 @@
+\documentclass[mode=notes, palette=ocean, lang=french, fontsize=11pt]{modernclassnotes}
+
+\course{Documentation du Paquet LaTeX}
+\coursecode{MCN v1.2.0}
+\professor{Équipe de Développement Modern Class Notes}
+\institution{Open Source TeX Initiative}
+\term{Édition 2026}
+\docsubtitle{Manuel d'utilisation \& Guide d'architecture du paquet Class Notes}
+\title{La classe \& paquet \texttt{modernclassnotes}}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+Le paquet et la classe \texttt{modernclassnotes} offrent un cadre LaTeX moderne, esthétique et open-source conçu spécialement pour les enseignants, professeurs et universitaires. Il permet de créer facilement des notes de cours, des fiches de synthèse et des feuilles d'exercices.
+
+\begin{takeaways}
+Points forts de \texttt{modernclassnotes} :
+\begin{itemize}
+    \item \textbf{Quatre modes spécialisés} : \texttt{notes} (polycopiés complets), \texttt{handout} (fiches résumées de 1--2 pages), \texttt{worksheet} (feuilles d'exercices avec corrigés) et \texttt{chapternotes} (résumés par chapitre).
+    \item \textbf{Palettes de couleurs choisies} : Alternez entre 8 thèmes (\texttt{ocean}, \texttt{nord}, \texttt{midnight}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono}) en une seule option.
+    \item \textbf{Support multilingue natif} : Prise en charge avec \texttt{lang=english}, \texttt{lang=french}, \texttt{lang=german} et \texttt{lang=chinese}.
+    \item \textbf{Zéro dépendance lourde} : Moteur de boîtes TeX/LaTeX natif assurant une portabilité maximale sur TeX Live, MiKTeX et Overleaf.
+    \item \textbf{Suivi des cours \& chapitres} : Bannières de cours et de chapitres automatisées avec objectifs optionnels via \texttt{\textbackslash lecture}, \texttt{\textbackslash chapter} et \texttt{\textbackslash subchapter}.
+\end{itemize}
+\end{takeaways}
+
+\section{Options de la classe \& Configuration}
+
+Chargez la classe dans l'en-tête de votre document :
+\begin{codebox}[Chargement de la classe]
+\begin{lstlisting}[language=TeX]
+\documentclass[mode=notes, palette=ocean, lang=french, fontsize=11pt]{modernclassnotes}
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Tableau des options}
+\begin{table}[h]
+\centering
+\begin{tabular}{l|p{9.5cm}|l}
+\toprule
+\textbf{Clé} & \textbf{Valeurs} & \textbf{Défaut} \\
+\midrule
+\texttt{mode} & \texttt{notes}, \texttt{handout}, \texttt{worksheet}, \texttt{chapternotes} & \texttt{notes} \\ \hline
+\texttt{palette} & \texttt{ocean}, \texttt{midnight}, \texttt{nord}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono} & \texttt{ocean} \\ \hline
+\texttt{fontsize} & \texttt{10pt}, \texttt{11pt}, \texttt{12pt} & \texttt{11pt} \\ \hline
+\texttt{font} & \texttt{default}, \texttt{palatino}, \texttt{charter}, \texttt{sans}/\texttt{helvet}, \texttt{kpfonts}, \texttt{pagella}, \texttt{sourceserif}, \texttt{fira}, \texttt{libertine}, \texttt{utopia} & \texttt{default} \\ \hline
+\texttt{lang} & \texttt{english} (\texttt{en}), \texttt{german} (\texttt{de}), \texttt{french} (\texttt{fr}), \texttt{chinese} (\texttt{zh}) & \texttt{english} \\ \hline
+\texttt{official} & \texttt{true}, \texttt{false} & \texttt{false} \\ \hline
+\texttt{showsolutions} & \texttt{true}, \texttt{false} & \texttt{true} \\ \hline
+\texttt{parskip} & \texttt{true}, \texttt{false} & \texttt{true} \\
+\bottomrule
+\end{tabular}
+\caption{Options de classe et paramètres}
+\end{table}
+
+\section{Commandes de métadonnées}
+
+Définissez les métadonnées de votre cours dans le préambule :
+\begin{codebox}[Configuration des métadonnées]
+\begin{lstlisting}[language=TeX]
+\course{Mécanique Quantique}
+\coursecode{PHYS 301}
+\professor{Prof. Claire Dubois}
+\institution{Sorbonne Université}
+\term{Semestre d'Automne 2026}
+\docsubtitle{Fiche de synthèse – Cours 3}
+\title{Équation de Schrödinger}
+\end{lstlisting}
+\end{codebox}
+
+\section{Systèmes de suivi des cours et chapitres}
+
+Utilisez la commande \texttt{\textbackslash lecture} pour diviser le document en séances :
+\begin{codebox}[Macro de cours]
+\begin{lstlisting}[language=TeX]
+\lecture[12 Novembre 2026]{1}{Équation de Schrödinger et Puits de Potentiel}
+\end{lstlisting}
+\end{codebox}
+
+Pour les notes structurées par chapitre (\texttt{mode=chapternotes}), utilisez \texttt{\textbackslash chapter} et \texttt{\textbackslash subchapter} :
+\begin{codebox}[Macro de chapitre avec objectifs]
+\begin{lstlisting}[language=TeX]
+\chapter{1}{Systèmes Numériques et Nombres Binaires}{%
+  Comprendre la numération binaire.,%
+  Convertir entre les bases binaires et décimales.,%
+  Former les compléments.%
+}
+
+\subchapter{2}{Nombres Binaires}
+\end{lstlisting}
+\end{codebox}
+
+\section{Environnements pédagogiques}
+
+\begin{definition}[Environnements d'encadrés pédagogiques]
+\texttt{modernclassnotes} fournit des environnements structurés pour le contenu académique :
+\begin{itemize}
+    \item \texttt{theorem} (Théorème), \texttt{lemma} (Lemme), \texttt{proposition}, \texttt{corollary} (Corollaire), \texttt{proof} (Démonstration)
+    \item \texttt{definition}, \texttt{example} (Exemple), \texttt{remark} (Remarque), \texttt{warning} (Attention), \texttt{tip} (Astuce), \texttt{takeaways}
+    \item \texttt{exercise} (Exercice), \texttt{solution} (Solution), \texttt{codebox} (Extrait de code)
+\end{itemize}
+\end{definition}
+
+\begin{example}[Exemple d'environnement Théorème]
+\begin{lstlisting}[language=TeX]
+\begin{theorem}[Identité d'Euler]
+Pour tout nombre réel $\theta$, $e^{i\theta} = \cos\theta + i\sin\theta$.
+\end{theorem}
+\end{lstlisting}
+\end{example}
+
+\section{Directives open-source}
+
+Pour redistribuer ce paquet :
+\begin{enumerate}
+    \item Conservez les termes de licence LPPL 1.3c / MIT dans le fichier \texttt{LICENSE}.
+    \item Fournissez les fichiers PDF compilés dans le dossier \texttt{examples/}.
+\end{enumerate}
+
+\end{document}

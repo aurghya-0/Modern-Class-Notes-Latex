@@ -44,12 +44,19 @@ else
 endif
 	@echo "Package installed successfully to $(INSTALL_DIR)."
 
-doc: $(DOC_DIR)/modernclassnotes-doc.pdf
+doc: $(DOC_DIR)/modernclassnotes-doc.pdf \
+     $(DOC_DIR)/modernclassnotes-doc-de.pdf \
+     $(DOC_DIR)/modernclassnotes-doc-fr.pdf \
+     $(DOC_DIR)/modernclassnotes-doc-zh.pdf
 
-$(DOC_DIR)/modernclassnotes-doc.pdf: $(DOC_DIR)/modernclassnotes-doc.tex modernclassnotes.cls
-	@echo "Compiling documentation..."
-	$(TEX) $(TEXFLAGS) -output-directory=$(DOC_DIR) $(DOC_DIR)/modernclassnotes-doc.tex
-	$(TEX) $(TEXFLAGS) -output-directory=$(DOC_DIR) $(DOC_DIR)/modernclassnotes-doc.tex
+$(DOC_DIR)/modernclassnotes-doc-zh.pdf: $(DOC_DIR)/modernclassnotes-doc-zh.tex modernclassnotes.cls
+	@echo "Compiling documentation $<..."
+	xelatex -interaction=nonstopmode -output-directory=$(DOC_DIR) $<
+
+$(DOC_DIR)/%.pdf: $(DOC_DIR)/%.tex modernclassnotes.cls
+	@echo "Compiling documentation $<..."
+	$(TEX) $(TEXFLAGS) -output-directory=$(DOC_DIR) $<
+	$(TEX) $(TEXFLAGS) -output-directory=$(DOC_DIR) $<
 
 examples: $(EXAMPLES_DIR)/01-complete-course-notes.pdf \
           $(EXAMPLES_DIR)/02-single-lecture-handout.pdf \

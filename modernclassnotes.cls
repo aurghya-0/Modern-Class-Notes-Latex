@@ -41,6 +41,10 @@
 % -------------------------------------------------------------------
 % Core Dependencies
 % -------------------------------------------------------------------
+\RequirePackage{iftex}
+\ifxetex\else
+  \RequirePackage[utf8]{inputenc}
+\fi
 \RequirePackage[T1]{fontenc}
 \RequirePackage{xcolor}
 \RequirePackage{geometry}

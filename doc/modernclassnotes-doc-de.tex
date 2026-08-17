@@ -1,0 +1,126 @@
+\documentclass[mode=notes, palette=ocean, lang=german, fontsize=11pt]{modernclassnotes}
+
+\course{LaTeX-Paketdokumentation}
+\coursecode{MCN v1.2.0}
+\professor{Modern Class Notes Entwickler}
+\institution{Open Source TeX Initiative}
+\term{Version 2026}
+\docsubtitle{Benutzerhandbuch \& Architektur-Leitfaden für das Class-Notes-Paket}
+\title{Das \texttt{modernclassnotes} Paket \& Dokumentenklasse}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Einführung}
+
+Das \texttt{modernclassnotes}-Paket und die zugehörige Dokumentenklasse bieten ein modernes, hochästhetisches und quelloffenes LaTeX-Framework, das speziell für Professoren, Dozenten und Lehrkräfte entwickelt wurde. Es ermöglicht die mühelose Erstellung und Verteilung von Vorlesungsskripten, Handouts und Übungsblättern.
+
+\begin{takeaways}
+Wichtigste Merkmale von \texttt{modernclassnotes}:
+\begin{itemize}
+    \item \textbf{Vier spezialisierte Modi}: \texttt{notes} (vollständige Vorlesungsskripte), \texttt{handout} (1--2-seitige Zusammenfassungen), \texttt{worksheet} (Übungsblätter mit Lösungsschlüsseln) und \texttt{chapternotes} (kapitelbasierte Zusammenfassungen).
+    \item \textbf{Kuratierte Farbpaletten}: Wechseln Sie zwischen 8 Farbthemen (\texttt{ocean}, \texttt{nord}, \texttt{midnight}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono}) mit einer einzigen Option.
+    \item \textbf{Mehrsprachige Lokalisierung}: Nativ unterstützte Sprachen mit \texttt{lang=english}, \texttt{lang=german}, \texttt{lang=french} und \texttt{lang=chinese}.
+    \item \textbf{Keine komplexen Abhängigkeiten}: Native TeX/LaTeX-Box-Engine für maximale Portabilität unter TeX Live, MiKTeX und Overleaf.
+    \item \textbf{Vorlesungs- \& Kapitel-Verfolgung}: Automatische Vorlesungs- und Kapitelbanner mit optionalen Lernzielen via \texttt{\textbackslash lecture}, \texttt{\textbackslash chapter} und \texttt{\textbackslash subchapter}.
+\end{itemize}
+\end{takeaways}
+
+\section{Klassenoptionen \& Konfiguration}
+
+Laden Sie die Klasse im Dokumentenkopf:
+\begin{codebox}[Einbinden der Klasse]
+\begin{lstlisting}[language=TeX]
+\documentclass[mode=notes, palette=ocean, lang=german, fontsize=11pt]{modernclassnotes}
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Verfügbare Optionen}
+\begin{table}[h]
+\centering
+\begin{tabular}{l|p{9.5cm}|l}
+\toprule
+\textbf{Schlüssel} & \textbf{Werte} & \textbf{Standard} \\
+\midrule
+\texttt{mode} & \texttt{notes}, \texttt{handout}, \texttt{worksheet}, \texttt{chapternotes} & \texttt{notes} \\ \hline
+\texttt{palette} & \texttt{ocean}, \texttt{midnight}, \texttt{nord}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono} & \texttt{ocean} \\ \hline
+\texttt{fontsize} & \texttt{10pt}, \texttt{11pt}, \texttt{12pt} & \texttt{11pt} \\ \hline
+\texttt{font} & \texttt{default}, \texttt{palatino}, \texttt{charter}, \texttt{sans}/\texttt{helvet}, \texttt{kpfonts}, \texttt{pagella}, \texttt{sourceserif}, \texttt{fira}, \texttt{libertine}, \texttt{utopia} & \texttt{default} \\ \hline
+\texttt{lang} & \texttt{english} (\texttt{en}), \texttt{german} (\texttt{de}), \texttt{french} (\texttt{fr}), \texttt{chinese} (\texttt{zh}) & \texttt{english} \\ \hline
+\texttt{official} & \texttt{true}, \texttt{false} & \texttt{false} \\ \hline
+\texttt{showsolutions} & \texttt{true}, \texttt{false} & \texttt{true} \\ \hline
+\texttt{parskip} & \texttt{true}, \texttt{false} & \texttt{true} \\
+\bottomrule
+\end{tabular}
+\caption{Klassenoptionen und Parameterwerte}
+\end{table}
+
+\section{Kurs-Metadaten Befehle}
+
+Geben Sie Ihre Kursdaten in der Präambel an:
+\begin{codebox}[Metadaten-Einrichtung]
+\begin{lstlisting}[language=TeX]
+\course{Theoretische Informatik}
+\coursecode{CS 102}
+\professor{Prof. Dr. Markus Weber}
+\institution{Technische Universität München}
+\term{Wintersemester 2026}
+\docsubtitle{Vorlesungsskript \& Übungsaufgaben}
+\title{Einführung in die Algorithmik}
+\end{lstlisting}
+\end{codebox}
+
+\section{Vorlesungs- \& Kapitel-Systeme}
+
+Verwenden Sie den Befehl \texttt{\textbackslash lecture}, um das Skript in Vorlesungseinheiten zu gliedern:
+\begin{codebox}[Vorlesungs-Makro]
+\begin{lstlisting}[language=TeX]
+\lecture[15. Oktober 2026]{1}{Komplexitätstheorie \& O-Notation}
+\end{lstlisting}
+\end{codebox}
+
+Für kapitelbasierte Skripte (\texttt{mode=chapternotes}) nutzen Sie \texttt{\textbackslash chapter} und \texttt{\textbackslash subchapter}:
+\begin{codebox}[Kapitel-Makro mit Lernzielen]
+\begin{lstlisting}[language=TeX]
+\chapter{1}{Digitale Systeme und Binärzahlen}{%
+  Binärzahlen verstehen.,%
+  Umwandlung zwischen Zahlenbasis-Systemen.,%
+  Bildung von Komplementen.%
+}
+
+\subchapter{2}{Binärzahlen}
+\end{lstlisting}
+\end{codebox}
+
+\section{Pädagogische Umgebungen}
+
+\begin{definition}[Mathematische \& Didaktische Umgebungen]
+\texttt{modernclassnotes} bietet strukturierte Umgebungen für lehrreiche Inhalte:
+\begin{itemize}
+    \item \texttt{theorem} (Satz), \texttt{lemma}, \texttt{proposition}, \texttt{corollary} (Korollar), \texttt{proof} (Beweis)
+    \item \texttt{definition}, \texttt{example} (Beispiel), \texttt{remark} (Bemerkung), \texttt{warning} (Warnung), \texttt{tip} (Tipp), \texttt{takeaways}
+    \item \texttt{exercise} (Übung), \texttt{solution} (Lösung), \texttt{codebox} (Quellcode)
+\end{itemize}
+\end{definition}
+
+\begin{example}[Beispiel für Satz-Umgebung]
+\begin{lstlisting}[language=TeX]
+\begin{theorem}[Eulersche Identität]
+Für jede reelle Zahl $\theta$ gilt $e^{i\theta} = \cos\theta + i\sin\theta$.
+\end{theorem}
+\end{lstlisting}
+\end{example}
+
+\section{Open-Source Richtlinien}
+
+Zur Weitergabe und Bereitstellung dieses Pakets:
+\begin{enumerate}
+    \item Erhalten Sie die LPPL 1.3c / MIT Lizenzbedingungen in \texttt{LICENSE}.
+    \item Stellen Sie kompilierte Beispiel-PDFs in \texttt{examples/} für Vorschauen bereit.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,132 @@
+\documentclass[mode=notes, palette=ocean, lang=chinese, fontsize=11pt]{modernclassnotes}
+\ifxetex
+  \RequirePackage{xeCJK}
+  \setCJKmainfont{SimSun}
+\else
+  \RequirePackage{CJKutf8}
+\fi
+
+\course{LaTeX 宏包文档}
+\coursecode{MCN v1.2.0}
+\professor{Modern Class Notes 维护团队}
+\institution{开源 TeX 倡议}
+\term{2026年版本}
+\docsubtitle{Class Notes 宏包使用手册与架构指南}
+\title{\texttt{modernclassnotes} 类与宏包}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{简介}
+
+\texttt{modernclassnotes} 宏包与文档类提供了一个现代、美观且开源的 LaTeX 框架，专为大学教授、讲师和教育工作者设计。它可以轻松创建和分发讲义、课堂总结和作业练习册。
+
+\begin{takeaways}
+\texttt{modernclassnotes} 的核心亮点：
+\begin{itemize}
+    \item \textbf{四种专业模式}：\texttt{notes}（完整课程讲义）、\texttt{handout}（1--2页课堂总结）、\texttt{worksheet}（作业与解答）和 \texttt{chapternotes}（章节笔记）。
+    \item \textbf{精选颜色主题}：通过单个选项在 8 种主题之间自由切换（\texttt{ocean}、\texttt{nord}、\texttt{midnight}、\texttt{emerald}、\texttt{burgundy}、\texttt{amethyst}、\texttt{purple}、\texttt{mono}）。
+    \item \textbf{原生多语言支持}：原生支持 \texttt{lang=english}、\texttt{lang=chinese}、\texttt{lang=german} 和 \texttt{lang=french}。
+    \item \textbf{零复杂依赖}：原生 TeX/LaTeX 框体引擎，确保在 TeX Live、MiKTeX 和 Overleaf 上具有最高兼容性。
+    \item \textbf{讲与章节追踪}：通过 \texttt{\textbackslash lecture}、\texttt{\textbackslash chapter} 和 \texttt{\textbackslash subchapter} 自动生成讲义与章节标题信息栏。
+\end{itemize}
+\end{takeaways}
+
+\section{类选项与配置}
+
+在 LaTeX 文档导言区中加载该类：
+\begin{codebox}[加载文档类]
+\begin{lstlisting}[language=TeX]
+\documentclass[mode=notes, palette=ocean, lang=chinese, fontsize=11pt]{modernclassnotes}
+\end{lstlisting}
+\end{codebox}
+
+\subsection{可用类选项}
+\begin{table}[h]
+\centering
+\begin{tabular}{l|p{9.5cm}|l}
+\toprule
+\textbf{键} & \textbf{可选项} & \textbf{默认值} \\
+\midrule
+\texttt{mode} & \texttt{notes}, \texttt{handout}, \texttt{worksheet}, \texttt{chapternotes} & \texttt{notes} \\ \hline
+\texttt{palette} & \texttt{ocean}, \texttt{midnight}, \texttt{nord}, \texttt{emerald}, \texttt{burgundy}, \texttt{amethyst}, \texttt{purple}, \texttt{mono} & \texttt{ocean} \\ \hline
+\texttt{fontsize} & \texttt{10pt}, \texttt{11pt}, \texttt{12pt} & \texttt{11pt} \\ \hline
+\texttt{font} & \texttt{default}, \texttt{palatino}, \texttt{charter}, \texttt{sans}/\texttt{helvet}, \texttt{kpfonts}, \texttt{pagella}, \texttt{sourceserif}, \texttt{fira}, \texttt{libertine}, \texttt{utopia} & \texttt{default} \\ \hline
+\texttt{lang} & \texttt{english} (\texttt{en}), \texttt{german} (\texttt{de}), \texttt{french} (\texttt{fr}), \texttt{chinese} (\texttt{zh}) & \texttt{english} \\ \hline
+\texttt{official} & \texttt{true}, \texttt{false} & \texttt{false} \\ \hline
+\texttt{showsolutions} & \texttt{true}, \texttt{false} & \texttt{true} \\ \hline
+\texttt{parskip} & \texttt{true}, \texttt{false} & \texttt{true} \\
+\bottomrule
+\end{tabular}
+\caption{文档类选项与参数值}
+\end{table}
+
+\section{课程元数据命令}
+
+在导言区指定您的课程元数据：
+\begin{codebox}[元数据配置]
+\begin{lstlisting}[language=TeX]
+\course{高等数学与线性代数}
+\coursecode{MATH 101}
+\professor{张教授}
+\institution{清华大学}
+\term{2026年秋季学期}
+\docsubtitle{课程讲义与作业集}
+\title{MATH 101 课程笔记}
+\end{lstlisting}
+\end{codebox}
+
+\section{讲与章节追踪系统}
+
+使用 \texttt{\textbackslash lecture} 命令将讲义切分为不同的讲次：
+\begin{codebox}[讲次宏]
+\begin{lstlisting}[language=TeX]
+\lecture[2026年9月2日]{1}{算法分析导论}
+\end{lstlisting}
+\end{codebox}
+
+对于按章节划分的笔记（\texttt{mode=chapternotes}），使用 \texttt{\textbackslash chapter} 和 \texttt{\textbackslash subchapter}：
+\begin{codebox}[带教学目标的章节宏]
+\begin{lstlisting}[language=TeX]
+\chapter{1}{数字系统与二进制}{%
+  理解二进制数体系.,%
+  实现进制转换.,%
+  掌握补码表示法.%
+}
+
+\subchapter{2}{二进制数}
+\end{lstlisting}
+\end{codebox}
+
+\section{教学环境}
+
+\begin{definition}[数学与教学框体环境]
+\texttt{modernclassnotes} 提供了结构化的学术框体环境：
+\begin{itemize}
+    \item \texttt{theorem}（定理）、\texttt{lemma}（引理）、\texttt{proposition}（命题）、\texttt{corollary}（推论）、\texttt{proof}（证明）
+    \item \texttt{definition}（定义）、\texttt{example}（例题）、\texttt{remark}（备注）、\texttt{warning}（警告）、\texttt{tip}（提示）、\texttt{takeaways}（核心要点）
+    \item \texttt{exercise}（练习）、\texttt{solution}（解答）、\texttt{codebox}（代码片段）
+\end{itemize}
+\end{definition}
+
+\begin{example}[定理环境示例]
+\begin{lstlisting}[language=TeX]
+\begin{theorem}[欧拉公式]
+对任意实数 $\theta$，均有 $e^{i\theta} = \cos\theta + i\sin\theta$。
+\end{theorem}
+\end{lstlisting}
+\end{example}
+
+\section{开源发布指南}
+
+如需发布或分发此宏包：
+\begin{enumerate}
+    \item 请保留 \texttt{LICENSE} 中的 LPPL 1.3c / MIT 双重许可协议。
+    \item 建议在 \texttt{examples/} 中包含编译好的 PDF 文件供 GitHub 预览。
+\end{enumerate}
+
+\end{document}
