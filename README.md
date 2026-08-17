@@ -39,6 +39,11 @@ Designed with a **zero-dependency native box engine**, it works out of the box o
 - **Dynamic Lecture & Chapter Tracking**:
   - Automated lecture headers via `\lecture[date]{number}{title}`.
   - Chapter headings with optional objectives via `\chapter{number}{title}{objectives}` and subchapters via `\subchapter{number}{title}`.
+- **Multi-Language Localization**:
+  - `lang=english` / `en` (Default English)
+  - `lang=german` / `de` / `ngerman` (Full German translation for Vorlesungsskript, Übungen, Sätze, Beweise)
+  - `lang=french` / `fr` (Full French translation for Notes de cours, Exercices, Théorèmes, Démonstrations)
+  - `lang=chinese` / `zh` / `cjk` (Full Chinese translation for 课程笔记, 讲/章, 定理, 解答, 证明)
 - **CTAN & Open-Source Distribution Ready**:
   - Dual LPPL 1.3c / MIT licensed, complete with build `Makefile` and CTAN packaging scripts.
 

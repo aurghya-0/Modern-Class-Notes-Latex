@@ -12,7 +12,7 @@
 %% Dual-licensed under the MIT License for open-source flexibility.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{modernclassnotes}[2026/08/04 v1.1.0 Modern Class Notes Document Class]
+\ProvidesClass{modernclassnotes}[2026/08/17 v1.2.0 Modern Class Notes Document Class]
 
 % -------------------------------------------------------------------
 % Package Options & Key-Value Handling
@@ -23,10 +23,11 @@
   prefix=mcn@
 }
 
-\DeclareStringOption[notes]{mode}        % notes, handout, worksheet
-\DeclareStringOption[ocean]{palette}     % ocean, midnight, nord, emerald, burgundy, amethyst, mono
+\DeclareStringOption[notes]{mode}        % notes, handout, worksheet, chapternotes
+\DeclareStringOption[ocean]{palette}     % ocean, midnight, nord, emerald, burgundy, amethyst, purple, mono
 \DeclareStringOption[11pt]{fontsize}     % 10pt, 11pt, 12pt
-\DeclareStringOption[default]{font}      % default, palatino, charter, sans
+\DeclareStringOption[default]{font}      % default, palatino, charter, sans/helvet, kpfonts, pagella, sourceserif, fira, libertine, utopia
+\DeclareStringOption[english]{lang}      % english/en, german/de/ngerman, french/fr, chinese/zh/cjk
 \DeclareBoolOption[true]{showsolutions}  % show/hide solutions in worksheets
 \DeclareBoolOption[true]{parskip}        % toggle paragraph spacing
 \DeclareBoolOption[true]{numbering}      % continuous vs chapter-based numbering
@@ -40,7 +41,6 @@
 % -------------------------------------------------------------------
 % Core Dependencies
 % -------------------------------------------------------------------
-%\RequirePackage[utf8]{inputenc} % not needed when using xelatex / modern LaTeX2e
 \RequirePackage[T1]{fontenc}
 \RequirePackage{xcolor}
 \RequirePackage{geometry}
@@ -82,6 +82,145 @@
 \renewcommand{\labelitemii}{$\circ$}
 \renewcommand{\labelitemiii}{$\blacksquare$}
 \renewcommand{\labelitemiv}{$\diamond$}
+
+% -------------------------------------------------------------------
+% Localization / Internationalization Strings
+% -------------------------------------------------------------------
+\newcommand{\mcn@lang@defaulttitle}{Class Notes}
+\newcommand{\mcn@lang@instructor}{Instructor:}
+\newcommand{\mcn@lang@professor}{Professor:}
+\newcommand{\mcn@lang@term}{Term:}
+\newcommand{\mcn@lang@date}{Date:}
+\newcommand{\mcn@lang@institution}{Institution:}
+\newcommand{\mcn@lang@studentname}{Student Name:}
+\newcommand{\mcn@lang@studentid}{Student ID:}
+\newcommand{\mcn@lang@lecture}{Lecture}
+\newcommand{\mcn@lang@lecturetag}{LECTURE}
+\newcommand{\mcn@lang@chapter}{Chapter}
+\newcommand{\mcn@lang@chaptertag}{CHAPTER}
+\newcommand{\mcn@lang@theorem}{Theorem}
+\newcommand{\mcn@lang@lemma}{Lemma}
+\newcommand{\mcn@lang@proposition}{Proposition}
+\newcommand{\mcn@lang@corollary}{Corollary}
+\newcommand{\mcn@lang@definition}{Definition}
+\newcommand{\mcn@lang@example}{Example}
+\newcommand{\mcn@lang@remark}{Remark}
+\newcommand{\mcn@lang@warning}{Warning}
+\newcommand{\mcn@lang@tip}{Pro Tip}
+\newcommand{\mcn@lang@takeaways}{Key Takeaways}
+\newcommand{\mcn@lang@exercise}{Exercise}
+\newcommand{\mcn@lang@solution}{Solution:}
+\newcommand{\mcn@lang@proof}{Proof}
+\newcommand{\mcn@lang@codebox}{Code Snippet}
+
+\newcommand{\mcn@formatlecture}[2]{\mcn@lang@lecture\ #1: #2}
+\newcommand{\mcn@formatlecturetag}[1]{\mcn@lang@lecturetag\ #1}
+\newcommand{\mcn@formatchapter}[2]{\mcn@lang@chapter\ #1: #2}
+\newcommand{\mcn@formatchaptertag}[1]{\mcn@lang@chaptertag\ #1}
+
+% German language dictionary
+\newcommand{\mcn@setlang@german}{%
+  \renewcommand{\mcn@lang@defaulttitle}{Vorlesungsskript}%
+  \renewcommand{\mcn@lang@instructor}{Dozent:}%
+  \renewcommand{\mcn@lang@professor}{Professor:}%
+  \renewcommand{\mcn@lang@term}{Semester:}%
+  \renewcommand{\mcn@lang@date}{Datum:}%
+  \renewcommand{\mcn@lang@institution}{Institution:}%
+  \renewcommand{\mcn@lang@studentname}{Name des Studierenden:}%
+  \renewcommand{\mcn@lang@studentid}{Matrikelnummer:}%
+  \renewcommand{\mcn@lang@lecture}{Vorlesung}%
+  \renewcommand{\mcn@lang@lecturetag}{VORLESUNG}%
+  \renewcommand{\mcn@lang@chapter}{Kapitel}%
+  \renewcommand{\mcn@lang@chaptertag}{KAPITEL}%
+  \renewcommand{\mcn@lang@theorem}{Satz}%
+  \renewcommand{\mcn@lang@lemma}{Lemma}%
+  \renewcommand{\mcn@lang@proposition}{Proposition}%
+  \renewcommand{\mcn@lang@corollary}{Korollar}%
+  \renewcommand{\mcn@lang@definition}{Definition}%
+  \renewcommand{\mcn@lang@example}{Beispiel}%
+  \renewcommand{\mcn@lang@remark}{Bemerkung}%
+  \renewcommand{\mcn@lang@warning}{Warnung}%
+  \renewcommand{\mcn@lang@tip}{Profi-Tipp}%
+  \renewcommand{\mcn@lang@takeaways}{Wichtigste Erkenntnisse}%
+  \renewcommand{\mcn@lang@exercise}{Übung}%
+  \renewcommand{\mcn@lang@solution}{Lösung:}%
+  \renewcommand{\mcn@lang@proof}{Beweis}%
+  \renewcommand{\mcn@lang@codebox}{Quellcode}%
+}
+
+% French language dictionary
+\newcommand{\mcn@setlang@french}{%
+  \renewcommand{\mcn@lang@defaulttitle}{Notes de cours}%
+  \renewcommand{\mcn@lang@instructor}{Enseignant :}%
+  \renewcommand{\mcn@lang@professor}{Professeur :}%
+  \renewcommand{\mcn@lang@term}{Semestre :}%
+  \renewcommand{\mcn@lang@date}{Date :}%
+  \renewcommand{\mcn@lang@institution}{Institution :}%
+  \renewcommand{\mcn@lang@studentname}{Nom de l'étudiant :}%
+  \renewcommand{\mcn@lang@studentid}{N° d'étudiant :}%
+  \renewcommand{\mcn@lang@lecture}{Cours}%
+  \renewcommand{\mcn@lang@lecturetag}{COURS}%
+  \renewcommand{\mcn@lang@chapter}{Chapitre}%
+  \renewcommand{\mcn@lang@chaptertag}{CHAPITRE}%
+  \renewcommand{\mcn@lang@theorem}{Théorème}%
+  \renewcommand{\mcn@lang@lemma}{Lemme}%
+  \renewcommand{\mcn@lang@proposition}{Proposition}%
+  \renewcommand{\mcn@lang@corollary}{Corollaire}%
+  \renewcommand{\mcn@lang@definition}{Définition}%
+  \renewcommand{\mcn@lang@example}{Exemple}%
+  \renewcommand{\mcn@lang@remark}{Remarque}%
+  \renewcommand{\mcn@lang@warning}{Attention}%
+  \renewcommand{\mcn@lang@tip}{Astuce}%
+  \renewcommand{\mcn@lang@takeaways}{Points clés}%
+  \renewcommand{\mcn@lang@exercise}{Exercice}%
+  \renewcommand{\mcn@lang@solution}{Solution :}%
+  \renewcommand{\mcn@lang@proof}{Démonstration}%
+  \renewcommand{\mcn@lang@codebox}{Extrait de code}%
+}
+
+% Chinese language dictionary
+\newcommand{\mcn@setlang@chinese}{%
+  \renewcommand{\mcn@lang@defaulttitle}{课程笔记}%
+  \renewcommand{\mcn@lang@instructor}{讲师：}%
+  \renewcommand{\mcn@lang@professor}{教授：}%
+  \renewcommand{\mcn@lang@term}{学期：}%
+  \renewcommand{\mcn@lang@date}{日期：}%
+  \renewcommand{\mcn@lang@institution}{机构：}%
+  \renewcommand{\mcn@lang@studentname}{姓名：}%
+  \renewcommand{\mcn@lang@studentid}{学号：}%
+  \renewcommand{\mcn@lang@lecture}{讲}%
+  \renewcommand{\mcn@lang@lecturetag}{第}%
+  \renewcommand{\mcn@lang@chapter}{章}%
+  \renewcommand{\mcn@lang@chaptertag}{第}%
+  \renewcommand{\mcn@lang@theorem}{定理}%
+  \renewcommand{\mcn@lang@lemma}{引理}%
+  \renewcommand{\mcn@lang@proposition}{命题}%
+  \renewcommand{\mcn@lang@corollary}{推论}%
+  \renewcommand{\mcn@lang@definition}{定义}%
+  \renewcommand{\mcn@lang@example}{例题}%
+  \renewcommand{\mcn@lang@remark}{备注}%
+  \renewcommand{\mcn@lang@warning}{警告}%
+  \renewcommand{\mcn@lang@tip}{提示}%
+  \renewcommand{\mcn@lang@takeaways}{核心要点}%
+  \renewcommand{\mcn@lang@exercise}{练习}%
+  \renewcommand{\mcn@lang@solution}{解答：}%
+  \renewcommand{\mcn@lang@proof}{证明}%
+  \renewcommand{\mcn@lang@codebox}{代码片段}%
+  \renewcommand{\mcn@formatlecture}[2]{第 ##1 讲: ##2}%
+  \renewcommand{\mcn@formatlecturetag}[1]{第 ##1 讲}%
+  \renewcommand{\mcn@formatchapter}[2]{第 ##1 章: ##2}%
+  \renewcommand{\mcn@formatchaptertag}[1]{第 ##1 章}%
+}
+
+% Language Option Matching
+\expandafter\ifstrequal\expandafter{\mcn@lang}{german}{\mcn@setlang@german}{}%
+\expandafter\ifstrequal\expandafter{\mcn@lang}{ngerman}{\mcn@setlang@german}{}%
+\expandafter\ifstrequal\expandafter{\mcn@lang}{de}{\mcn@setlang@german}{}%
+\expandafter\ifstrequal\expandafter{\mcn@lang}{french}{\mcn@setlang@french}{}%
+\expandafter\ifstrequal\expandafter{\mcn@lang}{fr}{\mcn@setlang@french}{}%
+\expandafter\ifstrequal\expandafter{\mcn@lang}{chinese}{\mcn@setlang@chinese}{}%
+\expandafter\ifstrequal\expandafter{\mcn@lang}{zh}{\mcn@setlang@chinese}{}%
+\expandafter\ifstrequal\expandafter{\mcn@lang}{cjk}{\mcn@setlang@chinese}{}%
 
 % -------------------------------------------------------------------
 % Font Selection Presets
@@ -244,7 +383,7 @@
 \newcommand{\mcn@lecturedate}{}
 \newcommand{\mcn@assignmentname}{}
 
-\title{Class Notes} % Default title
+\title{\mcn@lang@defaulttitle} % Default title
 
 \newcommand{\course}[1]{\renewcommand{\mcn@course}{#1}}
 \newcommand{\coursecode}[1]{\renewcommand{\mcn@coursecode}{#1}}
@@ -268,7 +407,7 @@
   \small\sffamily\bfseries\color{mcnPrimary}%
   \ifx\mcn@coursecode\@empty
     \ifx\mcn@course\@empty
-      Class Notes
+      \mcn@lang@defaulttitle
     \else
       \mcn@course
     \fi
@@ -321,10 +460,10 @@
         \end{minipage}%
         \begin{minipage}[t]{0.33\linewidth}%
           {\raggedleft\small\sffamily\color{mcnText}%
-            \ifx\mcn@professor\@empty\else\textbf{Instructor:} \mcn@professor\par\fi
-            \ifx\mcn@term\@empty\else\textbf{Term:} \mcn@term\par\fi
-            \ifx\mcn@lecturedate\@empty\else\textbf{Date:} \mcn@lecturedate\par\fi
-            \ifx\mcn@institution\@empty\else\textbf{Institution:} \mcn@institution\par\fi
+            \ifx\mcn@professor\@empty\else\textbf{\mcn@lang@instructor} \mcn@professor\par\fi
+            \ifx\mcn@term\@empty\else\textbf{\mcn@lang@term} \mcn@term\par\fi
+            \ifx\mcn@lecturedate\@empty\else\textbf{\mcn@lang@date} \mcn@lecturedate\par\fi
+            \ifx\mcn@institution\@empty\else\textbf{\mcn@lang@institution} \mcn@institution\par\fi
           }%
         \end{minipage}%
       \end{minipage}%
@@ -347,9 +486,9 @@
         \end{minipage}%
         \begin{minipage}[t]{0.43\linewidth}%
           {\raggedleft\small\sffamily\color{mcnText}%
-            \textbf{Student Name:} \rule{4cm}{0.4pt}\par\vspace{3pt}%
-            \textbf{Student ID:} \rule{4.3cm}{0.4pt}\par\vspace{3pt}%
-            \textbf{Date:} \rule{5cm}{0.4pt}%
+            \textbf{\mcn@lang@studentname} \rule{4cm}{0.4pt}\par\vspace{3pt}%
+            \textbf{\mcn@lang@studentid} \rule{4.3cm}{0.4pt}\par\vspace{3pt}%
+            \textbf{\mcn@lang@date} \rule{5cm}{0.4pt}%
           }%
         \end{minipage}%
       \end{minipage}%
@@ -368,8 +507,8 @@
           \ifx\mcn@docsubtitle\@empty\else{\large\sffamily\color{mcnSecondary}\mcn@docsubtitle}\\[8pt]\fi
           \rule{0.6\linewidth}{1pt}\\[10pt]
           {\small\sffamily\color{mcnText}%
-            \ifx\mcn@professor\@empty\else \textbf{Professor:} \mcn@professor \quad\textbar\quad \fi
-            \ifx\mcn@term\@empty\else \textbf{Term:} \mcn@term \quad\textbar\quad \fi
+            \ifx\mcn@professor\@empty\else \textbf{\mcn@lang@professor} \mcn@professor \quad\textbar\quad \fi
+            \ifx\mcn@term\@empty\else \textbf{\mcn@lang@term} \mcn@term \quad\textbar\quad \fi
             \ifx\mcn@institution\@empty\else \mcn@institution \fi
           }%
           \vspace{12pt}%
@@ -388,7 +527,7 @@
 \newcounter{lecture}
 \newcommand{\lecture}[3][]{% [date]{number}{title}
   \refstepcounter{lecture}%
-  \def\mcn@currentlecture{Lecture #2: #3}%
+  \def\mcn@currentlecture{\mcn@formatlecture{#2}{#3}}%
   \par\vspace{1.2em}%
   \noindent
   \fcolorbox{mcnSecondary}{mcnBoxBg}{%
@@ -397,14 +536,14 @@
       \noindent\hspace{8pt}%
       \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
         {\raggedright
-          {\small\sffamily\bfseries\color{mcnSecondary} LECTURE #2 \ifx&#1&\else\hfill #1\fi}\par\vspace{2pt}%
+          {\small\sffamily\bfseries\color{mcnSecondary} \mcn@formatlecturetag{#2} \ifx&#1&\else\hfill #1\fi}\par\vspace{2pt}%
           {\Large\sffamily\bfseries\color{mcnPrimary} #3}\par
         }%
       \end{minipage}%
       \vspace{6pt}%
     \end{minipage}%
   }%
-  \addcontentsline{toc}{section}{Lecture #2: #3}%
+  \addcontentsline{toc}{section}{\mcn@formatlecture{#2}{#3}}%
   \par\vspace{0.8em}%
 }
 
@@ -417,7 +556,7 @@
 
 \NewDocumentCommand{\chapter}{m m m}{%  % #1=number, #2=title, #3=objectives
   \setcounter{chapter}{#1}\addtocounter{chapter}{-1}\refstepcounter{chapter}%
-  \def\mcn@currentlecture{Chapter #1: #2}%
+  \def\mcn@currentlecture{\mcn@formatchapter{#1}{#2}}%
   \par\vspace{1.2em}%
   \noindent
   \fcolorbox{mcnSecondary}{mcnBoxBg}{%
@@ -426,7 +565,7 @@
       \noindent\hspace{8pt}%
       \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
         {\raggedright
-          {\small\sffamily\bfseries\color{mcnSecondary} CHAPTER #1}\par\vspace{2pt}%
+          {\small\sffamily\bfseries\color{mcnSecondary} \mcn@formatchaptertag{#1}}\par\vspace{2pt}%
           {\Large\sffamily\bfseries\color{mcnPrimary} #2}\par
         }%
         % ---------- Optional objectives ----------
@@ -460,7 +599,7 @@
   }%
   \par
   \phantomsection
-  \addcontentsline{toc}{section}{Chapter #1: #2}%
+  \addcontentsline{toc}{section}{\mcn@formatchapter{#1}{#2}}%
   \par\vspace{0.3em}%
 }
 
@@ -486,7 +625,6 @@
 % -------------------------------------------------------------------
 % Universal Custom Modern Callout Box Engine
 % -------------------------------------------------------------------
-% Native TeX callout frame generator (zero external macro dependency)
 \newcommand{\mcn@callout}[5]{% {BorderColor}{BgColor}{Label}{Icon/Prefix}{Content}
   \par\addvspace{0.8em}%
   \noindent
@@ -514,7 +652,7 @@
 
 \newenvironment{theorem}[1][]{%
   \refstepcounter{mcnTheoremCount}%
-  \def\mcn@title{Theorem \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@theorem\ \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -525,7 +663,7 @@
 
 \newenvironment{lemma}[1][]{%
   \refstepcounter{mcnTheoremCount}%
-  \def\mcn@title{Lemma \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@lemma\ \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -536,7 +674,7 @@
 
 \newenvironment{proposition}[1][]{%
   \refstepcounter{mcnTheoremCount}%
-  \def\mcn@title{Proposition \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@proposition\ \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -547,7 +685,7 @@
 
 \newenvironment{corollary}[1][]{%
   \refstepcounter{mcnTheoremCount}%
-  \def\mcn@title{Corollary \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@corollary\ \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -558,7 +696,7 @@
 
 \newenvironment{definition}[1][]{%
   \refstepcounter{mcnDefCount}%
-  \def\mcn@title{Definition \themcnDefCount\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@definition\ \themcnDefCount\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -569,7 +707,7 @@
 
 \newenvironment{example}[1][]{%
   \refstepcounter{mcnExampleCount}%
-  \def\mcn@title{Example \themcnExampleCount\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@example\ \themcnExampleCount\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -579,7 +717,7 @@
 }
 
 \newenvironment{remark}[1][]{%
-  \def\mcn@title{Remark\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@remark\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -589,7 +727,7 @@
 }
 
 \newenvironment{warning}[1][]{%
-  \def\mcn@title{Warning\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@warning\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -599,7 +737,7 @@
 }
 
 \newenvironment{tip}[1][]{%
-  \def\mcn@title{Pro Tip\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@tip\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -609,7 +747,7 @@
 }
 
 \newenvironment{takeaways}{%
-  \def\mcn@title{Key Takeaways}%
+  \def\mcn@title{\mcn@lang@takeaways}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -620,7 +758,7 @@
 
 \newenvironment{exercise}[1][]{%
   \refstepcounter{mcnExerciseCount}%
-  \def\mcn@title{Exercise \themcnExerciseCount\ifx&#1&\else\ (#1)\fi}%
+  \def\mcn@title{\mcn@lang@exercise\ \themcnExerciseCount\ifx&#1&\else\ (#1)\fi}%
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }{%
@@ -632,7 +770,7 @@
 \newenvironment{solution}{%
   \ifmcn@showsolutions
     \par\vspace{0.4em}%
-    \noindent{\sffamily\bfseries\color{mcnSecondary}Solution:}\par\vspace{0.2em}%
+    \noindent{\sffamily\bfseries\color{mcnSecondary}\mcn@lang@solution}\par\vspace{0.2em}%
   \else
     \expandafter\comment
   \fi
@@ -647,7 +785,7 @@
 \newsavebox{\mcn@box}
 
 % Standard Proof environment wrapper
-\renewenvironment{proof}[1][Proof]{%
+\renewenvironment{proof}[1][\mcn@lang@proof]{%
   \par\vspace{0.4em}%
   \noindent{\sffamily\bfseries\color{mcnPrimary}#1:}\quad\ignorespaces
 }{%
@@ -677,7 +815,7 @@
   framexleftmargin=12pt
 }
 
-\newenvironment{codebox}[1][Code Snippet]{%
+\newenvironment{codebox}[1][\mcn@lang@codebox]{%
   \par\vspace{0.5em}%
   \noindent{\small\sffamily\bfseries\color{mcnPrimary}#1}\par\vspace{0.3em}%
 }{%

@@ -1,0 +1,51 @@
+\documentclass[mode=notes, palette=burgundy, lang=german, fontsize=11pt]{modernclassnotes}
+
+\course{Theoretische Informatik \& Diskrete Mathematik}
+\coursecode{CS 102}
+\professor{Prof. Dr. Markus Weber}
+\institution{Technische Universität München}
+\term{Wintersemester 2026/27}
+\title{Einführung in die Algorithmik}
+\docsubtitle{Vorlesungsskript \& Übungsaufgaben}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\lecture[15. Oktober 2026]{1}{Komplexitätstheorie \& O-Notation}
+
+\begin{definition}[Landau-Symbole]
+Es seien $f, g: \mathbb{N} \to \mathbb{R}^+$ zwei Funktionen. Wir schreiben $f(n) = O(g(n))$, wenn positive Konstanten $c$ und $n_0$ existieren, sodass $f(n) \le c \cdot g(n)$ für alle $n \ge n_0$ gilt.
+\end{definition}
+
+\begin{theorem}[Hauptsatz der Laufzeitentwicklung (Master-Theorem)]
+Seien $a \ge 1$ und $b > 1$ Konstanten, $f(n)$ eine Funktion und $T(n)$ definiert durch die Rekursionsgleichung $T(n) = a T(n/b) + f(n)$. Dann lässt sich das asymptotische Verhalten von $T(n)$ bestimmen.
+\end{theorem}
+
+\begin{proof}
+Der Beweis erfolgt durch vollständige Induktion über die Rekursionsbäume der Aufteilungstiefe $\log_b n$.
+\end{proof}
+
+\begin{example}[Binäre Suche]
+Die binäre Suche halbiert in jedem Schritt das Suchfeld, was zu einer Rekursion der Form $T(n) = T(n/2) + O(1)$ führt. Nach dem Master-Theorem gilt $T(n) = O(\log n)$.
+\end{example}
+
+\begin{exercise}[Laufzeitanalyse]
+Bestimmen Sie die asymptotische Komplexität des Merge-Sort-Algorithmus mit der Rekursionsgleichung $T(n) = 2T(n/2) + O(n)$.
+\end{exercise}
+
+\begin{solution}
+Durch Anwendung des Master-Theorems mit $a=2, b=2$ und $f(n)=O(n)$ erhalten wir $n^{\log_b a} = n^1 = n$. Da $f(n) = \Theta(n)$ ist, folgt $T(n) = \Theta(n \log n)$.
+\end{solution}
+
+\begin{takeaways}
+\begin{itemize}
+  \item Landau-Notation beschreibt das Wachstum von Funktionen im Unendlichen.
+  \item Binäre Suche benötigt nur logarithmisches Wachstum $O(\log n)$.
+  \item Master-Theorem ermöglicht die schnelle Analyse von Teile-und-Herrsche-Algorithmen.
+\end{itemize}
+\end{takeaways}
+
+\end{document}
