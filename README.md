@@ -128,6 +128,17 @@ Integrating over $[0,1]$ yields $\frac{2}{3}c = 1 \implies c = \frac{3}{2}$.
 
 ---
 
+## 📖 Multilingual User Manuals
+
+The comprehensive package documentation and architecture guide is provided in four languages under the `doc/` directory:
+
+- 🇬🇧 **English**: [`doc/modernclassnotes-doc.pdf`](doc/modernclassnotes-doc.pdf) ([`tex`](doc/modernclassnotes-doc.tex))
+- 🇩🇪 **German** (*Deutsch*): [`doc/modernclassnotes-doc-de.pdf`](doc/modernclassnotes-doc-de.pdf) ([`tex`](doc/modernclassnotes-doc-de.tex))
+- 🇫🇷 **French** (*Français*): [`doc/modernclassnotes-doc-fr.pdf`](doc/modernclassnotes-doc-fr.pdf) ([`tex`](doc/modernclassnotes-doc-fr.tex))
+- 🇨🇳 **Chinese** (*中文*): [`doc/modernclassnotes-doc-zh.pdf`](doc/modernclassnotes-doc-zh.pdf) ([`tex`](doc/modernclassnotes-doc-zh.tex))
+
+---
+
 ## 🛠️ Installation & Building
 
 ### Standard Usage (Local Directory)
@@ -138,7 +149,7 @@ Simply copy `modernclassnotes.cls` (or `modernclassnotes.sty`) into your TeX doc
   ```bash
   make all
   ```
-- **Compile user manual**:
+- **Compile user manuals**:
   ```bash
   make doc
   ```
@@ -161,23 +172,36 @@ Simply copy `modernclassnotes.cls` (or `modernclassnotes.sty`) into your TeX doc
 
 ```
 Modern-Class-Notes-Latex/
-├── modernclassnotes.cls       # Primary LaTeX document class
-├── modernclassnotes.sty       # Package version for inclusion in standard docs
-├── Makefile                   # Build automation script
-├── LICENSE                    # Dual LPPL 1.3c / MIT license
-├── README.md                  # Project documentation & GitHub homepage
+├── modernclassnotes.cls            # Primary LaTeX document class
+├── modernclassnotes.sty            # Package version for inclusion in standard docs
+├── Makefile                        # Cross-platform build automation script
+├── build.sh                        # Shell build script
+├── LICENSE                         # Dual LPPL 1.3c / MIT license
+├── README.md                       # Project documentation & GitHub homepage
 ├── doc/
-│   ├── modernclassnotes-doc.tex # Complete LaTeX user guide & manual
-│   └── modernclassnotes-doc.pdf # Compiled user manual PDF
+│   ├── modernclassnotes-doc.tex    # English user manual (source)
+│   ├── modernclassnotes-doc.pdf    # English user manual (PDF)
+│   ├── modernclassnotes-doc-de.tex # German user manual (source)
+│   ├── modernclassnotes-doc-de.pdf # German user manual (PDF)
+│   ├── modernclassnotes-doc-fr.tex # French user manual (source)
+│   ├── modernclassnotes-doc-fr.pdf # French user manual (PDF)
+│   ├── modernclassnotes-doc-zh.tex # Chinese user manual (source)
+│   └── modernclassnotes-doc-zh.pdf # Chinese user manual (PDF)
 └── examples/
-    ├── 01-complete-course-notes.tex # Full multi-lecture course notes template
-    ├── 01-complete-course-notes.pdf # Compiled PDF preview
-    ├── 02-single-lecture-handout.tex # Single lecture handout template
-    ├── 02-single-lecture-handout.pdf # Compiled PDF preview
-    ├── 03-homework-worksheet.tex    # Problem set & solution worksheet template
-    ├── 03-homework-worksheet.pdf    # Compiled PDF preview
-    ├── 04-chapter-notes.tex         # Chapter notes template with objectives
-    └── 04-chapter-notes.pdf         # Compiled PDF preview
+    ├── 01-complete-course-notes.tex    # English multi-lecture course notes template
+    ├── 01-complete-course-notes.pdf    # English course notes PDF preview
+    ├── 02-single-lecture-handout.tex    # English single lecture handout template
+    ├── 02-single-lecture-handout.pdf    # English handout PDF preview
+    ├── 03-homework-worksheet.tex       # English problem set & worksheet template
+    ├── 03-homework-worksheet.pdf       # English worksheet PDF preview
+    ├── 04-chapter-notes.tex            # English chapter notes template with objectives
+    ├── 04-chapter-notes.pdf            # English chapter notes PDF preview
+    ├── 05-german-vorlesungsskript.tex  # German course notes template
+    ├── 05-german-vorlesungsskript.pdf  # German course notes PDF preview
+    ├── 06-french-fiche-de-cours.tex    # French lecture summary handout template
+    ├── 06-french-fiche-de-cours.pdf    # French handout PDF preview
+    ├── 07-chinese-worksheet-homework.tex# Chinese homework worksheet template
+    └── 07-chinese-worksheet-homework.pdf# Chinese worksheet PDF preview
 ```
 
 ---
