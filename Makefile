@@ -72,7 +72,8 @@ examples: $(EXAMPLES_DIR)/01-complete-course-notes.pdf \
           $(EXAMPLES_DIR)/04-chapter-notes.pdf \
           $(EXAMPLES_DIR)/05-german-vorlesungsskript.pdf \
           $(EXAMPLES_DIR)/06-french-fiche-de-cours.pdf \
-          $(EXAMPLES_DIR)/07-chinese-worksheet-homework.pdf
+          $(EXAMPLES_DIR)/07-chinese-worksheet-homework.pdf \
+          $(EXAMPLES_DIR)/08-tagged-pdf-accessibility.pdf
 
 $(EXAMPLES_DIR)/07-chinese-worksheet-homework.pdf: $(EXAMPLES_DIR)/07-chinese-worksheet-homework.tex modernclassnotes.cls
 	@echo "Compiling example $<..."

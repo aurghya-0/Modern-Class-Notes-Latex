@@ -633,12 +633,14 @@
 
 \newcommand{\mcn@envstart}{%
   \par
+  \ifmcn@tagging\ifdefined\tagpdfparaOff\tagpdfparaOff\fi\fi
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
 }
 \newcommand{\mcn@envend}{%
   \end{minipage}%
   \end{lrbox}%
+  \ifmcn@tagging\ifdefined\tagpdfparaOn\tagpdfparaOn\fi\fi
 }
 
 \newenvironment{theorem}[1][]{%
@@ -786,21 +788,21 @@
 \ExplSyntaxOn
 \ifmcn@tagging
   \AddToHook{env/lstlisting/before}{
-    \tag_stop:
-    \ifdefined\tagpdfparaOff\tagpdfparaOff\fi
+    \tagpdfsetup{para/tagging=false}
   }
   \AddToHook{env/lstlisting/after}{
-    \ifdefined\tagpdfparaOn\tagpdfparaOn\fi
-    \tag_start:
+    \tagpdfsetup{para/tagging=false}
   }
 \fi
 \ExplSyntaxOff
 
 \newenvironment{codebox}[1][\mcn@lang@codebox]{%
   \par\vspace{0.5em}%
+  \ifmcn@tagging\tagpdfsetup{para/tagging=false}\fi
   \noindent{\small\sffamily\bfseries\color{mcnPrimary}#1}\par\vspace{0.3em}%
 }{%
   \par\vspace{0.5em}%
+  \ifmcn@tagging\tagpdfsetup{para/tagging=true}\fi
 }
 
 % -------------------------------------------------------------------

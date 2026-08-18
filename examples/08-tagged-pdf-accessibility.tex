@@ -1,0 +1,64 @@
+\DocumentMetadata{tagging=on}
+\documentclass[mode=notes, palette=ocean, fontsize=11pt]{modernclassnotes}
+
+\course{Computer Science \& Accessibility}
+\coursecode{CS 401}
+\professor{Dr. Morgan Vance}
+\institution{School of Computing}
+\term{Fall 2026}
+\docsubtitle{Demonstration of LaTeX Tagged PDF Accessibility Compliance}
+\title{CS 401: Tagged PDF \& Accessibility Notes}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\lecture[October 12, 2026]{1}{LaTeX Tagged PDF \& PDF/UA Accessibility}
+
+This document demonstrates full compatibility with the official \LaTeX{} Tagged PDF project (\texttt{\textbackslash DocumentMetadata\{tagging=on\}}).
+
+When tagged PDF mode is active, paragraph tagging around verbatim blocks (\texttt{lstlisting}) and custom boxes (\texttt{codebox}) can be temporarily suspended using \texttt{\textbackslash tagpdfsetup\{para/tagging=false\}}.
+
+\begin{definition}[Tagged PDF]
+A \textbf{Tagged PDF} is a PDF document that contains an underlying logical structure tree describing the roles and nesting of document components (such as headings, paragraphs, lists, and code snippets) for assistive technologies.
+\end{definition}
+
+\begin{theorem}[Accessibility Compliance]
+All core environments in \texttt{modernclassnotes}—including callout boxes, theorems, exercises, solutions, and code boxes—are structurally compatible with \LaTeX{}'s \texttt{tagpdf} engine.
+\end{theorem}
+
+\begin{proof}
+Internal paragraph sockets and verbatim line-break boxes in \texttt{modernclassnotes} automatically handle \texttt{tagpdf} hook state transitions, ensuring balanced structural trees during PDF compilation.
+\end{proof}
+
+\tagpdfsetup{para/tagging=false}
+\begin{codebox}[Python Implementation: Accessibility Metadata Validation]
+\begin{lstlisting}[language=Python]
+def check_pdf_accessibility(document):
+    """
+    Validates PDF structural tags for accessibility compliance.
+    """
+    has_tagged_tree = document.has_struct_tree_root()
+    has_language_meta = document.get_language() is not None
+    
+    return has_tagged_tree and has_language_meta
+\end{lstlisting}
+\end{codebox}
+\tagpdfsetup{para/tagging=true}
+
+\begin{tip}
+To build accessible lecture notes for students using screen readers, simply place \texttt{\textbackslash DocumentMetadata\{tagging=on\}} at the very top of your document before \texttt{\textbackslash documentclass}.
+\end{tip}
+
+\begin{takeaways}
+\begin{itemize}
+    \item \texttt{\textbackslash DocumentMetadata\{tagging=on\}} enables PDF/UA accessibility metadata.
+    \item \texttt{modernclassnotes} supports both standard and tagged compilation modes natively.
+    \item Visual styling remains completely identical across both modes.
+\end{itemize}
+\end{takeaways}
+
+\end{document}
