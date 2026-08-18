@@ -25,17 +25,6 @@
   \mcn@taggingfalse
 \fi
 
-\newcommand{\mcn@tagparaOff}{%
-  \ifmcn@tagging
-    \ifdefined\tagpdfparaOff\tagpdfparaOff\fi
-  \fi
-}
-\newcommand{\mcn@tagparaOn}{%
-  \ifmcn@tagging
-    \ifdefined\tagpdfparaOn\tagpdfparaOn\fi
-  \fi
-}
-
 % -------------------------------------------------------------------
 % Package Options & Key-Value Handling
 % -------------------------------------------------------------------
@@ -449,13 +438,11 @@
 \renewcommand{\maketitle}{%
   \ifstrequal{\mcn@mode}{handout}{%
     \vspace*{-0.5cm}%
-    \mcn@tagparaOff
     \noindent
     \fcolorbox{mcnPrimary}{mcnBoxBg}{%
       \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
         \paddingv
         \begin{minipage}[t]{0.65\linewidth}%
-          \mcn@tagparaOn
           {\raggedright
             \ifx\mcn@coursecode\@empty\else{\small\sffamily\bfseries\color{mcnSecondary}\mcn@coursecode}\par\fi
             {\Large\sffamily\bfseries\color{mcnPrimary}\@title}\par
@@ -463,7 +450,6 @@
           }%
         \end{minipage}%
         \begin{minipage}[t]{0.33\linewidth}%
-          \mcn@tagparaOn
           {\raggedleft\small\sffamily\color{mcnText}%
             \ifx\mcn@professor\@empty\else\textbf{\mcn@lang@instructor} \mcn@professor\par\fi
             \ifx\mcn@term\@empty\else\textbf{\mcn@lang@term} \mcn@term\par\fi
@@ -473,18 +459,15 @@
         \end{minipage}%
       \end{minipage}%
     }%
-    \mcn@tagparaOn
     \vspace{0.8em}%
   }{%
   \ifstrequal{\mcn@mode}{worksheet}{%
     \vspace*{-0.5cm}%
-    \mcn@tagparaOff
     \noindent
     \fcolorbox{mcnPrimary}{mcnBoxBg}{%
       \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
         \paddingv
         \begin{minipage}[t]{0.55\linewidth}%
-          \mcn@tagparaOn
           {\raggedright
             \ifx\mcn@coursecode\@empty\else{\small\sffamily\bfseries\color{mcnSecondary}\mcn@coursecode: \mcn@course}\par\fi
             {\Large\sffamily\bfseries\color{mcnPrimary}\ifx\mcn@assignmentname\@empty\@title\else\mcn@assignmentname\fi}\par
@@ -492,7 +475,6 @@
           }%
         \end{minipage}%
         \begin{minipage}[t]{0.43\linewidth}%
-          \mcn@tagparaOn
           {\raggedleft\small\sffamily\color{mcnText}%
             \textbf{\mcn@lang@studentname} \rule{4cm}{0.4pt}\par\vspace{3pt}%
             \textbf{\mcn@lang@studentid} \rule{4.3cm}{0.4pt}\par\vspace{3pt}%
@@ -501,15 +483,12 @@
         \end{minipage}%
       \end{minipage}%
     }%
-    \mcn@tagparaOn
     \vspace{0.8em}%
   }{%
     \begin{center}
       \vspace*{0.5cm}
-      \mcn@tagparaOff
       \fcolorbox{mcnPrimary}{mcnBoxBg}{%
         \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
-          \mcn@tagparaOn
           \vspace{12pt}%
           \centering
           \ifx\mcn@coursecode\@empty\else{\small\sffamily\bfseries\color{mcnSecondary}\mcn@coursecode}\\[4pt]\fi
@@ -524,7 +503,6 @@
           \vspace{12pt}%
         \end{minipage}%
       }%
-      \mcn@tagparaOn
       \vspace*{0.8cm}
     \end{center}
   }}
@@ -540,15 +518,9 @@
   \refstepcounter{lecture}%
   \def\mcn@currentlecture{\mcn@formatlecture{#2}{#3}}%
   \par\vspace{1.2em}%
-  \mcn@tagparaOff
-  \ifmcn@tagging
-    \tagstructbegin{tag=Sect}%
-    \tagstructbegin{tag=H1}%
-  \fi
   \noindent
   \fcolorbox{mcnSecondary}{mcnBoxBg}{%
     \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
-      \mcn@tagparaOn
       \vspace{6pt}%
       \noindent\hspace{8pt}%
       \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
@@ -560,11 +532,6 @@
       \vspace{6pt}%
     \end{minipage}%
   }%
-  \ifmcn@tagging
-    \tagstructend
-    \tagstructend
-  \fi
-  \mcn@tagparaOn
   \addcontentsline{toc}{section}{\mcn@formatlecture{#2}{#3}}%
   \par\vspace{0.8em}%
 }
@@ -580,15 +547,9 @@
   \setcounter{chapter}{#1}\addtocounter{chapter}{-1}\refstepcounter{chapter}%
   \def\mcn@currentlecture{\mcn@formatchapter{#1}{#2}}%
   \par\vspace{1.2em}%
-  \mcn@tagparaOff
-  \ifmcn@tagging
-    \tagstructbegin{tag=Sect}%
-    \tagstructbegin{tag=H1}%
-  \fi
   \noindent
   \fcolorbox{mcnSecondary}{mcnBoxBg}{%
     \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
-      \mcn@tagparaOn
       \vspace{6pt}%
       \noindent\hspace{8pt}%
       \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
@@ -623,11 +584,6 @@
       \vspace{6pt}%
     \end{minipage}%
   }%
-  \ifmcn@tagging
-    \tagstructend
-    \tagstructend
-  \fi
-  \mcn@tagparaOn
   \par
   \phantomsection
   \addcontentsline{toc}{section}{\mcn@formatchapter{#1}{#2}}%
@@ -636,22 +592,12 @@
 
 \newcommand{\subchapter}[2]{%
   \par\vspace{0.5em}%
-  \mcn@tagparaOff
-  \ifmcn@tagging
-    \tagstructbegin{tag=Sect}%
-    \tagstructbegin{tag=H2}%
-  \fi
   \noindent
   {\raggedright\large\sffamily\bfseries\color{mcnPrimary}%
     \makebox[2.5em][l]{\thechapter.#1}#2\par}%
   \vspace{-1.1em}%
   \noindent{\color{mcnBorder}\rule{\linewidth}{2pt}}%
   \vspace{-0.3em}%
-  \ifmcn@tagging
-    \tagstructend
-    \tagstructend
-  \fi
-  \mcn@tagparaOn
   \par
   \phantomsection
   \addcontentsline{toc}{subsection}{%
@@ -668,23 +614,18 @@
 % -------------------------------------------------------------------
 \newcommand{\mcn@callout}[5]{% {BorderColor}{BgColor}{Label}{Icon/Prefix}{Content}
   \par\addvspace{0.8em}%
-  \mcn@tagparaOff
   \noindent
   \fcolorbox{#1}{#2}{%
     \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
       \vspace{6pt}%
       \noindent\hspace{8pt}%
       \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
-        \mcn@tagparaOn
         {\sffamily\bfseries\color{#1}#4 #3}\par\vspace{4pt}%
-        \mcn@tagparaOff
         \color{mcnText}#5%
-        \mcn@tagparaOn
       \end{minipage}%
       \vspace{6pt}%
     \end{minipage}%
   }%
-  \mcn@tagparaOn
   \par\addvspace{0.8em}%
 }
 
@@ -698,13 +639,10 @@
 
 \newcommand{\mcn@envstart}{%
   \par
-  \mcn@tagparaOff
   \begin{lrbox}{\mcn@box}%
   \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
-  \mcn@tagparaOn
 }
 \newcommand{\mcn@envend}{%
-  \mcn@tagparaOff
   \end{minipage}%
   \end{lrbox}%
 }
@@ -809,13 +747,13 @@
     \par\vspace{0.4em}%
     \noindent{\sffamily\bfseries\color{mcnSecondary}\mcn@lang@solution}\par\vspace{0.2em}%
   \else
-    \expandafter\comment
+    \setbox0=\vbox\bgroup
   \fi
 }{%
   \ifmcn@showsolutions
     \par\vspace{0.6em}%
   \else
-    \expandafter\endcomment
+    \egroup
   \fi
 }
 
@@ -850,6 +788,19 @@
   xleftmargin=12pt,
   framexleftmargin=12pt
 }
+
+\ExplSyntaxOn
+\ifmcn@tagging
+  \AddToHook{env/lstlisting/before}{
+    \tag_stop:
+    \ifdefined\tagpdfparaOff\tagpdfparaOff\fi
+  }
+  \AddToHook{env/lstlisting/after}{
+    \ifdefined\tagpdfparaOn\tagpdfparaOn\fi
+    \tag_start:
+  }
+\fi
+\ExplSyntaxOff
 
 \newenvironment{codebox}[1][\mcn@lang@codebox]{%
   \par\vspace{0.5em}%
