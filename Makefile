@@ -49,6 +49,14 @@ doc: $(DOC_DIR)/modernclassnotes-doc.pdf \
      $(DOC_DIR)/modernclassnotes-doc-fr.pdf \
      $(DOC_DIR)/modernclassnotes-doc-zh.pdf
 
+$(DOC_DIR)/modernclassnotes-doc-de.pdf: $(DOC_DIR)/modernclassnotes-doc-de.tex modernclassnotes.cls
+	@echo "Compiling documentation $<..."
+	xelatex -interaction=nonstopmode -output-directory=$(DOC_DIR) $<
+
+$(DOC_DIR)/modernclassnotes-doc-fr.pdf: $(DOC_DIR)/modernclassnotes-doc-fr.tex modernclassnotes.cls
+	@echo "Compiling documentation $<..."
+	xelatex -interaction=nonstopmode -output-directory=$(DOC_DIR) $<
+
 $(DOC_DIR)/modernclassnotes-doc-zh.pdf: $(DOC_DIR)/modernclassnotes-doc-zh.tex modernclassnotes.cls
 	@echo "Compiling documentation $<..."
 	xelatex -interaction=nonstopmode -output-directory=$(DOC_DIR) $<

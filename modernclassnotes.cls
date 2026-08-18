@@ -12,7 +12,29 @@
 %% Dual-licensed under the MIT License for open-source flexibility.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{modernclassnotes}[2026/08/17 v1.2.0 Modern Class Notes Document Class]
+\ProvidesClass{modernclassnotes}[2026/08/18 v1.2.1 Modern Class Notes Document Class]
+
+% -------------------------------------------------------------------
+% Tagged PDF & PDF Management Detection
+% -------------------------------------------------------------------
+\RequirePackage{iftex}
+\newif\ifmcn@tagging
+\ifdefined\pdfmanagementversion
+  \mcn@taggingtrue
+\else
+  \mcn@taggingfalse
+\fi
+
+\newcommand{\mcn@tagparaOff}{%
+  \ifmcn@tagging
+    \ifdefined\tagpdfparaOff\tagpdfparaOff\fi
+  \fi
+}
+\newcommand{\mcn@tagparaOn}{%
+  \ifmcn@tagging
+    \ifdefined\tagpdfparaOn\tagpdfparaOn\fi
+  \fi
+}
 
 % -------------------------------------------------------------------
 % Package Options & Key-Value Handling
@@ -41,7 +63,6 @@
 % -------------------------------------------------------------------
 % Core Dependencies
 % -------------------------------------------------------------------
-\RequirePackage{iftex}
 \ifxetex\else
   \RequirePackage[utf8]{inputenc}
 \fi
@@ -56,7 +77,6 @@
 \RequirePackage{booktabs}
 \RequirePackage{array}
 \RequirePackage{enumerate}
-\RequirePackage{iftex}
 \RequirePackage{verbatim}
 \RequirePackage{xparse}    % for \NewDocumentCommand
 \IfFileExists{enumitem.sty}{\RequirePackage[shortlabels]{enumitem}}{}
@@ -229,31 +249,21 @@
 % -------------------------------------------------------------------
 % Font Selection Presets
 % -------------------------------------------------------------------
-% Default Latin Modern / Computer Modern
 \RequirePackage{lmodern}
-% font option override: kpfonts
 \expandafter\ifstrequal\expandafter{\mcn@font}{kpfonts}{%
   \IfFileExists{kpfonts.sty}{\RequirePackage{kpfonts}}{}%
 }{}
-% font option override: pagella
 \expandafter\ifstrequal\expandafter{\mcn@font}{pagella}{%
   \IfFileExists{tgpagella.sty}{\RequirePackage{tgpagella}}{\RequirePackage{mathpazo}}%
 }{}
-% font option override: sourceserif
 \expandafter\ifstrequal\expandafter{\mcn@font}{sourceserif}{%
-  \IfFileExists{sourceserifpro.sty}{%
-    \RequirePackage{sourceserifpro}%
-  }{%
-    \IfFileExists{sourcesanspro.sty}{\RequirePackage{sourcesanspro}}{}%
-  }%
+  \IfFileExists{sourceserifpro.sty}{\RequirePackage{sourceserifpro}}{}%
   \IfFileExists{newtxmath.sty}{\RequirePackage{newtxmath}}{}%
 }{}
-% font option override: charter
 \expandafter\ifstrequal\expandafter{\mcn@font}{charter}{%
   \IfFileExists{charter.sty}{\RequirePackage{charter}}{}%
   \IfFileExists{newtxmath.sty}{\RequirePackage{newtxmath}}{}%
 }{}
-% font option override: helvet / sans
 \expandafter\ifstrequal\expandafter{\mcn@font}{helvet}{%
   \IfFileExists{helvet.sty}{\RequirePackage{helvet}}{}%
   \renewcommand{\familydefault}{\sfdefault}%
@@ -264,16 +274,13 @@
   \renewcommand{\familydefault}{\sfdefault}%
   \IfFileExists{newtxmath.sty}{\RequirePackage{newtxmath}}{}%
 }{}
-% font option override: fira
 \expandafter\ifstrequal\expandafter{\mcn@font}{fira}{%
   \IfFileExists{FiraSans.sty}{\RequirePackage[sfdefault]{FiraSans}}{\renewcommand{\familydefault}{\sfdefault}}%
   \IfFileExists{FiraMono.sty}{\RequirePackage{FiraMono}}{}%
 }{}
-% font option override: libertine
 \expandafter\ifstrequal\expandafter{\mcn@font}{libertine}{%
   \IfFileExists{libertine.sty}{\RequirePackage{libertine}}{}%
 }{}
-% font option override: utopia
 \expandafter\ifstrequal\expandafter{\mcn@font}{utopia}{%
   \IfFileExists{utopia.sty}{\RequirePackage{utopia}}{}%
 }{}
@@ -281,7 +288,6 @@
 % -------------------------------------------------------------------
 % Color Palette Presets
 % -------------------------------------------------------------------
-% Default: Ocean Palette
 \definecolor{mcnPrimary}{HTML}{005F73}
 \definecolor{mcnSecondary}{HTML}{0A9396}
 \definecolor{mcnAccent}{HTML}{94D2BD}
@@ -289,7 +295,7 @@
 \definecolor{mcnText}{HTML}{1D2D35}
 \definecolor{mcnBoxBg}{HTML}{EAF4F4}
 \definecolor{mcnBorder}{HTML}{CCE3DE}
-% palette option override: midnight
+
 \expandafter\ifstrequal\expandafter{\mcn@palette}{midnight}{%
   \definecolor{mcnPrimary}{HTML}{1D2D44}
   \definecolor{mcnSecondary}{HTML}{3A86EF}
@@ -299,7 +305,6 @@
   \definecolor{mcnBoxBg}{HTML}{EDF2F7}
   \definecolor{mcnBorder}{HTML}{CBD5E0}
 }{}
-% palette option override: nord
 \expandafter\ifstrequal\expandafter{\mcn@palette}{nord}{%
   \definecolor{mcnPrimary}{HTML}{2E3440}
   \definecolor{mcnSecondary}{HTML}{88C0D0}
@@ -309,7 +314,6 @@
   \definecolor{mcnBoxBg}{HTML}{ECEFF4}
   \definecolor{mcnBorder}{HTML}{D8DEE9}
 }{}
-% palette option override: emerald
 \expandafter\ifstrequal\expandafter{\mcn@palette}{emerald}{%
   \definecolor{mcnPrimary}{HTML}{1B4332}
   \definecolor{mcnSecondary}{HTML}{2D6A4F}
@@ -319,7 +323,6 @@
   \definecolor{mcnBoxBg}{HTML}{E8F5E9}
   \definecolor{mcnBorder}{HTML}{C8E6C9}
 }{}
-% palette option override: burgundy
 \expandafter\ifstrequal\expandafter{\mcn@palette}{burgundy}{%
   \definecolor{mcnPrimary}{HTML}{5C061C}
   \definecolor{mcnSecondary}{HTML}{9D0208}
@@ -329,7 +332,6 @@
   \definecolor{mcnBoxBg}{HTML}{F7EBEF}
   \definecolor{mcnBorder}{HTML}{E8C5CE}
 }{}
-% palette option override: amethyst
 \expandafter\ifstrequal\expandafter{\mcn@palette}{amethyst}{%
   \definecolor{mcnPrimary}{HTML}{3A0CA3}
   \definecolor{mcnSecondary}{HTML}{7209B7}
@@ -339,7 +341,6 @@
   \definecolor{mcnBoxBg}{HTML}{F0EEFD}
   \definecolor{mcnBorder}{HTML}{D7D2FA}
 }{}
-% palette option override: mono
 \expandafter\ifstrequal\expandafter{\mcn@palette}{mono}{%
   \definecolor{mcnPrimary}{HTML}{212529}
   \definecolor{mcnSecondary}{HTML}{495057}
@@ -349,7 +350,6 @@
   \definecolor{mcnBoxBg}{HTML}{F1F3F5}
   \definecolor{mcnBorder}{HTML}{CED4DA}
 }{}
-% palette option override: purple
 \expandafter\ifstrequal\expandafter{\mcn@palette}{purple}{%
   \definecolor{mcnPrimary}{HTML}{560073}
   \definecolor{mcnSecondary}{HTML}{5D0A96}
@@ -360,7 +360,6 @@
   \definecolor{mcnBorder}{HTML}{D4CCE3}
 }{}
 
-% Environmental standard colors
 \definecolor{mcnTheorem}{HTML}{023E8A}
 \definecolor{mcnTheoremBg}{HTML}{EDF4FC}
 \definecolor{mcnDefinition}{HTML}{0077B6}
@@ -387,7 +386,7 @@
 \newcommand{\mcn@lecturedate}{}
 \newcommand{\mcn@assignmentname}{}
 
-\title{\mcn@lang@defaulttitle} % Default title
+\title{\mcn@lang@defaulttitle}
 
 \newcommand{\course}[1]{\renewcommand{\mcn@course}{#1}}
 \newcommand{\coursecode}[1]{\renewcommand{\mcn@coursecode}{#1}}
@@ -449,13 +448,14 @@
 % -------------------------------------------------------------------
 \renewcommand{\maketitle}{%
   \ifstrequal{\mcn@mode}{handout}{%
-    % Handout Compact Header Banner
     \vspace*{-0.5cm}%
+    \mcn@tagparaOff
     \noindent
     \fcolorbox{mcnPrimary}{mcnBoxBg}{%
       \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
         \paddingv
         \begin{minipage}[t]{0.65\linewidth}%
+          \mcn@tagparaOn
           {\raggedright
             \ifx\mcn@coursecode\@empty\else{\small\sffamily\bfseries\color{mcnSecondary}\mcn@coursecode}\par\fi
             {\Large\sffamily\bfseries\color{mcnPrimary}\@title}\par
@@ -463,6 +463,7 @@
           }%
         \end{minipage}%
         \begin{minipage}[t]{0.33\linewidth}%
+          \mcn@tagparaOn
           {\raggedleft\small\sffamily\color{mcnText}%
             \ifx\mcn@professor\@empty\else\textbf{\mcn@lang@instructor} \mcn@professor\par\fi
             \ifx\mcn@term\@empty\else\textbf{\mcn@lang@term} \mcn@term\par\fi
@@ -472,16 +473,18 @@
         \end{minipage}%
       \end{minipage}%
     }%
+    \mcn@tagparaOn
     \vspace{0.8em}%
   }{%
   \ifstrequal{\mcn@mode}{worksheet}{%
-    % Worksheet Header Banner
     \vspace*{-0.5cm}%
+    \mcn@tagparaOff
     \noindent
     \fcolorbox{mcnPrimary}{mcnBoxBg}{%
       \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
         \paddingv
         \begin{minipage}[t]{0.55\linewidth}%
+          \mcn@tagparaOn
           {\raggedright
             \ifx\mcn@coursecode\@empty\else{\small\sffamily\bfseries\color{mcnSecondary}\mcn@coursecode: \mcn@course}\par\fi
             {\Large\sffamily\bfseries\color{mcnPrimary}\ifx\mcn@assignmentname\@empty\@title\else\mcn@assignmentname\fi}\par
@@ -489,6 +492,7 @@
           }%
         \end{minipage}%
         \begin{minipage}[t]{0.43\linewidth}%
+          \mcn@tagparaOn
           {\raggedleft\small\sffamily\color{mcnText}%
             \textbf{\mcn@lang@studentname} \rule{4cm}{0.4pt}\par\vspace{3pt}%
             \textbf{\mcn@lang@studentid} \rule{4.3cm}{0.4pt}\par\vspace{3pt}%
@@ -497,13 +501,15 @@
         \end{minipage}%
       \end{minipage}%
     }%
+    \mcn@tagparaOn
     \vspace{0.8em}%
   }{%
-    % Full Notes Cover Banner
     \begin{center}
       \vspace*{0.5cm}
+      \mcn@tagparaOff
       \fcolorbox{mcnPrimary}{mcnBoxBg}{%
         \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
+          \mcn@tagparaOn
           \vspace{12pt}%
           \centering
           \ifx\mcn@coursecode\@empty\else{\small\sffamily\bfseries\color{mcnSecondary}\mcn@coursecode}\\[4pt]\fi
@@ -518,6 +524,7 @@
           \vspace{12pt}%
         \end{minipage}%
       }%
+      \mcn@tagparaOn
       \vspace*{0.8cm}
     \end{center}
   }}
@@ -533,9 +540,15 @@
   \refstepcounter{lecture}%
   \def\mcn@currentlecture{\mcn@formatlecture{#2}{#3}}%
   \par\vspace{1.2em}%
+  \mcn@tagparaOff
+  \ifmcn@tagging
+    \tagstructbegin{tag=Sect}%
+    \tagstructbegin{tag=H1}%
+  \fi
   \noindent
   \fcolorbox{mcnSecondary}{mcnBoxBg}{%
     \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
+      \mcn@tagparaOn
       \vspace{6pt}%
       \noindent\hspace{8pt}%
       \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
@@ -547,6 +560,11 @@
       \vspace{6pt}%
     \end{minipage}%
   }%
+  \ifmcn@tagging
+    \tagstructend
+    \tagstructend
+  \fi
+  \mcn@tagparaOn
   \addcontentsline{toc}{section}{\mcn@formatlecture{#2}{#3}}%
   \par\vspace{0.8em}%
 }
@@ -558,13 +576,19 @@
 
 \newcommand{\mcn@objective@item}[1]{\item \textcolor{mcnSecondary}{#1}}
 
-\NewDocumentCommand{\chapter}{m m m}{%  % #1=number, #2=title, #3=objectives
+\NewDocumentCommand{\chapter}{m m m}{%
   \setcounter{chapter}{#1}\addtocounter{chapter}{-1}\refstepcounter{chapter}%
   \def\mcn@currentlecture{\mcn@formatchapter{#1}{#2}}%
   \par\vspace{1.2em}%
+  \mcn@tagparaOff
+  \ifmcn@tagging
+    \tagstructbegin{tag=Sect}%
+    \tagstructbegin{tag=H1}%
+  \fi
   \noindent
   \fcolorbox{mcnSecondary}{mcnBoxBg}{%
     \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
+      \mcn@tagparaOn
       \vspace{6pt}%
       \noindent\hspace{8pt}%
       \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
@@ -572,11 +596,10 @@
           {\small\sffamily\bfseries\color{mcnSecondary} \mcn@formatchaptertag{#1}}\par\vspace{2pt}%
           {\Large\sffamily\bfseries\color{mcnPrimary} #2}\par
         }%
-        % ---------- Optional objectives ----------
         \ifstrempty{#3}{}{%
-          \par\vspace{-6pt}% space before separator
-          {\color{mcnBorder}\rule{\linewidth}{0.5pt}}% separator line (0.5pt elegant)
-          \par\vspace{0pt}% space after separator
+          \par\vspace{-6pt}%
+          {\color{mcnBorder}\rule{\linewidth}{0.5pt}}%
+          \par\vspace{0pt}%
           \@ifpackageloaded{enumitem}{%
             \begin{enumerate}[
                 label=\color{mcnPrimary}\arabic*.,
@@ -594,27 +617,41 @@
               \forcsvlist{\mcn@objective@item}{#3}%
             \end{enumerate}%
           }%
-          \vspace{0pt}% space after objectives
+          \vspace{0pt}%
         }%
-        % -----------------------------------------
       \end{minipage}%
       \vspace{6pt}%
     \end{minipage}%
   }%
+  \ifmcn@tagging
+    \tagstructend
+    \tagstructend
+  \fi
+  \mcn@tagparaOn
   \par
   \phantomsection
   \addcontentsline{toc}{section}{\mcn@formatchapter{#1}{#2}}%
   \par\vspace{0.3em}%
 }
 
-\newcommand{\subchapter}[2]{% {section}{title}
+\newcommand{\subchapter}[2]{%
   \par\vspace{0.5em}%
+  \mcn@tagparaOff
+  \ifmcn@tagging
+    \tagstructbegin{tag=Sect}%
+    \tagstructbegin{tag=H2}%
+  \fi
   \noindent
   {\raggedright\large\sffamily\bfseries\color{mcnPrimary}%
     \makebox[2.5em][l]{\thechapter.#1}#2\par}%
-  \vspace{-1.1em}% adjust to bring rule closer
+  \vspace{-1.1em}%
   \noindent{\color{mcnBorder}\rule{\linewidth}{2pt}}%
-  \vspace{-0.3em}% adjust spacing after rule
+  \vspace{-0.3em}%
+  \ifmcn@tagging
+    \tagstructend
+    \tagstructend
+  \fi
+  \mcn@tagparaOn
   \par
   \phantomsection
   \addcontentsline{toc}{subsection}{%
@@ -631,18 +668,23 @@
 % -------------------------------------------------------------------
 \newcommand{\mcn@callout}[5]{% {BorderColor}{BgColor}{Label}{Icon/Prefix}{Content}
   \par\addvspace{0.8em}%
+  \mcn@tagparaOff
   \noindent
   \fcolorbox{#1}{#2}{%
     \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
       \vspace{6pt}%
       \noindent\hspace{8pt}%
       \begin{minipage}{\dimexpr\linewidth-16pt\relax}%
+        \mcn@tagparaOn
         {\sffamily\bfseries\color{#1}#4 #3}\par\vspace{4pt}%
+        \mcn@tagparaOff
         \color{mcnText}#5%
+        \mcn@tagparaOn
       \end{minipage}%
       \vspace{6pt}%
     \end{minipage}%
   }%
+  \mcn@tagparaOn
   \par\addvspace{0.8em}%
 }
 
@@ -654,120 +696,111 @@
 \newcounter{mcnExampleCount}
 \newcounter{mcnExerciseCount}
 
+\newcommand{\mcn@envstart}{%
+  \par
+  \mcn@tagparaOff
+  \begin{lrbox}{\mcn@box}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@tagparaOn
+}
+\newcommand{\mcn@envend}{%
+  \mcn@tagparaOff
+  \end{minipage}%
+  \end{lrbox}%
+}
+
 \newenvironment{theorem}[1][]{%
   \refstepcounter{mcnTheoremCount}%
   \def\mcn@title{\mcn@lang@theorem\ \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[THM]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{lemma}[1][]{%
   \refstepcounter{mcnTheoremCount}%
   \def\mcn@title{\mcn@lang@lemma\ \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[LEM]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{proposition}[1][]{%
   \refstepcounter{mcnTheoremCount}%
   \def\mcn@title{\mcn@lang@proposition\ \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[PROP]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{corollary}[1][]{%
   \refstepcounter{mcnTheoremCount}%
   \def\mcn@title{\mcn@lang@corollary\ \themcnTheoremCount\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnTheorem}{mcnTheoremBg}{\mcn@title}{[COR]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{definition}[1][]{%
   \refstepcounter{mcnDefCount}%
   \def\mcn@title{\mcn@lang@definition\ \themcnDefCount\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnDefinition}{mcnDefinitionBg}{\mcn@title}{[DEF]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{example}[1][]{%
   \refstepcounter{mcnExampleCount}%
   \def\mcn@title{\mcn@lang@example\ \themcnExampleCount\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnExample}{mcnExampleBg}{\mcn@title}{[EX]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{remark}[1][]{%
   \def\mcn@title{\mcn@lang@remark\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnRemark}{mcnRemarkBg}{\mcn@title}{[REM]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{warning}[1][]{%
   \def\mcn@title{\mcn@lang@warning\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnWarning}{mcnWarningBg}{\mcn@title}{[!]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{tip}[1][]{%
   \def\mcn@title{\mcn@lang@tip\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnTip}{mcnTipBg}{\mcn@title}{[*]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{takeaways}{%
   \def\mcn@title{\mcn@lang@takeaways}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnPrimary}{mcnBoxBg}{\mcn@title}{[KEY]}{\usebox{\mcn@box}}%
 }
 
 \newenvironment{exercise}[1][]{%
   \refstepcounter{mcnExerciseCount}%
   \def\mcn@title{\mcn@lang@exercise\ \themcnExerciseCount\ifx&#1&\else\ (#1)\fi}%
-  \begin{lrbox}{\mcn@box}%
-  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+  \mcn@envstart
 }{%
-  \end{minipage}%
-  \end{lrbox}%
+  \mcn@envend
   \mcn@callout{mcnSecondary}{mcnBoxBg}{\mcn@title}{[EXR]}{\usebox{\mcn@box}}%
 }
 
@@ -788,7 +821,6 @@
 
 \newsavebox{\mcn@box}
 
-% Standard Proof environment wrapper
 \renewenvironment{proof}[1][\mcn@lang@proof]{%
   \par\vspace{0.4em}%
   \noindent{\sffamily\bfseries\color{mcnPrimary}#1:}\quad\ignorespaces
@@ -830,13 +862,23 @@
 % Hyperref Configuration
 % -------------------------------------------------------------------
 \RequirePackage{hyperref}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=mcnPrimary,
-  citecolor=mcnSecondary,
-  urlcolor=mcnSecondary,
-  pdfborder={0 0 0},
-  breaklinks=true
-}
+\ifmcn@tagging
+  \hypersetup{
+    colorlinks=true,
+    linkcolor=mcnPrimary,
+    citecolor=mcnSecondary,
+    urlcolor=mcnSecondary,
+    pdfborder={0 0 0}
+  }
+\else
+  \hypersetup{
+    colorlinks=true,
+    linkcolor=mcnPrimary,
+    citecolor=mcnSecondary,
+    urlcolor=mcnSecondary,
+    pdfborder={0 0 0},
+    breaklinks=true
+  }
+\fi
 
 \endinput
