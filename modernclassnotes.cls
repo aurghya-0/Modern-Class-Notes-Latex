@@ -615,6 +615,7 @@
 \newcommand{\mcn@callout}[5]{% {BorderColor}{BgColor}{Label}{Icon/Prefix}{Content}
   \par\addvspace{0.8em}%
   \noindent
+  \ifmcn@tagging\tagpdfsetup{artifact}\fi
   \fcolorbox{#1}{#2}{%
     \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
       \vspace{6pt}%
